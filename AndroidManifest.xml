@@ -10,12 +10,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/launcher"
+        android:icon="@drawable/icon_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Sherlock" >
         
         <activity
-            android:name="thevoiceless.unistats.RideActivity"
+            android:name="thevoiceless.unistats.RidesActivity"
             android:label="@string/title_activity_rides" >
             
             <intent-filter android:label="@string/app_name" >
