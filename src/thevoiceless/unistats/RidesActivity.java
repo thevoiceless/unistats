@@ -91,13 +91,15 @@ public class RidesActivity extends SherlockActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		if (item.getItemId() == R.id.menu_new_ride)
+		switch (item.getItemId())
 		{
-			Intent i = new Intent(this, NewRideActivity.class);
-			startActivity(i);
-			return true;
+			case R.id.menu_new_ride:
+				Intent i = new Intent(this, NewRideActivity.class);
+				startActivity(i);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
 	
 	private void setDataMembers()

@@ -6,14 +6,17 @@
     <LinearLayout
         android:id="@+id/newRideLinearLayout"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip" >
 
         <EditText
             android:id="@+id/enterName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_ride_name" />
+            android:hint="@string/hint_ride_name"
+            android:paddingLeft="10dp" />
 
         <LinearLayout
             android:id="@+id/dateRow"
@@ -53,8 +56,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
+			android:checked="false"
+			android:focusable="false"
+			android:enabled="false"
             android:clickable="false"
-            android:focusable="false"
             android:text="@string/use_GPS" />
 
         <CheckBox

@@ -16,9 +16,9 @@
     <!-- Create New Ride -->
     <string name="title_activity_new_ride">New Ride</string>
     <string name="hint_ride_name">Name</string>
-    <string name="hint_ride_month">MM</string>
-    <string name="hint_ride_day">DD</string>
-    <string name="hint_ride_year">YYYY</string>
+    <string name="hint_ride_month">Month</string>
+    <string name="hint_ride_day">Day</string>
+    <string name="hint_ride_year">Year</string>
     <string name="record_distance">Record distance</string>
     <string name="use_GPS">Use GPS</string>
     <string name="record_pedal_count">Record pedal count</string>

@@ -1,12 +1,15 @@
 package thevoiceless.unistats;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 public class NewRideActivity extends SherlockActivity
 {
@@ -18,9 +21,28 @@ public class NewRideActivity extends SherlockActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_ride);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		setDataMembers();
 		setListeners();
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		 switch (item.getItemId())
+		 {
+		        case android.R.id.home:
+		        	Intent i = new Intent(this, RidesActivity.class);
+		        	i.addFlags(
+		                    Intent.FLAG_ACTIVITY_CLEAR_TOP |
+		                    Intent.FLAG_ACTIVITY_NEW_TASK);
+		        	startActivity(i);
+		        	finish();
+		        	return true;
+		        default:
+		        	return super.onOptionsItemSelected(item);
+		 }
 	}
 	
 	private void setDataMembers()
@@ -31,6 +53,8 @@ public class NewRideActivity extends SherlockActivity
 		year = (EditText) findViewById(R.id.enterYear);
 		recordDistance = (CheckBox) findViewById(R.id.checkboxDistance);
 		useGPS = (CheckBox) findViewById(R.id.checkboxGPS);
+		
+		name.requestFocus();
 	}
 	
 	private void setListeners()
@@ -44,12 +68,14 @@ public class NewRideActivity extends SherlockActivity
 				{
 					useGPS.setFocusable(true);
 					useGPS.setEnabled(true);
+					useGPS.setClickable(true);
 				}
 				else
 				{
 					useGPS.setChecked(false);
-					useGPS.setFocusable(true);
-					useGPS.setEnabled(true);
+					useGPS.setFocusable(false);
+					useGPS.setEnabled(false);
+					useGPS.setClickable(false);
 				}
 			}
 		});
