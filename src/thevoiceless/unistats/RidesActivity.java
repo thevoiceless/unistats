@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -20,14 +21,25 @@ public class RidesActivity extends SherlockActivity
 	private RideHelper dbHelper;
 	private ListView ridesList;
 	
-	private class RideHolder
+	static class RideHolder
 	{
+		private TextView rideName, rideDate, rideDistance, ridePedals;
+		
 		RideHolder(View row)
 		{
+			rideName = (TextView) row.findViewById(R.id.rideNameArea);
+			rideDate = (TextView) row.findViewById(R.id.rideDateArea);
+			rideDistance = (TextView) row.findViewById(R.id.rideDistanceArea);
+			ridePedals = (TextView) row.findViewById(R.id.ridePedalsArea);
 		}
 		
 		void populateFrom(Cursor cursor, RideHelper helper)
 		{
+			rideName.setText(helper.getName(cursor));
+			rideDate.setText(helper.getDate(cursor));
+			rideDistance.setText(helper.getDistance(cursor));
+			ridePedals.setText(helper.getPedals(cursor));
+			
 		}
 	}
 	
@@ -84,5 +96,4 @@ public class RidesActivity extends SherlockActivity
 		ridesList = (ListView) findViewById(R.id.ridesList);
 		dbHelper = new RideHelper(this);
 	}
-
 }
