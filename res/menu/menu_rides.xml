@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item 
+        android:id="@+id/menu_new_ride"
+        android:title="@string/menu_new_ride_title"
+        android:icon="@drawable/menu_add"
+        android:showAsAction="ifRoom|withText" />
+    
+    <item
+        android:id="@+id/menu_achievements"
+        android:title="@string/menu_achievements_title"
+        android:icon="@drawable/menu_star"
+        android:showAsAction="ifRoom|withText" />
+    
+    <item
+        android:id="@+id/menu_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/menu_settings"/>
+
+</menu>

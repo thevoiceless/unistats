@@ -4,9 +4,13 @@
 	 <!-- Main application -->
     <string name="app_name">UniStats</string>
     <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
     
     <!-- Rides List -->
     <string name="title_activity_rides">Rides</string>
+    
+    <!-- Menus -->
+    <string name="menu_new_ride_title">New Ride</string>
+    <string name="menu_achievements_title">Achievements</string>
+    <string name="menu_settings">Settings</string>
 
 </resources>
