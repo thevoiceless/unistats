@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 
-public class MainActivity extends SherlockActivity
+public class RideActivity extends SherlockActivity
 {
 
 	@Override
