@@ -18,7 +18,7 @@ public class MainActivity extends SherlockActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		getSupportMenuInflater().inflate(R.menu.activity_main, menu);
+		getSupportMenuInflater().inflate(R.menu.ride_menu, menu);
 		return true;
 	}
 
