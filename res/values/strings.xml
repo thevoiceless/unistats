@@ -7,10 +7,23 @@
     
     <!-- Rides List -->
     <string name="title_activity_rides">Rides</string>
+    <string name="list_no_rides">No Rides</string>
     <string name="label_name">Name</string>
     <string name="label_date">Date</string>
     <string name="label_distance">Distance</string>
     <string name="label_pedals">Pedals</string>
+    
+    <!-- Create New Ride -->
+    <string name="title_activity_new_ride">New Ride</string>
+    <string name="hint_ride_name">Name</string>
+    <string name="hint_ride_month">MM</string>
+    <string name="hint_ride_day">DD</string>
+    <string name="hint_ride_year">YYYY</string>
+    <string name="record_distance">Record distance</string>
+    <string name="use_GPS">Use GPS</string>
+    <string name="record_pedal_count">Record pedal count</string>
+    <string name="button_set_goal">Set a goal for this ride</string>
+    <string name="button_save_ride">Save and start recording</string>
     
     <!-- Menus -->
     <string name="menu_new_ride_title">New Ride</string>
