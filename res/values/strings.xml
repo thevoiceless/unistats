@@ -7,6 +7,10 @@
     
     <!-- Rides List -->
     <string name="title_activity_rides">Rides</string>
+    <string name="label_name">Name</string>
+    <string name="label_date">Date</string>
+    <string name="label_distance">Distance</string>
+    <string name="label_pedals">Pedals</string>
     
     <!-- Menus -->
     <string name="menu_new_ride_title">New Ride</string>
