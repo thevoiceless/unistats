@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class NewRideActivity extends SherlockActivity
+public class RideDetailActivity extends SherlockActivity
 {
 	private static String errors;
 	private static Calendar chosenDate;
@@ -32,7 +32,7 @@ public class NewRideActivity extends SherlockActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_new_ride);
+		setContentView(R.layout.activity_ride_details);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		setDataMembers();
@@ -171,7 +171,7 @@ public class NewRideActivity extends SherlockActivity
 		{
 			if(validateForm())
 			{
-				Toast.makeText(NewRideActivity.this, "pass", Toast.LENGTH_SHORT).show();
+				Toast.makeText(RideDetailActivity.this, "pass", Toast.LENGTH_SHORT).show();
 				if (rideID == null)
 				{
 					dbHelper.insert(name.getText().toString(), 
@@ -183,7 +183,7 @@ public class NewRideActivity extends SherlockActivity
 			else
 			{
 				// TODO: Show error dialog
-				Toast.makeText(NewRideActivity.this, errors, Toast.LENGTH_SHORT).show();
+				Toast.makeText(RideDetailActivity.this, errors, Toast.LENGTH_SHORT).show();
 			}
 		}
 	};

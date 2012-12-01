@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity 
-            android:name=".NewRideActivity"
+            android:name="thevoiceless.unistats.RideDetailActivity"
             android:label="@string/title_activity_new_ride" />
         
     </application>

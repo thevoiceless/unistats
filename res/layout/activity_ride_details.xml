@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_ride_name"
+            android:imeOptions="actionNext"
             android:inputType="textCapSentences"
             android:paddingLeft="10dp" />
 
@@ -30,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/hint_ride_month"
+                android:imeOptions="actionNext"
                 android:inputType="number" />
 
             <EditText
@@ -38,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/hint_ride_day"
+                android:imeOptions="actionNext"
                 android:inputType="number" />
 
             <EditText

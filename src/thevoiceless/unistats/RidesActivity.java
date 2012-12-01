@@ -106,7 +106,7 @@ public class RidesActivity extends SherlockActivity
 		switch (item.getItemId())
 		{
 			case R.id.menu_new_ride:
-				Intent i = new Intent(this, NewRideActivity.class);
+				Intent i = new Intent(this, RideDetailActivity.class);
 				startActivity(i);
 				return true;
 			default:
