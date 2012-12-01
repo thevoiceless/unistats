@@ -13,10 +13,11 @@
     <string name="label_distance">Distance</string>
     <string name="label_pedals">Pedals</string>
     
-    <!-- Create New Ride -->
+    <!-- Ride Detail Form -->
     <string name="title_activity_new_ride">New Ride</string>
+    <string name="title_activity_edit_ride">Edit Ride</string>
     <string name="hint_ride_name">Name</string>
-    <string name="date_is_name">Use date as name</string>
+    <string name="custom_date">Set different date</string>
     <string name="hint_ride_month">Month</string>
     <string name="hint_ride_day">Day</string>
     <string name="hint_ride_year">Year</string>

@@ -16,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_ride_name"
-            android:imeOptions="actionNext"
             android:inputType="textCapSentences"
             android:paddingLeft="10dp" />
 
@@ -29,7 +28,10 @@
                 android:id="@+id/enterMonth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:hint="@string/hint_ride_month"
                 android:imeOptions="actionNext"
                 android:inputType="number" />
@@ -39,6 +41,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:hint="@string/hint_ride_day"
                 android:imeOptions="actionNext"
                 android:inputType="number" />
@@ -47,19 +51,19 @@
                 android:id="@+id/enterYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:hint="@string/hint_ride_year"
                 android:inputType="number" />
 
-            <!-- <ImageButton
-                android:id="@+id/buttonShowCalendar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:src="@drawable/icon_calendar" /> -->
-
         </LinearLayout>
+        
+        <Button
+            android:id="@+id/buttonSetDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_date" />
 
         <CheckBox
             android:id="@+id/checkboxDistance"

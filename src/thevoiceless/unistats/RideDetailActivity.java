@@ -1,7 +1,10 @@
 package thevoiceless.unistats;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,8 +13,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -20,13 +23,12 @@ import com.actionbarsherlock.view.MenuItem;
 public class RideDetailActivity extends SherlockActivity
 {
 	private static String errors;
-	private static Calendar chosenDate;
+	private static Calendar cal;
 	private String rideID;
 	private RideHelper dbHelper;
 	private EditText name, month, day, year;
-	private ImageButton calendarButton;
 	private CheckBox recordDistance, useGPS, recordPedals;
-	private Button createAchievement, saveRide;
+	private Button setDate, createAchievement, saveRide;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -36,6 +38,7 @@ public class RideDetailActivity extends SherlockActivity
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		setDataMembers();
+		initForm();
 		setListeners();
 	}
 	
@@ -59,23 +62,29 @@ public class RideDetailActivity extends SherlockActivity
 	
 	private void setDataMembers()
 	{
+		cal = Calendar.getInstance();
 		dbHelper = new RideHelper(this);
 		name = (EditText) findViewById(R.id.enterName);
 		month = (EditText) findViewById(R.id.enterMonth);
 		day = (EditText) findViewById(R.id.enterDay);
 		year = (EditText) findViewById(R.id.enterYear);
-		//calendarButton = (ImageButton) findViewById(R.id.buttonShowCalendar);
+		setDate = (Button) findViewById(R.id.buttonSetDate);
 		recordDistance = (CheckBox) findViewById(R.id.checkboxDistance);
 		useGPS = (CheckBox) findViewById(R.id.checkboxGPS);
 		recordPedals = (CheckBox) findViewById(R.id.checkboxPedalCount);
 		createAchievement = (Button) findViewById(R.id.buttonCreateAchievement);
 		saveRide = (Button) findViewById(R.id.buttonSaveRide);
-		
+	}
+	
+	private void initForm()
+	{		
 		name.requestFocus();
+		updateDate();
 	}
 	
 	private void setListeners()
 	{
+		setDate.setOnClickListener(pressDateButton);
 		recordDistance.setOnCheckedChangeListener(distanceCheckboxChange);
 		saveRide.setOnClickListener(pressSaveButton);
 	}
@@ -86,14 +95,6 @@ public class RideDetailActivity extends SherlockActivity
 		if (name.getText().toString().trim().equals(""))
 		{
 			formErrors.append(getString(R.string.error_no_name));
-		}
-		if (!validateDate())
-		{
-			if (formErrors.length() > 0)
-			{
-				formErrors.append("\n");
-			}
-			formErrors.append(getString(R.string.error_bad_date));
 		}
 		if (!(recordDistance.isChecked() || recordPedals.isChecked()))
 		{
@@ -115,33 +116,57 @@ public class RideDetailActivity extends SherlockActivity
 		}
 	}
 	
-	private boolean validateDate()
+	private void updateDate()
 	{
-		if (month.getText().toString().trim().equals("")
-			|| day.getText().toString().trim().equals("")
-			|| year.getText().toString().trim().equals(""))
-		{
-			return false;
-		}
-		try
-		{
-			int monthNum = Integer.valueOf(month.getText().toString());
-			int dayNum = Integer.valueOf(day.getText().toString());
-			int yearNum = Integer.valueOf(year.getText().toString());
-			chosenDate = Calendar.getInstance();
-			chosenDate.set(Calendar.YEAR, yearNum);
-			chosenDate.set(Calendar.MONTH, monthNum - 1);
-			chosenDate.set(Calendar.DAY_OF_MONTH, dayNum);
-		}
-		catch (Exception e)
-		{
-			return false;
-		}
-		
-		return true;
+		Date today = cal.getTime();
+		month.setText(new SimpleDateFormat("MMMMMMMMMM").format(today));
+		day.setText(new SimpleDateFormat("d").format(today));
+		year.setText(new SimpleDateFormat("yyyy").format(today));
 	}
 	
 	/* LISTENERS */
+	
+	OnClickListener pressDateButton = new OnClickListener()
+	{
+		@Override
+		public void onClick(View v)
+		{
+			StringBuilder dateString = new StringBuilder();
+			dateString.append(month.getText().toString());
+			dateString.append(" ");
+			dateString.append(day.getText().toString());
+			dateString.append(" ");
+			dateString.append(year.getText().toString());
+			
+			try
+			{
+				cal.setTime(new SimpleDateFormat("MMMMMMMMMM d yyyy").parse(dateString.toString()));
+			}
+			catch (Exception e)
+			{
+				
+			}
+			
+			new DatePickerDialog(RideDetailActivity.this, 
+					selectDate, 
+					cal.get(Calendar.YEAR), 
+					cal.get(Calendar.MONTH), 
+					cal.get(Calendar.DAY_OF_MONTH))
+			.show();			
+		}
+	};
+	
+	DatePickerDialog.OnDateSetListener selectDate = new DatePickerDialog.OnDateSetListener()
+	{
+		@Override
+		public void onDateSet(DatePicker view, int year, int monthOfYear,	int dayOfMonth)
+		{
+			cal.set(Calendar.YEAR, year);
+			cal.set(Calendar.MONTH, monthOfYear);
+			cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+			updateDate();
+		}
+	};
 	
 	OnCheckedChangeListener distanceCheckboxChange = new OnCheckedChangeListener()
 	{
@@ -175,7 +200,7 @@ public class RideDetailActivity extends SherlockActivity
 				if (rideID == null)
 				{
 					dbHelper.insert(name.getText().toString(), 
-							(long) (chosenDate.getTimeInMillis() / 1000L), 
+							(long) (cal.getTimeInMillis() / 1000L), 
 							0, 0);
 					finish();
 				}
