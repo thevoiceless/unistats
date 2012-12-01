@@ -18,17 +18,20 @@ public class RideHelper extends SQLiteOpenHelper
 	// Column names
 	private static final String COL_NAME = "name";
 	private static final String COL_DATE = "date";
+	private static final String COL_GPS = "gps";
 	private static final String COL_DIST = "distance";
 	private static final String COL_PED = "pedals";
 	private static final String ALL_COLS = COL_NAME + ", " 
 			+ COL_DATE + ", " 
+			+ COL_GPS + ", "
 			+ COL_DIST + ", " 
 			+ COL_PED;
 	// Column integers
 	private static final int NAME_INT = 1;
 	private static final int DATE_INT = 2;
-	private static final int DIST_INT = 3;
-	private static final int PED_INT = 4;
+	private static final int GPS_INT = 3;
+	private static final int DIST_INT = 4;
+	private static final int PED_INT = 5;
 	
 	private static final int SCHEMA_VERSION = 1;
 	
@@ -38,6 +41,7 @@ public class RideHelper extends SQLiteOpenHelper
 			+ " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 			+ COL_NAME + " TEXT, "
 			+ COL_DATE + " INTEGER, "
+			+ COL_GPS + " INTEGER, "
 			+ COL_DIST + " REAL, "
 			+ COL_PED + " REAL);";
 	// Match provided arguments
@@ -81,11 +85,12 @@ public class RideHelper extends SQLiteOpenHelper
 	
 	/* DB MODIFICATION */
 	
-	public void insert(String name, long date, double distance, double pedals)
+	public void insert(String name, long date, int gps, double distance, double pedals)
 	{
 		ContentValues cv = new ContentValues();
 		cv.put(COL_NAME, name);
 		cv.put(COL_DATE, date);
+		cv.put(COL_GPS, gps);
 		cv.put(COL_DIST, distance);
 		cv.put(COL_PED, pedals);
 		getWritableDatabase().insert(TABLE_RIDES, COL_NAME, cv);
@@ -121,6 +126,11 @@ public class RideHelper extends SQLiteOpenHelper
 		cal = Calendar.getInstance();
 		cal.setTimeInMillis((long) (c.getLong(DATE_INT) * 1000));
 		return cal.getTime();
+	}
+	
+	public boolean getUseGPS(Cursor c)
+	{
+		return c.getInt(GPS_INT) == 1;
 	}
 	
 	public String getDistance(Cursor c)

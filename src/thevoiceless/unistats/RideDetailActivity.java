@@ -6,6 +6,7 @@ import java.util.Date;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +24,9 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class RideDetailActivity extends SherlockActivity
 {
+	private static final SimpleDateFormat MONTH_FORMAT = new SimpleDateFormat("MMMMMMMMMM");
+	private static final SimpleDateFormat DAY_FORMAT = new SimpleDateFormat("d");
+	private static final SimpleDateFormat YEAR_FORMAT = new SimpleDateFormat("yyyy");
 	private static String errors;
 	private static Calendar cal;
 	private String rideID;
@@ -63,8 +67,10 @@ public class RideDetailActivity extends SherlockActivity
 	
 	private void setDataMembers()
 	{
+		rideID = getIntent().getStringExtra(RidesActivity.RIDE_ID_KEY);
 		cal = Calendar.getInstance();
 		dbHelper = new RideHelper(this);
+		
 		name = (EditText) findViewById(R.id.enterName);
 		month = (EditText) findViewById(R.id.enterMonth);
 		day = (EditText) findViewById(R.id.enterDay);
@@ -79,9 +85,50 @@ public class RideDetailActivity extends SherlockActivity
 	}
 	
 	private void initForm()
-	{		
+	{
+		if (rideID != null)
+		{
+			Cursor c = dbHelper.getById(rideID);
+			c.moveToFirst();
+			
+			name.setText(dbHelper.getName(c));
+			
+			Date d = dbHelper.getDate(c);
+			month.setText(MONTH_FORMAT.format(d));
+			day.setText(DAY_FORMAT.format(d));
+			year.setText(YEAR_FORMAT.format(d));
+			
+			if (Double.valueOf(dbHelper.getDistance(c)) >= 0)
+			{
+				recordDistance.setChecked(true);
+			}
+			else
+			{
+				recordDistance.setChecked(false);
+			}
+			
+			if (dbHelper.getUseGPS(c))
+			{
+				useGPS.setChecked(true);
+				enableGPSCheckbox();
+			}
+			else
+			{
+				disableGPSCheckbox();
+			}
+			
+			if (Double.valueOf(dbHelper.getPedals(c)) >= 0)
+			{
+				recordPedals.setChecked(true);
+			}
+			else
+			{
+				recordPedals.setChecked(false);
+			}
+		}
+		
+		updateDisplayedDate();
 		name.requestFocus();
-		updateDate();
 	}
 	
 	private void setListeners()
@@ -89,6 +136,21 @@ public class RideDetailActivity extends SherlockActivity
 		setDate.setOnClickListener(pressDateButton);
 		recordDistance.setOnCheckedChangeListener(distanceCheckboxChange);
 		save.setOnClickListener(pressSaveButton);
+	}
+	
+	private void enableGPSCheckbox()
+	{
+		useGPS.setFocusable(true);
+		useGPS.setEnabled(true);
+		useGPS.setClickable(true);
+	}
+	
+	private void disableGPSCheckbox()
+	{
+		useGPS.setChecked(false);
+		useGPS.setFocusable(false);
+		useGPS.setEnabled(false);
+		useGPS.setClickable(false);
 	}
 	
 	private boolean validateForm()
@@ -118,13 +180,13 @@ public class RideDetailActivity extends SherlockActivity
 		}
 	}
 	
-	private void updateDate()
+	private void updateDisplayedDate()
 	{
 		Date chosenDate = cal.getTime();
 		Log.v("test", chosenDate.toString());
-		month.setText(new SimpleDateFormat("MMMMMMMMMM").format(chosenDate));
-		day.setText(new SimpleDateFormat("d").format(chosenDate));
-		year.setText(new SimpleDateFormat("yyyy").format(chosenDate));		
+		month.setText(MONTH_FORMAT.format(chosenDate));
+		day.setText(DAY_FORMAT.format(chosenDate));
+		year.setText(YEAR_FORMAT.format(chosenDate));		
 	}
 	
 	private void checkIfDateIsToday()
@@ -182,7 +244,7 @@ public class RideDetailActivity extends SherlockActivity
 			cal.set(Calendar.YEAR, year);
 			cal.set(Calendar.MONTH, monthOfYear);
 			cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-			updateDate();
+			updateDisplayedDate();
 			checkIfDateIsToday();
 		}
 	};
@@ -194,16 +256,11 @@ public class RideDetailActivity extends SherlockActivity
 		{
 			if (isChecked)
 			{
-				useGPS.setFocusable(true);
-				useGPS.setEnabled(true);
-				useGPS.setClickable(true);
+				enableGPSCheckbox();
 			}
 			else
 			{
-				useGPS.setChecked(false);
-				useGPS.setFocusable(false);
-				useGPS.setEnabled(false);
-				useGPS.setClickable(false);
+				disableGPSCheckbox();
 			}
 		}
 	};
@@ -215,14 +272,25 @@ public class RideDetailActivity extends SherlockActivity
 		{
 			if(validateForm())
 			{
-				Toast.makeText(RideDetailActivity.this, "pass", Toast.LENGTH_SHORT).show();
 				if (rideID == null)
 				{
-					dbHelper.insert(name.getText().toString(), 
-							(long) (cal.getTimeInMillis() / 1000L), 
-							0, 0);
-					finish();
+					double d = recordDistance.isChecked() ? 0 : -1;
+					int g = useGPS.isChecked() ? 1 : 0;
+					double p = recordPedals.isChecked() ? 0 : -1;
+					Toast.makeText(RideDetailActivity.this, "Saving ride...", Toast.LENGTH_SHORT).show();
+					if (rideID == null)
+					{
+						dbHelper.insert(name.getText().toString(), 
+								(long) (cal.getTimeInMillis() / 1000L), 
+								g, d, p);
+						finish();
+					}
 				}
+				else
+				{
+					Toast.makeText(RideDetailActivity.this, "update", Toast.LENGTH_SHORT).show();
+				}
+
 			}
 			else
 			{

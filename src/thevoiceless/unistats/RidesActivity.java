@@ -10,6 +10,8 @@ import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class RidesActivity extends SherlockActivity
 {
+	public static final String RIDE_ID_KEY = "thevoiceless.unistats.RIDE_ID";
 	private Cursor rides;
 	private RidesAdapter ridesAdapter;
 	private RideHelper dbHelper;
@@ -43,8 +46,25 @@ public class RidesActivity extends SherlockActivity
 			
 			rideName.setText(helper.getName(cursor));
 			rideDate.setText(dateFormat.format(helper.getDate(cursor)));
-			rideDistance.setText(helper.getDistance(cursor));
-			ridePedals.setText(helper.getPedals(cursor));
+			
+			if (Double.valueOf(helper.getDistance(cursor)) >= 0)
+			{
+				rideDistance.setText(helper.getDistance(cursor));
+			}
+			else
+			{
+				rideDistance.setText("");
+			}
+			
+			if (Double.valueOf(helper.getPedals(cursor)) >= 0)
+			{
+				ridePedals.setText(helper.getPedals(cursor));
+			}
+			else
+			{
+				ridePedals.setText("");
+			}
+			
 		}
 	}
 	
@@ -82,7 +102,7 @@ public class RidesActivity extends SherlockActivity
 		setTitle(R.string.title_activity_rides);
 		
 		setDataMembers();
-		
+		initList();
 	}
 	
 	@Override
@@ -138,5 +158,23 @@ public class RidesActivity extends SherlockActivity
 		ridesAdapter = new RidesAdapter(rides);
 		ridesList.setAdapter(ridesAdapter);
 	}
+	
+	private void initList()
+	{
+		ridesList.setOnItemClickListener(selectRideFromList);
+	}
+	
+	/* LISTENERS */
+	
+	OnItemClickListener selectRideFromList = new OnItemClickListener()
+	{
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+		{
+			Intent i = new Intent(RidesActivity.this, RideDetailActivity.class);
+			i.putExtra(RIDE_ID_KEY, String.valueOf(id));
+			startActivity(i);
+		}
+	};
 	
 }
