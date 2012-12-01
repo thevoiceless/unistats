@@ -21,6 +21,9 @@ import com.actionbarsherlock.view.MenuItem;
 public class NewRideActivity extends SherlockActivity
 {
 	private static String errors;
+	private static Calendar chosenDate;
+	private String rideID;
+	private RideHelper dbHelper;
 	private EditText name, month, day, year;
 	private CheckBox recordDistance, useGPS, recordPedals;
 	private Button createAchievement, saveRide;
@@ -56,6 +59,7 @@ public class NewRideActivity extends SherlockActivity
 	
 	private void setDataMembers()
 	{
+		dbHelper = new RideHelper(this);
 		name = (EditText) findViewById(R.id.enterName);
 		month = (EditText) findViewById(R.id.enterMonth);
 		day = (EditText) findViewById(R.id.enterDay);
@@ -123,10 +127,10 @@ public class NewRideActivity extends SherlockActivity
 			int monthNum = Integer.valueOf(month.getText().toString());
 			int dayNum = Integer.valueOf(day.getText().toString());
 			int yearNum = Integer.valueOf(year.getText().toString());
-			Calendar c = Calendar.getInstance();
-			c.set(Calendar.YEAR, yearNum);
-			c.set(Calendar.MONTH, monthNum);
-			c.set(Calendar.DAY_OF_MONTH, dayNum);
+			chosenDate = Calendar.getInstance();
+			chosenDate.set(Calendar.YEAR, yearNum);
+			chosenDate.set(Calendar.MONTH, monthNum);
+			chosenDate.set(Calendar.DAY_OF_MONTH, dayNum);
 		}
 		catch (Exception e)
 		{
@@ -167,9 +171,17 @@ public class NewRideActivity extends SherlockActivity
 			if(validateForm())
 			{
 				Toast.makeText(NewRideActivity.this, "pass", Toast.LENGTH_SHORT).show();
+				if (rideID == null)
+				{
+					dbHelper.insert(name.getText().toString(), 
+							(long) (chosenDate.getTimeInMillis() / 1000L), 
+							0, 0);
+					finish();
+				}
 			}
 			else
 			{
+				// TODO: Show error dialog
 				Toast.makeText(NewRideActivity.this, errors, Toast.LENGTH_SHORT).show();
 			}
 		}

@@ -1,5 +1,8 @@
 package thevoiceless.unistats;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class RideHelper extends SQLiteOpenHelper
 {
+	private static Calendar cal;
 	// Name of database and main rides table
 	private static final String DATABASE_NAME = "rides.db";
 	private static final String TABLE_RIDES = "rides";
@@ -77,7 +81,7 @@ public class RideHelper extends SQLiteOpenHelper
 	
 	/* DB MODIFICATION */
 	
-	public void insert(String name, String date, double distance, double pedals)
+	public void insert(String name, long date, double distance, double pedals)
 	{
 		ContentValues cv = new ContentValues();
 		cv.put(COL_NAME, name);
@@ -112,9 +116,11 @@ public class RideHelper extends SQLiteOpenHelper
 		return c.getString(NAME_INT);
 	}
 	
-	public String getDate(Cursor c)
+	public Date getDate(Cursor c)
 	{
-		return c.getString(DATE_INT);
+		cal = Calendar.getInstance();
+		cal.setTimeInMillis((long) (c.getLong(DATE_INT) * 1000));
+		return cal.getTime();
 	}
 	
 	public String getDistance(Cursor c)

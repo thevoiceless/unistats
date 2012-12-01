@@ -37,7 +37,7 @@ public class RidesActivity extends SherlockActivity
 		void populateFrom(Cursor cursor, RideHelper helper)
 		{
 			rideName.setText(helper.getName(cursor));
-			rideDate.setText(helper.getDate(cursor));
+			rideDate.setText(helper.getDate(cursor).toString());
 			rideDistance.setText(helper.getDistance(cursor));
 			ridePedals.setText(helper.getPedals(cursor));
 		}
