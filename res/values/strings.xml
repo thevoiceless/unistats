@@ -16,14 +16,18 @@
     <!-- Create New Ride -->
     <string name="title_activity_new_ride">New Ride</string>
     <string name="hint_ride_name">Name</string>
+    <string name="date_is_name">Use date as name</string>
     <string name="hint_ride_month">Month</string>
     <string name="hint_ride_day">Day</string>
     <string name="hint_ride_year">Year</string>
     <string name="record_distance">Record distance</string>
     <string name="use_GPS">Use GPS</string>
     <string name="record_pedal_count">Record pedal count</string>
-    <string name="button_set_goal">Set a goal for this ride</string>
+    <string name="button_set_goal">Set a goal for thisYou  ride</string>
     <string name="button_save_ride">Save and start recording</string>
+    <string name="error_no_name">You must specify a name.</string>
+    <string name="error_bad_date">Date is invalid.</string>
+    <string name="no_stat_selected">Select a statistic to record.</string>
     
     <!-- Menus -->
     <string name="menu_new_ride_title">New Ride</string>

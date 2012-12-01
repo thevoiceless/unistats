@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <LinearLayout
+   <LinearLayout
         android:id="@+id/newRideLinearLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_ride_name"
             android:paddingLeft="10dp" />
+
 
         <LinearLayout
             android:id="@+id/dateRow"
@@ -69,13 +70,13 @@
             android:text="@string/record_pedal_count" />
 
         <Button
-            android:id="@+id/goalButton"
+            android:id="@+id/buttonCreateAchievement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_set_goal" />
 
         <Button
-            android:id="@+id/saveRideButton"
+            android:id="@+id/ButtonSaveRide"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_save_ride" />

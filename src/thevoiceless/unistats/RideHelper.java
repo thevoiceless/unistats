@@ -33,7 +33,7 @@ public class RideHelper extends SQLiteOpenHelper
 	private static final String DB_CREATE = "CREATE TABLE " + TABLE_RIDES
 			+ " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 			+ COL_NAME + " TEXT, "
-			+ COL_DATE + " TEXT, "
+			+ COL_DATE + " INTEGER, "
 			+ COL_DIST + " REAL, "
 			+ COL_PED + " REAL);";
 	// Match provided arguments
