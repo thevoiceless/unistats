@@ -7,6 +7,7 @@ import java.util.Date;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -28,7 +29,7 @@ public class RideDetailActivity extends SherlockActivity
 	private RideHelper dbHelper;
 	private EditText name, month, day, year;
 	private CheckBox recordDistance, useGPS, recordPedals;
-	private Button setDate, createAchievement, saveRide;
+	private Button setDate, createAchievement, save, saveAndStart;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -73,7 +74,8 @@ public class RideDetailActivity extends SherlockActivity
 		useGPS = (CheckBox) findViewById(R.id.checkboxGPS);
 		recordPedals = (CheckBox) findViewById(R.id.checkboxPedalCount);
 		createAchievement = (Button) findViewById(R.id.buttonCreateAchievement);
-		saveRide = (Button) findViewById(R.id.buttonSaveRide);
+		save = (Button) findViewById(R.id.buttonSaveRide);
+		saveAndStart = (Button) findViewById(R.id.buttonSaveAndStartRide);
 	}
 	
 	private void initForm()
@@ -86,7 +88,7 @@ public class RideDetailActivity extends SherlockActivity
 	{
 		setDate.setOnClickListener(pressDateButton);
 		recordDistance.setOnCheckedChangeListener(distanceCheckboxChange);
-		saveRide.setOnClickListener(pressSaveButton);
+		save.setOnClickListener(pressSaveButton);
 	}
 	
 	private boolean validateForm()
@@ -118,10 +120,26 @@ public class RideDetailActivity extends SherlockActivity
 	
 	private void updateDate()
 	{
-		Date today = cal.getTime();
-		month.setText(new SimpleDateFormat("MMMMMMMMMM").format(today));
-		day.setText(new SimpleDateFormat("d").format(today));
-		year.setText(new SimpleDateFormat("yyyy").format(today));
+		Date chosenDate = cal.getTime();
+		Log.v("test", chosenDate.toString());
+		month.setText(new SimpleDateFormat("MMMMMMMMMM").format(chosenDate));
+		day.setText(new SimpleDateFormat("d").format(chosenDate));
+		year.setText(new SimpleDateFormat("yyyy").format(chosenDate));		
+	}
+	
+	private void checkIfDateIsToday()
+	{
+		Calendar today = Calendar.getInstance();
+		if (cal.get(Calendar.MONTH) != today.get(Calendar.MONTH)
+			|| cal.get(Calendar.DAY_OF_MONTH) != today.get(Calendar.DAY_OF_MONTH)
+			|| cal.get(Calendar.YEAR) != today.get(Calendar.YEAR))
+		{
+			saveAndStart.setEnabled(false);
+		}
+		else
+		{
+			saveAndStart.setEnabled(true);
+		}
 	}
 	
 	/* LISTENERS */
@@ -144,7 +162,7 @@ public class RideDetailActivity extends SherlockActivity
 			}
 			catch (Exception e)
 			{
-				
+				Log.wtf("ohshit", "Excption while setting date in pressDateButton");
 			}
 			
 			new DatePickerDialog(RideDetailActivity.this, 
@@ -165,6 +183,7 @@ public class RideDetailActivity extends SherlockActivity
 			cal.set(Calendar.MONTH, monthOfYear);
 			cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 			updateDate();
+			checkIfDateIsToday();
 		}
 	};
 	

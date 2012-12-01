@@ -93,12 +93,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_set_goal" />
-
-        <Button
+         
+       <Button
             android:id="@+id/buttonSaveRide"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_save_ride" />
+
+       <Button
+            android:id="@+id/buttonSaveAndStartRide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_save_start_ride" />
     </LinearLayout>
 
 </ScrollView>
