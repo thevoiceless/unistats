@@ -129,7 +129,7 @@ public class NewRideActivity extends SherlockActivity
 			int yearNum = Integer.valueOf(year.getText().toString());
 			chosenDate = Calendar.getInstance();
 			chosenDate.set(Calendar.YEAR, yearNum);
-			chosenDate.set(Calendar.MONTH, monthNum);
+			chosenDate.set(Calendar.MONTH, monthNum - 1);
 			chosenDate.set(Calendar.DAY_OF_MONTH, dayNum);
 		}
 		catch (Exception e)

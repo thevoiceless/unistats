@@ -1,5 +1,7 @@
 package thevoiceless.unistats;
 
+import java.text.SimpleDateFormat;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,6 +23,7 @@ public class RidesActivity extends SherlockActivity
 	private RidesAdapter ridesAdapter;
 	private RideHelper dbHelper;
 	private ListView ridesList;
+	private TextView noRides;
 	
 	static class RideHolder
 	{
@@ -36,8 +39,10 @@ public class RidesActivity extends SherlockActivity
 		
 		void populateFrom(Cursor cursor, RideHelper helper)
 		{
+			SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy");
+			
 			rideName.setText(helper.getName(cursor));
-			rideDate.setText(helper.getDate(cursor).toString());
+			rideDate.setText(dateFormat.format(helper.getDate(cursor)));
 			rideDistance.setText(helper.getDistance(cursor));
 			ridePedals.setText(helper.getPedals(cursor));
 		}
@@ -77,8 +82,15 @@ public class RidesActivity extends SherlockActivity
 		setTitle(R.string.title_activity_rides);
 		
 		setDataMembers();
+		
+	}
+	
+	@Override
+	public void onResume()
+	{
 		initCursor();
 		setAdapters();
+		super.onResume();
 	}
 
 	@Override
@@ -105,7 +117,10 @@ public class RidesActivity extends SherlockActivity
 	private void setDataMembers()
 	{
 		ridesList = (ListView) findViewById(R.id.ridesList);
+		noRides = (TextView) findViewById(android.R.id.empty);
 		dbHelper = new RideHelper(this);
+		
+		ridesList.setEmptyView(noRides);
 	}
 	
 	private void initCursor()
