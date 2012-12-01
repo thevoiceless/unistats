@@ -1,8 +1,6 @@
 package thevoiceless.unistats;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +9,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -25,6 +24,7 @@ public class NewRideActivity extends SherlockActivity
 	private String rideID;
 	private RideHelper dbHelper;
 	private EditText name, month, day, year;
+	private ImageButton calendarButton;
 	private CheckBox recordDistance, useGPS, recordPedals;
 	private Button createAchievement, saveRide;
 	
@@ -64,11 +64,12 @@ public class NewRideActivity extends SherlockActivity
 		month = (EditText) findViewById(R.id.enterMonth);
 		day = (EditText) findViewById(R.id.enterDay);
 		year = (EditText) findViewById(R.id.enterYear);
+		//calendarButton = (ImageButton) findViewById(R.id.buttonShowCalendar);
 		recordDistance = (CheckBox) findViewById(R.id.checkboxDistance);
 		useGPS = (CheckBox) findViewById(R.id.checkboxGPS);
 		recordPedals = (CheckBox) findViewById(R.id.checkboxPedalCount);
 		createAchievement = (Button) findViewById(R.id.buttonCreateAchievement);
-		saveRide = (Button) findViewById(R.id.ButtonSaveRide);
+		saveRide = (Button) findViewById(R.id.buttonSaveRide);
 		
 		name.requestFocus();
 	}
