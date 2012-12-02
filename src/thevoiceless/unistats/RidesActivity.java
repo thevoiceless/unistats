@@ -24,7 +24,7 @@ public class RidesActivity extends SherlockActivity
 	public static final String RIDE_ID_KEY = "thevoiceless.unistats.RIDE_ID";
 	private Cursor rides;
 	private RidesAdapter ridesAdapter;
-	private RideHelper dbHelper;
+	private DatabaseHelper dbHelper;
 	private ListView ridesList;
 	private TextView noRides;
 	
@@ -40,25 +40,25 @@ public class RidesActivity extends SherlockActivity
 			ridePedals = (TextView) row.findViewById(R.id.ridePedalsArea);
 		}
 		
-		void populateFrom(Cursor cursor, RideHelper helper)
+		void populateFrom(Cursor cursor, DatabaseHelper helper)
 		{
 			SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy");
 			
-			rideName.setText(helper.getName(cursor));
-			rideDate.setText(dateFormat.format(helper.getDate(cursor)));
+			rideName.setText(helper.getRideName(cursor));
+			rideDate.setText(dateFormat.format(helper.getRideDate(cursor)));
 			
-			if (Double.valueOf(helper.getDistance(cursor)) >= 0)
+			if (Double.valueOf(helper.getRideDistance(cursor)) >= 0)
 			{
-				rideDistance.setText(helper.getDistance(cursor));
+				rideDistance.setText(helper.getRideDistance(cursor));
 			}
 			else
 			{
 				rideDistance.setText("");
 			}
 			
-			if (Double.valueOf(helper.getPedals(cursor)) >= 0)
+			if (Double.valueOf(helper.getRidePedals(cursor)) >= 0)
 			{
-				ridePedals.setText(helper.getPedals(cursor));
+				ridePedals.setText(helper.getRidePedals(cursor));
 			}
 			else
 			{
@@ -143,7 +143,7 @@ public class RidesActivity extends SherlockActivity
 	{
 		ridesList = (ListView) findViewById(R.id.ridesList);
 		noRides = (TextView) findViewById(android.R.id.empty);
-		dbHelper = new RideHelper(this);
+		dbHelper = new DatabaseHelper(this);
 		
 		ridesList.setEmptyView(noRides);
 	}
@@ -155,7 +155,7 @@ public class RidesActivity extends SherlockActivity
 			rides.close();
 		}
 		
-		rides = dbHelper.getAll("name");
+		rides = dbHelper.getAllRides(DatabaseHelper.RIDE_COL_NAME);
 	}
 	
 	private void setAdapters()

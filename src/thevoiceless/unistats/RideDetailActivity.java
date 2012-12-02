@@ -30,7 +30,7 @@ public class RideDetailActivity extends SherlockActivity
 	private static Calendar cal = Calendar.getInstance();
 	private static String errors;
 	private String rideID;
-	private RideHelper dbHelper;
+	private DatabaseHelper dbHelper;
 	private EditText name, month, day, year;
 	private CheckBox recordDistance, useGPS, recordPedals;
 	private Button setDate, createAchievement, save, saveAndStart;
@@ -80,7 +80,7 @@ public class RideDetailActivity extends SherlockActivity
 	private void setDataMembers()
 	{
 		rideID = getIntent().getStringExtra(RidesActivity.RIDE_ID_KEY);
-		dbHelper = new RideHelper(this);
+		dbHelper = new DatabaseHelper(this);
 		
 		name = (EditText) findViewById(R.id.enterName);
 		month = (EditText) findViewById(R.id.enterMonth);
@@ -99,18 +99,18 @@ public class RideDetailActivity extends SherlockActivity
 	{
 		if (rideID != null)
 		{
-			Cursor c = dbHelper.getById(rideID);
+			Cursor c = dbHelper.getRideById(rideID);
 			c.moveToFirst();
 			
-			name.setText(dbHelper.getName(c));
+			name.setText(dbHelper.getRideName(c));
 			
-			Date d = dbHelper.getDate(c);
+			Date d = dbHelper.getRideDate(c);
 //			Log.v("initForm", d.toString());
 			month.setText(MONTH_FORMAT.format(d));
 			day.setText(DAY_FORMAT.format(d));
 			year.setText(YEAR_FORMAT.format(d));
 			
-			if (Double.valueOf(dbHelper.getDistance(c)) >= 0)
+			if (Double.valueOf(dbHelper.getRideDistance(c)) >= 0)
 			{
 				recordDistance.setChecked(true);
 				enableGPSCheckbox();
@@ -121,7 +121,7 @@ public class RideDetailActivity extends SherlockActivity
 				disableGPSCheckbox();
 			}
 			
-			if (dbHelper.getUseGPS(c))
+			if (dbHelper.getRideUseGPS(c))
 			{
 				useGPS.setChecked(true);
 			}
@@ -130,7 +130,7 @@ public class RideDetailActivity extends SherlockActivity
 				useGPS.setChecked(false);
 			}
 			
-			if (Double.valueOf(dbHelper.getPedals(c)) >= 0)
+			if (Double.valueOf(dbHelper.getRidePedals(c)) >= 0)
 			{
 				recordPedals.setChecked(true);
 			}
@@ -299,7 +299,7 @@ public class RideDetailActivity extends SherlockActivity
 				
 				if (rideID == null)
 				{					
-					long result = dbHelper.insert(name.getText().toString(), 
+					long result = dbHelper.insertRide(name.getText().toString(), 
 							(long) (cal.getTimeInMillis() / 1000L), 
 							g, d, p);
 					
@@ -317,7 +317,7 @@ public class RideDetailActivity extends SherlockActivity
 				}
 				else
 				{					
-					int result = dbHelper.update(rideID,
+					int result = dbHelper.updateRide(rideID,
 							name.getText().toString(), 
 							(long) (cal.getTimeInMillis() / 1000L), 
 							g, d, p);
