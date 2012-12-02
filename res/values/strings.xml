@@ -24,7 +24,7 @@
     <string name="record_distance">Record distance</string>
     <string name="use_GPS">Use GPS</string>
     <string name="record_pedal_count">Record pedal count</string>
-    <string name="button_set_goal">Set a goal for this ride</string>
+    <string name="button_set_goal">Set a goal</string>
     <string name="button_save_ride">Save</string>
     <string name="button_save_start_ride">Save and start ride</string>
     <string name="error_no_name">You must specify a name.</string>

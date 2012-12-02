@@ -101,20 +101,21 @@ public class RideDetailActivity extends SherlockActivity
 			if (Double.valueOf(dbHelper.getDistance(c)) >= 0)
 			{
 				recordDistance.setChecked(true);
+				enableGPSCheckbox();
 			}
 			else
 			{
 				recordDistance.setChecked(false);
+				disableGPSCheckbox();
 			}
 			
 			if (dbHelper.getUseGPS(c))
 			{
 				useGPS.setChecked(true);
-				enableGPSCheckbox();
 			}
 			else
 			{
-				disableGPSCheckbox();
+				useGPS.setChecked(false);
 			}
 			
 			if (Double.valueOf(dbHelper.getPedals(c)) >= 0)
@@ -125,10 +126,11 @@ public class RideDetailActivity extends SherlockActivity
 			{
 				recordPedals.setChecked(false);
 			}
+			
+			name.clearFocus();
 		}
 		
 		updateDisplayedDate();
-		name.requestFocus();
 	}
 	
 	private void setListeners()
@@ -272,23 +274,28 @@ public class RideDetailActivity extends SherlockActivity
 		{
 			if(validateForm())
 			{
+				double d = recordDistance.isChecked() ? 0 : -1;
+				int g = useGPS.isChecked() ? 1 : 0;
+				double p = recordPedals.isChecked() ? 0 : -1;
+				
 				if (rideID == null)
 				{
-					double d = recordDistance.isChecked() ? 0 : -1;
-					int g = useGPS.isChecked() ? 1 : 0;
-					double p = recordPedals.isChecked() ? 0 : -1;
 					Toast.makeText(RideDetailActivity.this, "Saving ride...", Toast.LENGTH_SHORT).show();
-					if (rideID == null)
-					{
-						dbHelper.insert(name.getText().toString(), 
-								(long) (cal.getTimeInMillis() / 1000L), 
-								g, d, p);
-						finish();
-					}
+					
+					dbHelper.insert(name.getText().toString(), 
+							(long) (cal.getTimeInMillis() / 1000L), 
+							g, d, p);
+					finish();
 				}
 				else
 				{
-					Toast.makeText(RideDetailActivity.this, "update", Toast.LENGTH_SHORT).show();
+					Toast.makeText(RideDetailActivity.this, "Updating ride...", Toast.LENGTH_SHORT).show();
+					
+					dbHelper.update(rideID,
+							name.getText().toString(), 
+							(long) (cal.getTimeInMillis() / 1000L), 
+							g, d, p);
+					finish();
 				}
 
 			}

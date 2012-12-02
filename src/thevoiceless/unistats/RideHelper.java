@@ -83,7 +83,7 @@ public class RideHelper extends SQLiteOpenHelper
 		}		
 	}
 	
-	/* DB MODIFICATION */
+	/* DATABASE MODIFICATION */
 	
 	public void insert(String name, long date, int gps, double distance, double pedals)
 	{
@@ -94,6 +94,20 @@ public class RideHelper extends SQLiteOpenHelper
 		cv.put(COL_DIST, distance);
 		cv.put(COL_PED, pedals);
 		getWritableDatabase().insert(TABLE_RIDES, COL_NAME, cv);
+	}
+	
+	public void update(String id, String name, long date, int gps, double distance, double pedals)
+	{
+		ContentValues cv = new ContentValues();
+		String[] args = {id};
+		
+		cv.put(COL_NAME, name);
+		cv.put(COL_DATE, date);
+		cv.put(COL_GPS, gps);
+		cv.put(COL_DIST, distance);
+		cv.put(COL_PED, pedals);
+		
+		getWritableDatabase().update(TABLE_RIDES, cv, ID_MATCH_ARGS, args);
 	}
 	
 	public boolean delete(String id)
