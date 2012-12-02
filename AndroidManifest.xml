@@ -27,6 +27,10 @@
             android:name=".AchievementsActivity"
             android:logo="@drawable/icon_menu_star"
             android:label="@string/title_activity_achievements" />
+        <activity 
+            android:name=".AchievementDetailActivity"
+            android:logo="@drawable/icon_menu_star"
+            android:label="@string/title_activity_new_achievement" />
         
     </application>
 </manifest>

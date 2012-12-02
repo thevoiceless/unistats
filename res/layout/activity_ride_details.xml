@@ -1,10 +1,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/newRideScrollView"
+    android:id="@+id/rideDetailScrollView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
 	<LinearLayout
-        android:id="@+id/newRideLinearLayout"
+        android:id="@+id/rideDetailLinearLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -12,7 +12,7 @@
         android:paddingRight="10dip" >
 
         <EditText
-            android:id="@+id/enterName"
+            android:id="@+id/enterRideName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_ride_name"
@@ -20,12 +20,12 @@
             android:paddingLeft="10dp" />
 
         <LinearLayout
-            android:id="@+id/dateRow"
+            android:id="@+id/rideDateRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
 
             <EditText
-                android:id="@+id/enterMonth"
+                android:id="@+id/enterRideMonth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -37,7 +37,7 @@
                 android:inputType="number" />
 
             <EditText
-                android:id="@+id/enterDay"
+                android:id="@+id/enterRideDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -48,7 +48,7 @@
                 android:inputType="number" />
 
             <EditText
-                android:id="@+id/enterYear"
+                android:id="@+id/enterRideYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -60,19 +60,19 @@
         </LinearLayout>
         
         <Button
-            android:id="@+id/buttonSetDate"
+            android:id="@+id/buttonSetRideDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/custom_date" />
 
         <CheckBox
-            android:id="@+id/checkboxDistance"
+            android:id="@+id/checkboxRideDistance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/record_distance" />
 
         <CheckBox
-            android:id="@+id/checkboxGPS"
+            android:id="@+id/checkboxRideGPS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -83,7 +83,7 @@
             android:text="@string/use_GPS" />
 
         <CheckBox
-            android:id="@+id/checkboxPedalCount"
+            android:id="@+id/checkboxRidePedalCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/record_pedal_count" />

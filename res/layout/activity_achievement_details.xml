@@ -1,0 +1,63 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/achievementDetailScrollView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+	<RelativeLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content" >
+	    
+	    <EditText
+	        android:id="@+id/enterAchievementName"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:hint="@string/hint_achievement_name" />
+	    
+	    <TextView
+	        android:id="@+id/labelSelectAchievementParams"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/enterAchievementName"
+	        android:padding="5dip"
+	        android:text="@string/label_select_achievement_params"
+	        android:textSize="20sp" />
+	    
+	    <CheckBox
+	        android:id="@+id/checkboxDistanceAchievement"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/labelSelectAchievementParams"
+	        android:paddingRight="5dip"
+	        android:text="@string/distance_goal" />
+	    
+	    <EditText
+	        android:id="@+id/enterDistanceAchievement"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@id/checkboxDistanceAchievement"
+	        android:layout_alignParentLeft="false"
+	        android:layout_toRightOf="@id/checkboxDistanceAchievement"
+	        android:ems="10"
+	        android:inputType="number" />
+	    
+	    <CheckBox
+	        android:id="@+id/checkboxPedalsAchievement"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/checkboxDistanceAchievement"
+	        android:paddingRight="5dip"
+	        android:text="@string/pedals_goal" />
+	    
+	    <EditText
+	        android:id="@+id/enterPedalsAchievement"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@id/checkboxPedalsAchievement"
+	        android:layout_alignLeft="@+id/enterDistanceAchievement"
+	        android:layout_alignParentRight="true"
+	        android:ems="10"
+	        android:inputType="number" />
+
+	</RelativeLayout>
+	
+</ScrollView>

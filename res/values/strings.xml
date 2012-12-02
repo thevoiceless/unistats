@@ -37,6 +37,14 @@
     <!-- Achievements List -->
     <string name="title_activity_achievements">Achievements</string>
     
+    <!-- Achievement Detail Form -->
+    <string name="title_activity_new_achievement">New Achievement</string>
+    <string name="title_activity_edit_achievement">Edit Achievement</string>
+    <string name="hint_achievement_name">Name</string>
+    <string name="label_select_achievement_params">Set a goal for…</string>
+    <string name="distance_goal">Distance:</string>
+    <string name="pedals_goal">Pedals:</string>
+    
     <!-- Menus -->
     <string name="menu_rides_title">Rides</string>
     <string name="menu_new_ride_title">New Ride</string>

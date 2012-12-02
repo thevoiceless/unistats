@@ -76,7 +76,8 @@ public class AchievementsActivity extends SherlockActivity
 		switch (item.getItemId())
 		{
 			case R.id.menu_new_achievement:
-				Toast.makeText(this, "New", Toast.LENGTH_SHORT).show();
+				i = new Intent(this, AchievementDetailActivity.class);
+				startActivity(i);
 				return true;
 			case R.id.menu_rides:
 				i = new Intent(this, RidesActivity.class);

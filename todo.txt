@@ -1,5 +1,5 @@
-Set icon for application
-Set icon for each activity
+Determine distance units
+
 Use Loader instead of deprecated CursorAdapter constructor
 Fast-scroll in rides list
 Show error dialog after form validation

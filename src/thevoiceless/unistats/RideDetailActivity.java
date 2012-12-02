@@ -82,14 +82,14 @@ public class RideDetailActivity extends SherlockActivity
 		rideID = getIntent().getStringExtra(RidesActivity.RIDE_ID_KEY);
 		dbHelper = new DatabaseHelper(this);
 		
-		name = (EditText) findViewById(R.id.enterName);
-		month = (EditText) findViewById(R.id.enterMonth);
-		day = (EditText) findViewById(R.id.enterDay);
-		year = (EditText) findViewById(R.id.enterYear);
-		setDate = (Button) findViewById(R.id.buttonSetDate);
-		recordDistance = (CheckBox) findViewById(R.id.checkboxDistance);
-		useGPS = (CheckBox) findViewById(R.id.checkboxGPS);
-		recordPedals = (CheckBox) findViewById(R.id.checkboxPedalCount);
+		name = (EditText) findViewById(R.id.enterRideName);
+		month = (EditText) findViewById(R.id.enterRideMonth);
+		day = (EditText) findViewById(R.id.enterRideDay);
+		year = (EditText) findViewById(R.id.enterRideYear);
+		setDate = (Button) findViewById(R.id.buttonSetRideDate);
+		recordDistance = (CheckBox) findViewById(R.id.checkboxRideDistance);
+		useGPS = (CheckBox) findViewById(R.id.checkboxRideGPS);
+		recordPedals = (CheckBox) findViewById(R.id.checkboxRidePedalCount);
 		createAchievement = (Button) findViewById(R.id.buttonCreateAchievement);
 		save = (Button) findViewById(R.id.buttonSaveRide);
 		saveAndStart = (Button) findViewById(R.id.buttonSaveAndStartRide);
@@ -99,6 +99,8 @@ public class RideDetailActivity extends SherlockActivity
 	{
 		if (rideID != null)
 		{
+			setTitle(R.string.title_activity_edit_ride);
+			
 			Cursor c = dbHelper.getRideById(rideID);
 			c.moveToFirst();
 			
