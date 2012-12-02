@@ -28,7 +28,7 @@ public class RideDetailActivity extends SherlockActivity
 	private static final SimpleDateFormat DAY_FORMAT = new SimpleDateFormat("d");
 	private static final SimpleDateFormat YEAR_FORMAT = new SimpleDateFormat("yyyy");
 	private static String errors;
-	private static Calendar cal;
+	private static Calendar cal = Calendar.getInstance();
 	private String rideID;
 	private RideHelper dbHelper;
 	private EditText name, month, day, year;
@@ -41,7 +41,19 @@ public class RideDetailActivity extends SherlockActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ride_details);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		
+	}
+	
+	@Override
+	public void onPause()
+	{
+		dbHelper.close();
+		super.onPause();
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 		setDataMembers();
 		initForm();
 		setListeners();
@@ -68,7 +80,7 @@ public class RideDetailActivity extends SherlockActivity
 	private void setDataMembers()
 	{
 		rideID = getIntent().getStringExtra(RidesActivity.RIDE_ID_KEY);
-		cal = Calendar.getInstance();
+//		cal = Calendar.getInstance();
 		dbHelper = new RideHelper(this);
 		
 		name = (EditText) findViewById(R.id.enterName);
@@ -94,6 +106,7 @@ public class RideDetailActivity extends SherlockActivity
 			name.setText(dbHelper.getName(c));
 			
 			Date d = dbHelper.getDate(c);
+//			Log.v("initForm", d.toString());
 			month.setText(MONTH_FORMAT.format(d));
 			day.setText(DAY_FORMAT.format(d));
 			year.setText(YEAR_FORMAT.format(d));
@@ -127,10 +140,12 @@ public class RideDetailActivity extends SherlockActivity
 				recordPedals.setChecked(false);
 			}
 			
-			name.clearFocus();
+			c.close();
 		}
-		
-		updateDisplayedDate();
+		else
+		{
+			updateDisplayedDate();
+		}
 	}
 	
 	private void setListeners()
@@ -185,7 +200,7 @@ public class RideDetailActivity extends SherlockActivity
 	private void updateDisplayedDate()
 	{
 		Date chosenDate = cal.getTime();
-		Log.v("test", chosenDate.toString());
+//		Log.v("updateDisplayedDate", chosenDate.toString());
 		month.setText(MONTH_FORMAT.format(chosenDate));
 		day.setText(DAY_FORMAT.format(chosenDate));
 		year.setText(YEAR_FORMAT.format(chosenDate));		
@@ -206,6 +221,25 @@ public class RideDetailActivity extends SherlockActivity
 		}
 	}
 	
+	private void updateCalendar()
+	{
+		StringBuilder dateString = new StringBuilder();
+		dateString.append(month.getText().toString());
+		dateString.append(" ");
+		dateString.append(day.getText().toString());
+		dateString.append(" ");
+		dateString.append(year.getText().toString());
+		
+		try
+		{
+			cal.setTime(new SimpleDateFormat("MMMMMMMMMM d yyyy").parse(dateString.toString()));
+		}
+		catch (Exception e)
+		{
+			Log.wtf("ohshit", "Excption while setting date in pressDateButton");
+		}
+	}
+	
 	/* LISTENERS */
 	
 	OnClickListener pressDateButton = new OnClickListener()
@@ -213,21 +247,7 @@ public class RideDetailActivity extends SherlockActivity
 		@Override
 		public void onClick(View v)
 		{
-			StringBuilder dateString = new StringBuilder();
-			dateString.append(month.getText().toString());
-			dateString.append(" ");
-			dateString.append(day.getText().toString());
-			dateString.append(" ");
-			dateString.append(year.getText().toString());
-			
-			try
-			{
-				cal.setTime(new SimpleDateFormat("MMMMMMMMMM d yyyy").parse(dateString.toString()));
-			}
-			catch (Exception e)
-			{
-				Log.wtf("ohshit", "Excption while setting date in pressDateButton");
-			}
+			updateCalendar();
 			
 			new DatePickerDialog(RideDetailActivity.this, 
 					selectDate, 
@@ -279,25 +299,41 @@ public class RideDetailActivity extends SherlockActivity
 				double p = recordPedals.isChecked() ? 0 : -1;
 				
 				if (rideID == null)
-				{
-					Toast.makeText(RideDetailActivity.this, "Saving ride...", Toast.LENGTH_SHORT).show();
-					
-					dbHelper.insert(name.getText().toString(), 
+				{					
+					long result = dbHelper.insert(name.getText().toString(), 
 							(long) (cal.getTimeInMillis() / 1000L), 
 							g, d, p);
-					finish();
+					
+					if (result != -1)
+					{
+						Toast.makeText(RideDetailActivity.this, "Ride created", Toast.LENGTH_SHORT).show();
+						finish();
+					}
+					else
+					{
+						Log.e("create", "An error occurred");
+						Toast.makeText(RideDetailActivity.this, "Error creating ride", Toast.LENGTH_SHORT).show();
+					}
+					
 				}
 				else
-				{
-					Toast.makeText(RideDetailActivity.this, "Updating ride...", Toast.LENGTH_SHORT).show();
-					
-					dbHelper.update(rideID,
+				{					
+					int result = dbHelper.update(rideID,
 							name.getText().toString(), 
 							(long) (cal.getTimeInMillis() / 1000L), 
 							g, d, p);
-					finish();
+					
+					if (result == 1)
+					{
+						Toast.makeText(RideDetailActivity.this, "Ride updated", Toast.LENGTH_SHORT).show();
+						finish();
+					}
+					else
+					{
+						Toast.makeText(RideDetailActivity.this, "Error saving ride", Toast.LENGTH_SHORT).show();
+						Log.e("update", "Rows affected: " + result);
+					}
 				}
-
 			}
 			else
 			{
