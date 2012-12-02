@@ -66,9 +66,8 @@ public class RideDetailActivity extends SherlockActivity
 		 {
 		        case android.R.id.home:
 		        	Intent i = new Intent(this, RidesActivity.class);
-		        	i.addFlags(
-		                    Intent.FLAG_ACTIVITY_CLEAR_TOP |
-		                    Intent.FLAG_ACTIVITY_NEW_TASK);
+		        	i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+		        			| Intent.FLAG_ACTIVITY_NEW_TASK);
 		        	startActivity(i);
 		        	finish();
 		        	return true;

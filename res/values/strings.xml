@@ -44,6 +44,9 @@
     <string name="label_select_achievement_params">Set a goal for…</string>
     <string name="distance_goal">Distance:</string>
     <string name="pedals_goal">Pedals:</string>
+    <string name="label_select_achievement_date">Accomplish by…</string>
+    <string name="no_goal_date">Any date</string>
+    <string name="button_save_achievement">Save</string>
     
     <!-- Menus -->
     <string name="menu_rides_title">Rides</string>
