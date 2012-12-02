@@ -27,8 +27,8 @@ public class RideDetailActivity extends SherlockActivity
 	private static final SimpleDateFormat MONTH_FORMAT = new SimpleDateFormat("MMMMMMMMMM");
 	private static final SimpleDateFormat DAY_FORMAT = new SimpleDateFormat("d");
 	private static final SimpleDateFormat YEAR_FORMAT = new SimpleDateFormat("yyyy");
-	private static String errors;
 	private static Calendar cal = Calendar.getInstance();
+	private static String errors;
 	private String rideID;
 	private RideHelper dbHelper;
 	private EditText name, month, day, year;
@@ -80,7 +80,6 @@ public class RideDetailActivity extends SherlockActivity
 	private void setDataMembers()
 	{
 		rideID = getIntent().getStringExtra(RidesActivity.RIDE_ID_KEY);
-//		cal = Calendar.getInstance();
 		dbHelper = new RideHelper(this);
 		
 		name = (EditText) findViewById(R.id.enterName);
@@ -236,7 +235,7 @@ public class RideDetailActivity extends SherlockActivity
 		}
 		catch (Exception e)
 		{
-			Log.wtf("ohshit", "Excption while setting date in pressDateButton");
+			Log.wtf("ohshit", getString(R.string.exception_setting_date));
 		}
 	}
 	
@@ -306,13 +305,13 @@ public class RideDetailActivity extends SherlockActivity
 					
 					if (result != -1)
 					{
-						Toast.makeText(RideDetailActivity.this, "Ride created", Toast.LENGTH_SHORT).show();
+						Toast.makeText(RideDetailActivity.this, R.string.ride_created_successfully, Toast.LENGTH_SHORT).show();
 						finish();
 					}
 					else
 					{
-						Log.e("create", "An error occurred");
-						Toast.makeText(RideDetailActivity.this, "Error creating ride", Toast.LENGTH_SHORT).show();
+						Log.e("create", getString(R.string.error_creating_ride));
+						Toast.makeText(RideDetailActivity.this, R.string.error_creating_ride, Toast.LENGTH_SHORT).show();
 					}
 					
 				}
@@ -325,13 +324,13 @@ public class RideDetailActivity extends SherlockActivity
 					
 					if (result == 1)
 					{
-						Toast.makeText(RideDetailActivity.this, "Ride updated", Toast.LENGTH_SHORT).show();
+						Toast.makeText(RideDetailActivity.this, R.string.ride_updated_successfully, Toast.LENGTH_SHORT).show();
 						finish();
 					}
 					else
 					{
-						Toast.makeText(RideDetailActivity.this, "Error saving ride", Toast.LENGTH_SHORT).show();
 						Log.e("update", "Rows affected: " + result);
+						Toast.makeText(RideDetailActivity.this, R.string.error_updating_ride, Toast.LENGTH_SHORT).show();
 					}
 				}
 			}

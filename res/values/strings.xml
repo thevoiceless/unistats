@@ -28,12 +28,23 @@
     <string name="button_save_ride">Save</string>
     <string name="button_save_start_ride">Save and start ride</string>
     <string name="error_no_name">You must specify a name.</string>
-    <string name="error_bad_date">Date is invalid.</string>
     <string name="no_stat_selected">Select a statistic to record.</string>
+    <string name="ride_created_successfully">Ride created</string>
+    <string name="error_creating_ride">Error creating ride</string>
+    <string name="ride_updated_successfully">Ride updated</string>
+    <string name="error_updating_ride">Error saving ride</string>
+    
+    <!-- Achievements List -->
+    <string name="title_activity_achievements">Achievements</string>
     
     <!-- Menus -->
+    <string name="menu_rides_title">Rides</string>
     <string name="menu_new_ride_title">New Ride</string>
     <string name="menu_achievements_title">Achievements</string>
+    <string name="menu_new_achievement_title">New Achievement</string>
     <string name="menu_settings">Settings</string>
+    
+    <!-- Logging -->
+    <string name="exception_setting_date">Exception while setting date in pressDateButton</string>
 
 </resources>

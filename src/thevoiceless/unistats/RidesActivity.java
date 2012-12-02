@@ -123,10 +123,15 @@ public class RidesActivity extends SherlockActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
+		Intent i;
 		switch (item.getItemId())
 		{
 			case R.id.menu_new_ride:
-				Intent i = new Intent(this, RideDetailActivity.class);
+				i = new Intent(this, RideDetailActivity.class);
+				startActivity(i);
+				return true;
+			case R.id.menu_achievements:
+				i = new Intent(this, AchievementsActivity.class);
 				startActivity(i);
 				return true;
 			default:

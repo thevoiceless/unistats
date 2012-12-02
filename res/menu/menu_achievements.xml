@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item 
+        android:id="@+id/menu_new_achievement"
+        android:title="@string/menu_new_achievement_title"
+        android:icon="@drawable/icon_menu_add"
+        android:showAsAction="ifRoom|withText" />
+    
+    <item
+        android:id="@+id/menu_rides"
+        android:title="@string/menu_rides_title"
+        android:icon="@drawable/icon_menu_wheel"
+        android:showAsAction="ifRoom|withText" />
+    
+</menu>
