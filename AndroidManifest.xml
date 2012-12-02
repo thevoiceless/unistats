@@ -25,6 +25,7 @@
             android:label="@string/title_activity_new_ride" />
         <activity
             android:name=".AchievementsActivity"
+            android:logo="@drawable/icon_menu_star"
             android:label="@string/title_activity_achievements" />
         
     </application>
