@@ -1,4 +1,5 @@
+Set icon for application
+Set icon for each activity
 Use Loader instead of deprecated CursorAdapter constructor
 Fast-scroll in rides list
-Start rides immediately OR in the future when creating them
 Show error dialog after form validation
