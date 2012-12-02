@@ -132,6 +132,7 @@ public class RidesActivity extends SherlockActivity
 				return true;
 			case R.id.menu_achievements:
 				i = new Intent(this, AchievementsActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 				startActivity(i);
 				return true;
 			default:
