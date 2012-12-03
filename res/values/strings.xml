@@ -46,6 +46,7 @@
     <string name="pedals_goal">Pedals:</string>
     <string name="label_select_achievement_date">Accomplish by…</string>
     <string name="no_goal_date">Any date</string>
+    <string name="set_date">Set date</string>
     <string name="button_save_achievement">Save</string>
     
     <!-- Menus -->

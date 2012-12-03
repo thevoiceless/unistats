@@ -92,6 +92,10 @@ public class RideDetailActivity extends SherlockActivity
 		createAchievement = (Button) findViewById(R.id.buttonCreateAchievement);
 		save = (Button) findViewById(R.id.buttonSaveRide);
 		saveAndStart = (Button) findViewById(R.id.buttonSaveAndStartRide);
+		
+		month.setKeyListener(null);
+		day.setKeyListener(null);
+		year.setKeyListener(null);
 	}
 	
 	private void initForm()

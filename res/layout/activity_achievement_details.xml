@@ -23,7 +23,7 @@
 	        android:textSize="20sp" />
 	    
 	    <CheckBox
-	        android:id="@+id/checkboxDistanceAchievement"
+	        android:id="@+id/checkboxAchievementDistance"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@id/labelSelectAchievementParams"
@@ -31,38 +31,41 @@
 	        android:text="@string/distance_goal" />
 	    
 	    <EditText
-	        android:id="@+id/enterDistanceAchievement"
+	        android:id="@+id/enterAchievementDistance"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignBaseline="@id/checkboxDistanceAchievement"
+	        android:layout_alignBaseline="@id/checkboxAchievementDistance"
 	        android:layout_alignParentLeft="false"
-	        android:layout_toRightOf="@id/checkboxDistanceAchievement"
+	        android:layout_toRightOf="@id/checkboxAchievementDistance"
 	        android:ems="10"
+	        android:enabled="false"
 	        android:inputType="number" />
 	    
 	    <CheckBox
-	        android:id="@+id/checkboxPedalsAchievement"
+	        android:id="@+id/checkboxAchievementPedals"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/checkboxDistanceAchievement"
+	        android:layout_below="@id/checkboxAchievementDistance"
 	        android:paddingRight="5dip"
 	        android:text="@string/pedals_goal" />
 	    
 	    <EditText
-	        android:id="@+id/enterPedalsAchievement"
+	        android:id="@+id/enterAchievementPedals"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignBaseline="@id/checkboxPedalsAchievement"
-	        android:layout_alignLeft="@+id/enterDistanceAchievement"
+	        android:layout_alignBaseline="@id/checkboxAchievementPedals"
+	        android:layout_alignLeft="@+id/enterAchievementDistance"
 	        android:layout_alignParentRight="true"
 	        android:ems="10"
+	        android:enabled="false"
+	        android:focusable="false"
 	        android:inputType="number" />
 	    
 	    <TextView
 	        android:id="@+id/labelSelectAchievementDate"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/checkboxPedalsAchievement"
+	        android:layout_below="@id/checkboxAchievementPedals"
 	        android:padding="5dip"
 	        android:text="@string/label_select_achievement_date"
 	        android:textSize="20sp" />
@@ -91,31 +94,34 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/hint_ride_month"
-                android:imeOptions="actionNext"
-                android:inputType="number" />
+                android:inputType="none"
+                android:longClickable="false" />
 
             <EditText
                 android:id="@+id/enterAchievementDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="false"
                 android:enabled="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/hint_ride_day"
-                android:imeOptions="actionNext"
-                android:inputType="number" />
+                android:inputType="none"
+                android:longClickable="false" />
 
             <EditText
                 android:id="@+id/enterAchievementYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="false"
                 android:enabled="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/hint_ride_year"
-                android:inputType="number" />
+                android:inputType="none"
+                android:longClickable="false" />
 
         </LinearLayout>
         
@@ -126,7 +132,7 @@
             android:layout_below="@id/achievementDateRow"
             android:enabled="false"
             android:focusable="false"
-            android:text="@string/custom_date" />
+            android:text="@string/set_date" />
 	    
 	    <Button
 	        android:id="@+id/buttonSaveAchievement"
@@ -137,5 +143,4 @@
 	        android:text="@string/button_save_achievement" />
 
 	</RelativeLayout>
-	
 </ScrollView>

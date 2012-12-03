@@ -33,29 +33,32 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/hint_ride_month"
-                android:imeOptions="actionNext"
-                android:inputType="number" />
+                android:inputType="none"
+                android:longClickable="false" />
 
             <EditText
                 android:id="@+id/enterRideDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/hint_ride_day"
-                android:imeOptions="actionNext"
-                android:inputType="number" />
+                android:inputType="none"
+                android:longClickable="false" />
 
             <EditText
                 android:id="@+id/enterRideYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:hint="@string/hint_ride_year"
-                android:inputType="number" />
+                android:inputType="none"
+                android:longClickable="false" />
 
         </LinearLayout>
         
