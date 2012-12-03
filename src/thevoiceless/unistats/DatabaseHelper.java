@@ -73,12 +73,20 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	private static final String DB_GET_RIDE_BY_ID = "SELECT _id, " + ALL_RIDE_COLS
 			+ " FROM " + TABLE_RIDES 
 			+ " WHERE " + ID_MATCH_ARGS;
+	private static final String DB_GET_GOAL_BY_ID = "SELECT _id, " + ALL_GOAL_COLS
+			+ " FROM " + TABLE_GOALS
+			+ " WHERE " + ID_MATCH_ARGS;
 	// Get all and order by given arguments
 	private static final String DB_GET_ALL_RIDES_ORDER_BY = "SELECT _id, " + ALL_RIDE_COLS
 			+ " FROM " + TABLE_RIDES
 			+ " ORDER BY ";
-	// Delete from rides table
+	private static final String DB_GET_ALL_GOALS_ORDER_BY = "SELECT _id, " + ALL_GOAL_COLS
+			+ " FROM " + TABLE_GOALS
+			+ " ORDER BY ";
+	// Delete from table
 	private static final String DB_DELETE_RIDE = "DELETE FROM " + TABLE_RIDES 
+			+ " WHERE " + ID_MATCH_ARGS;
+	private static final String DB_DELETE_GOAL = "DELETE FROM " + TABLE_GOALS
 			+ " WHERE " + ID_MATCH_ARGS;
 	
 	
@@ -120,6 +128,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		cv.put(RIDE_COL_GPS, gps);
 		cv.put(RIDE_COL_DIST, distance);
 		cv.put(RIDE_COL_PED, pedals);
+		
 		return getWritableDatabase().insert(TABLE_RIDES, RIDE_COL_NAME, cv);
 	}
 	
@@ -141,6 +150,39 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	{
 		String[] args = {id};
 		int result = getWritableDatabase().delete(TABLE_RIDES, ID_MATCH_ARGS, args);
+		
+		return (result != 0) ? true : false;
+	}
+	
+	public long insertGoal(String name, long date, double distance, double pedals)
+	{
+		ContentValues cv = new ContentValues();
+		cv.put(GOAL_COL_NAME, name);
+		cv.put(GOAL_COL_DATE, date);
+		cv.put(GOAL_COL_DIST, distance);
+		cv.put(GOAL_COL_PED, pedals);
+		
+		return getWritableDatabase().insert(TABLE_GOALS, GOAL_COL_NAME, cv);
+	}
+	
+	public int updateGoal(String id, String name, long date, double distance, double pedals)
+	{
+		ContentValues cv = new ContentValues();
+		String[] args = {id};
+		
+		cv.put(GOAL_COL_NAME, name);
+		cv.put(GOAL_COL_DATE, date);
+		cv.put(GOAL_COL_DIST, distance);
+		cv.put(GOAL_COL_PED, pedals);
+		
+		return getWritableDatabase().update(TABLE_GOALS, cv, ID_MATCH_ARGS, args);
+	}
+	
+	public boolean deleteGoal(String id)
+	{
+		String[] args = {id};
+		int result = getWritableDatabase().delete(TABLE_GOALS, ID_MATCH_ARGS, args);
+		
 		return (result != 0) ? true : false;
 	}
 	
@@ -166,6 +208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	{
 		cal = Calendar.getInstance();
 		cal.setTimeInMillis((long) (c.getLong(RIDE_DATE_INT) * 1000));
+		
 		return cal.getTime();
 	}
 	
@@ -182,5 +225,39 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	public String getRidePedals(Cursor c)
 	{
 		return c.getString(RIDE_PED_INT);
+	}
+	
+	public Cursor getAllGoals(String orderBy)
+	{
+		return getReadableDatabase().rawQuery(DB_GET_ALL_GOALS_ORDER_BY + orderBy, null);
+	}
+	
+	public Cursor getGoalById(String id)
+	{
+		String[] args = {id};
+		return getReadableDatabase().rawQuery(DB_GET_GOAL_BY_ID, args);
+	}
+	
+	public String getGoalName(Cursor c)
+	{
+		return c.getString(GOAL_NAME_INT);
+	}
+	
+	public Date getGoalDate(Cursor c)
+	{
+		cal = Calendar.getInstance();
+		cal.setTimeInMillis((long) (c.getLong(GOAL_DATE_INT) * 1000));
+		
+		return cal.getTime();
+	}
+	
+	public String getGoalDistance(Cursor c)
+	{
+		return c.getString(GOAL_DIST_INT);
+	}
+	
+	public String getGoalPedals(Cursor c)
+	{
+		return c.getString(GOAL_PED_INT);
 	}
 }
