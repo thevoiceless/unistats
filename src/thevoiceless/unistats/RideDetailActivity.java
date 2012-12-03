@@ -156,6 +156,7 @@ public class RideDetailActivity extends SherlockActivity
 	{
 		setDate.setOnClickListener(pressDateButton);
 		recordDistance.setOnCheckedChangeListener(distanceCheckboxChange);
+		createGoal.setOnClickListener(pressCreateGoal);
 		save.setOnClickListener(pressSaveButton);
 	}
 	
@@ -290,6 +291,16 @@ public class RideDetailActivity extends SherlockActivity
 			{
 				disableGPSCheckbox();
 			}
+		}
+	};
+	
+	OnClickListener pressCreateGoal = new OnClickListener()
+	{
+		@Override
+		public void onClick(View v)
+		{
+			Intent i = new Intent(RideDetailActivity.this, GoalDetailActivity.class);
+			startActivity(i);
 		}
 	};
 	
