@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -27,6 +28,8 @@ public class GoalDetailActivity extends SherlockActivity
 	private static final SimpleDateFormat YEAR_FORMAT = new SimpleDateFormat("yyyy");
 	private static Calendar cal = Calendar.getInstance();
 	private static String errors;
+	private String goalID;
+	private DatabaseHelper dbHelper;
 	private EditText name, distance, pedals, month, day, year;
 	private CheckBox setDistance, setPedals, anyDate;
 	private Button setDate, save;
@@ -61,6 +64,9 @@ public class GoalDetailActivity extends SherlockActivity
 	
 	private void setDataMembers()
 	{
+		goalID = getIntent().getStringExtra(GoalsActivity.GOAL_ID_KEY);
+		dbHelper = new DatabaseHelper(this);
+		
 		name = (EditText) findViewById(R.id.enterGoalName);
 		distance = (EditText) findViewById(R.id.enterGoalDistance);
 		pedals = (EditText) findViewById(R.id.enterGoalPedals);
@@ -84,6 +90,7 @@ public class GoalDetailActivity extends SherlockActivity
 		setDistance.setOnCheckedChangeListener(distanceCheckboxChange);
 		setPedals.setOnCheckedChangeListener(pedalsCheckboxChange);
 		setDate.setOnClickListener(pressDateButton);
+		save.setOnClickListener(pressSaveButton);
 	}
 	
 	private void enableDistance()
@@ -116,6 +123,7 @@ public class GoalDetailActivity extends SherlockActivity
 	
 	private void enableDateSelection()
 	{
+		updateDisplayedDate();
 		month.setEnabled(true);
 		month.setFocusable(true);
 		day.setEnabled(true);
@@ -166,6 +174,71 @@ public class GoalDetailActivity extends SherlockActivity
 		catch (Exception e)
 		{
 			Log.wtf("ohshit", getString(R.string.exception_setting_date));
+		}
+	}
+	
+	private boolean validateForm()
+	{
+		StringBuilder formErrors = new StringBuilder();
+		// Check name
+		if (name.getText().toString().trim().equals(""))
+		{
+			formErrors.append(getString(R.string.error_no_name));
+		}
+		// Check chosen stat(s)
+		// None selected
+		if (!(setDistance.isChecked() || setPedals.isChecked()))
+		{
+			if (formErrors.length() > 0)
+			{
+				formErrors.append("\n");
+			}
+			formErrors.append(getString(R.string.no_goal_set));
+		}
+		// Verify values
+		else
+		{
+			if (setDistance.isChecked())
+			{
+				try
+				{
+					Double.valueOf(distance.getText().toString());
+				}
+				catch (Exception e)
+				{
+					if (formErrors.length() > 0)
+					{
+						formErrors.append("\n");
+					}
+					formErrors.append(getString(R.string.invalid_distance));
+				}
+			}
+			
+			if (setPedals.isChecked())
+			{
+				try
+				{
+					Double.valueOf(pedals.getText().toString());
+				}
+				catch (Exception e)
+				{
+					if (formErrors.length() > 0)
+					{
+						formErrors.append("\n");
+					}
+					formErrors.append(getString(R.string.invalid_pedals));
+				}
+			}
+		}
+		
+		errors = formErrors.toString();
+		if (errors.equals(""))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 	
@@ -244,6 +317,59 @@ public class GoalDetailActivity extends SherlockActivity
 			cal.set(Calendar.MONTH, monthOfYear);
 			cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 			updateDisplayedDate();
+		}
+	};
+	
+	OnClickListener pressSaveButton = new OnClickListener()
+	{
+		@Override
+		public void onClick(View v)
+		{
+			if (validateForm())
+			{
+				double d = setDistance.isChecked() ? Double.valueOf(distance.getText().toString()) : -1;
+				double p = setPedals.isChecked() ? Double.valueOf(pedals.getText().toString()) : -1;
+				
+				if (goalID == null)
+				{
+					long date = anyDate.isChecked() ? -1L : (long) (cal.getTimeInMillis() / 1000L);
+					long result = dbHelper.insertGoal(name.getText().toString(), date, d, p);
+					
+					if (result != -1)
+					{
+						Toast.makeText(GoalDetailActivity.this, R.string.goal_created_successfully, Toast.LENGTH_SHORT).show();
+						finish();
+					}
+					else
+					{
+						Log.e("create", getString(R.string.error_creating_ride));
+						Toast.makeText(GoalDetailActivity.this, R.string.error_creating_ride, Toast.LENGTH_SHORT).show();
+					}
+				}
+//				else
+//				{					
+//					int result = dbHelper.updateRide(rideID,
+//							name.getText().toString(), 
+//							(long) (cal.getTimeInMillis() / 1000L), 
+//							g, d, p);
+//					
+//					if (result == 1)
+//					{
+//						Toast.makeText(RideDetailActivity.this, R.string.ride_updated_successfully, Toast.LENGTH_SHORT).show();
+//						finish();
+//					}
+//					else
+//					{
+//						Log.e("update", "Rows affected: " + result);
+//						Toast.makeText(RideDetailActivity.this, R.string.error_updating_ride, Toast.LENGTH_SHORT).show();
+//					}
+//				}
+			}
+			else
+			{
+				// TODO: Show error dialog
+				Toast.makeText(GoalDetailActivity.this, errors, Toast.LENGTH_SHORT).show();
+			}
 		}
 	};
 }

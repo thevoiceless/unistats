@@ -5,12 +5,13 @@
     <string name="app_name">UniStats</string>
     <string name="hello_world">Hello world!</string>
     
-    <!-- Labels -->
+    <!-- General -->
     <string name="label_name">Name</string>
     <string name="label_date">Date</string>
     <string name="label_distance">Distance</string>
     <string name="label_pedals">Pedals</string>
     <string name="label_details">Details</string>
+    <string name="error_no_name">You must specify a name.</string>
     
     <!-- Rides List -->
     <string name="title_activity_rides">Rides</string>
@@ -30,8 +31,7 @@
     <string name="button_set_goal">Set a goal</string>
     <string name="button_save_ride">Save</string>
     <string name="button_save_start_ride">Save and start ride</string>
-    <string name="error_no_name">You must specify a name.</string>
-    <string name="no_stat_selected">Select a statistic to record.</string>
+    <string name="no_stat_selected">You must select a statistic.</string>
     <string name="ride_created_successfully">Ride created</string>
     <string name="error_creating_ride">Error creating ride</string>
     <string name="ride_updated_successfully">Ride updated</string>
@@ -40,6 +40,7 @@
     <!-- Goals List -->
     <string name="title_activity_goals">Goals</string>
     <string name="list_no_goals">No Goals</string>
+    <string name="by">by</string>
     
     <!-- Goal Detail Form -->
     <string name="title_activity_new_goal">New Goal</string>
@@ -52,6 +53,11 @@
     <string name="no_goal_date">Any date</string>
     <string name="set_date">Set date</string>
     <string name="button_save_goal">Save</string>
+    <string name="no_goal_set">You must specify a goal.</string>
+    <string name="invalid_distance">Invalid distance.</string>
+    <string name="invalid_pedals">Invalid number of pedals.</string>
+    <string name="goal_created_successfully">Goal created</string>
+    <string name="error_creating_goal">Error creating goal</string>
     
     <!-- Menus -->
     <string name="menu_rides_title">Rides</string>

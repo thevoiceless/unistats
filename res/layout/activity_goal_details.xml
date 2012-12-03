@@ -39,7 +39,7 @@
 	        android:layout_toRightOf="@id/checkboxGoalDistance"
 	        android:ems="10"
 	        android:enabled="false"
-	        android:inputType="number" />
+	        android:inputType="numberDecimal" />
 	    
 	    <CheckBox
 	        android:id="@+id/checkboxGoalPedals"
@@ -59,7 +59,7 @@
 	        android:ems="10"
 	        android:enabled="false"
 	        android:focusable="false"
-	        android:inputType="number" />
+	        android:inputType="numberDecimal" />
 	    
 	    <TextView
 	        android:id="@+id/labelSelectGoalDate"

@@ -177,10 +177,12 @@ public class RideDetailActivity extends SherlockActivity
 	private boolean validateForm()
 	{
 		StringBuilder formErrors = new StringBuilder();
+		// Check name
 		if (name.getText().toString().trim().equals(""))
 		{
 			formErrors.append(getString(R.string.error_no_name));
 		}
+		// Check chosen stat(s)
 		if (!(recordDistance.isChecked() || recordPedals.isChecked()))
 		{
 			if (formErrors.length() > 0)
@@ -296,7 +298,7 @@ public class RideDetailActivity extends SherlockActivity
 		@Override
 		public void onClick(View v)
 		{
-			if(validateForm())
+			if (validateForm())
 			{
 				double d = recordDistance.isChecked() ? 0 : -1;
 				int g = useGPS.isChecked() ? 1 : 0;

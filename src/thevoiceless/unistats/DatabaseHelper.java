@@ -243,12 +243,13 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		return c.getString(GOAL_NAME_INT);
 	}
 	
-	public Date getGoalDate(Cursor c)
+	public long getGoalDate(Cursor c)
 	{
-		cal = Calendar.getInstance();
-		cal.setTimeInMillis((long) (c.getLong(GOAL_DATE_INT) * 1000));
-		
-		return cal.getTime();
+//		cal = Calendar.getInstance();
+//		cal.setTimeInMillis((long) (c.getLong(GOAL_DATE_INT) * 1000));
+//		
+//		return cal.getTime();
+		return c.getLong(GOAL_DATE_INT);
 	}
 	
 	public String getGoalDistance(Cursor c)
