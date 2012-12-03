@@ -14,13 +14,13 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
-public class AchievementsActivity extends SherlockActivity
+public class GoalsActivity extends SherlockActivity
 {
 	private DatabaseHelper dbHelper;
 	
-	static class AchievementHolder
+	static class GoalHolder
 	{		
-		AchievementHolder(View row)
+		GoalHolder(View row)
 		{
 		}
 		
@@ -29,27 +29,27 @@ public class AchievementsActivity extends SherlockActivity
 		}
 	}
 	
-	private class AchievementsAdapter extends CursorAdapter
+	private class GoalsAdapter extends CursorAdapter
 	{
 		// TODO: See https://developer.android.com/reference/android/widget/CursorAdapter.html
-		AchievementsAdapter(Cursor c)
+		GoalsAdapter(Cursor c)
 		{
-			super(AchievementsActivity.this, c);
+			super(GoalsActivity.this, c);
 		}
 		
 		@Override
 		public void bindView(View row, Context context, Cursor cursor)
 		{
-			AchievementHolder holder = (AchievementHolder) row.getTag();
+			GoalHolder holder = (GoalHolder) row.getTag();
 			holder.populateFrom(cursor, dbHelper);
 		}
 		
 		@Override
 		public View newView(Context context, Cursor cursor, ViewGroup parent)
 		{
-			LayoutInflater inflater = AchievementsActivity.this.getLayoutInflater();
+			LayoutInflater inflater = GoalsActivity.this.getLayoutInflater();
 			View row = inflater.inflate(R.layout.ride_row, parent, false);
-			AchievementHolder holder = new AchievementHolder(row);
+			GoalHolder holder = new GoalHolder(row);
 			row.setTag(holder);
 			return row;
 		}
@@ -59,13 +59,13 @@ public class AchievementsActivity extends SherlockActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_achievements);
+		setContentView(R.layout.activity_goals);
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		getSupportMenuInflater().inflate(R.menu.menu_achievements, menu);
+		getSupportMenuInflater().inflate(R.menu.menu_goals, menu);
 		return true;
 	}
 	
@@ -75,8 +75,8 @@ public class AchievementsActivity extends SherlockActivity
 		Intent i;
 		switch (item.getItemId())
 		{
-			case R.id.menu_new_achievement:
-				i = new Intent(this, AchievementDetailActivity.class);
+			case R.id.menu_new_goal:
+				i = new Intent(this, GoalDetailActivity.class);
 				startActivity(i);
 				return true;
 			case R.id.menu_rides:

@@ -24,13 +24,13 @@
             android:name=".RideDetailActivity"
             android:label="@string/title_activity_new_ride" />
         <activity
-            android:name=".AchievementsActivity"
+            android:name=".GoalsActivity"
             android:logo="@drawable/icon_menu_star"
-            android:label="@string/title_activity_achievements" />
+            android:label="@string/title_activity_goals" />
         <activity 
-            android:name=".AchievementDetailActivity"
+            android:name=".GoalDetailActivity"
             android:logo="@drawable/icon_menu_star"
-            android:label="@string/title_activity_new_achievement" />
+            android:label="@string/title_activity_new_goal" />
         
     </application>
 </manifest>

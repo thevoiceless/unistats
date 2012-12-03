@@ -1,8 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     
     <item 
-        android:id="@+id/menu_new_achievement"
-        android:title="@string/menu_new_achievement_title"
+        android:id="@+id/menu_new_goal"
+        android:title="@string/menu_new_goal_title"
         android:icon="@drawable/icon_menu_add"
         android:showAsAction="ifRoom|withText" />
     

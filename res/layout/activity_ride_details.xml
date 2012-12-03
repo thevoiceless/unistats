@@ -92,7 +92,7 @@
             android:text="@string/record_pedal_count" />
 
         <Button
-            android:id="@+id/buttonCreateAchievement"
+            android:id="@+id/buttonCreateGoal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_set_goal" />

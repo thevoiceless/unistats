@@ -34,27 +34,27 @@
     <string name="ride_updated_successfully">Ride updated</string>
     <string name="error_updating_ride">Error saving ride</string>
     
-    <!-- Achievements List -->
-    <string name="title_activity_achievements">Achievements</string>
-    <string name="list_no_achievements">No Goals</string>
+    <!-- Goals List -->
+    <string name="title_activity_goals">Goals</string>
+    <string name="list_no_goals">No Goals</string>
     
-    <!-- Achievement Detail Form -->
-    <string name="title_activity_new_achievement">New Achievement</string>
-    <string name="title_activity_edit_achievement">Edit Achievement</string>
-    <string name="hint_achievement_name">Name</string>
-    <string name="label_select_achievement_params">Set a goal for…</string>
+    <!-- Goal Detail Form -->
+    <string name="title_activity_new_goal">New Goal</string>
+    <string name="title_activity_edit_goal">Edit Goal</string>
+    <string name="hint_goal_name">Name</string>
+    <string name="label_select_goal_params">Set a goal for…</string>
     <string name="distance_goal">Distance:</string>
     <string name="pedals_goal">Pedals:</string>
-    <string name="label_select_achievement_date">Accomplish by…</string>
+    <string name="label_select_goal_date">Accomplish by…</string>
     <string name="no_goal_date">Any date</string>
     <string name="set_date">Set date</string>
-    <string name="button_save_achievement">Save</string>
+    <string name="button_save_goal">Save</string>
     
     <!-- Menus -->
     <string name="menu_rides_title">Rides</string>
     <string name="menu_new_ride_title">New Ride</string>
-    <string name="menu_achievements_title">Achievements</string>
-    <string name="menu_new_achievement_title">New Achievement</string>
+    <string name="menu_goals_title">Goals</string>
+    <string name="menu_new_goal_title">New Goal</string>
     <string name="menu_settings">Settings</string>
     
     <!-- Logging -->

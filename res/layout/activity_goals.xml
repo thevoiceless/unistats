@@ -3,7 +3,7 @@
      android:layout_height="fill_parent" >
      
      <ListView
-        android:id="@+id/achievementsList"
+        android:id="@+id/goalsList"
         android:layout_width="match_parent"
         android:layout_height="fill_parent" />
     
@@ -13,6 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/list_no_achievements" />
+        android:text="@string/list_no_goals" />
 
  </RelativeLayout>

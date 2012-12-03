@@ -7,8 +7,8 @@
         android:showAsAction="ifRoom|withText" />
     
     <item
-        android:id="@+id/menu_achievements"
-        android:title="@string/menu_achievements_title"
+        android:id="@+id/menu_goals"
+        android:title="@string/menu_goals_title"
         android:icon="@drawable/icon_menu_star"
         android:showAsAction="ifRoom|withText" />
     

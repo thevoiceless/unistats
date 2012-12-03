@@ -33,7 +33,7 @@ public class RideDetailActivity extends SherlockActivity
 	private DatabaseHelper dbHelper;
 	private EditText name, month, day, year;
 	private CheckBox recordDistance, useGPS, recordPedals;
-	private Button setDate, createAchievement, save, saveAndStart;
+	private Button setDate, createGoal, save, saveAndStart;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -89,7 +89,7 @@ public class RideDetailActivity extends SherlockActivity
 		recordDistance = (CheckBox) findViewById(R.id.checkboxRideDistance);
 		useGPS = (CheckBox) findViewById(R.id.checkboxRideGPS);
 		recordPedals = (CheckBox) findViewById(R.id.checkboxRidePedalCount);
-		createAchievement = (Button) findViewById(R.id.buttonCreateAchievement);
+		createGoal = (Button) findViewById(R.id.buttonCreateGoal);
 		save = (Button) findViewById(R.id.buttonSaveRide);
 		saveAndStart = (Button) findViewById(R.id.buttonSaveAndStartRide);
 		

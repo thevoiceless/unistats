@@ -16,7 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	// Name of database and tables
 	private static final String DATABASE_NAME = "unistats.db";
 	private static final String TABLE_RIDES = "rides";
-	private static final String TABLE_ACHIEVEMENTS = "achievements";
+	private static final String TABLE_GOALS = "goals";
 	// Ride column names
 	public static final String RIDE_COL_NAME = "name";
 	public static final String RIDE_COL_DATE = "date";
@@ -34,20 +34,20 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	private static final int RIDE_GPS_INT = 3;
 	private static final int RIDE_DIST_INT = 4;
 	private static final int RIDE_PED_INT = 5;
-	// Achievement column names
-	public static final String ACH_COL_NAME = "name";
-	public static final String ACH_COL_DATE = "date";
-	public static final String ACH_COL_DIST = "distance";
-	public static final String ACH_COL_PED = "pedals";
-	private static final String ALL_ACH_COLS = ACH_COL_NAME + " "
-			+ ACH_COL_DATE + " "
-			+ ACH_COL_DIST + " "
-			+ ACH_COL_PED;
-	// Achievement column integers
-	private static final int ACH_NAME_INT = 1;
-	private static final int ACH_DATE_INT = 2;
-	private static final int ACH_DIST_INT = 3;
-	private static final int ACH_PED_INT = 4;
+	// Goal column names
+	public static final String GOAL_COL_NAME = "name";
+	public static final String GOAL_COL_DATE = "date";
+	public static final String GOAL_COL_DIST = "distance";
+	public static final String GOAL_COL_PED = "pedals";
+	private static final String ALL_GOAL_COLS = GOAL_COL_NAME + " "
+			+ GOAL_COL_DATE + " "
+			+ GOAL_COL_DIST + " "
+			+ GOAL_COL_PED;
+	// Goal column integers
+	private static final int GOAL_NAME_INT = 1;
+	private static final int GOAL_DATE_INT = 2;
+	private static final int GOAL_DIST_INT = 3;
+	private static final int GOAL_PED_INT = 4;
 	
 	private static final int SCHEMA_VERSION = 1;
 	
@@ -61,19 +61,12 @@ public class DatabaseHelper extends SQLiteOpenHelper
 			+ RIDE_COL_GPS + " INTEGER, "
 			+ RIDE_COL_DIST + " REAL, "
 			+ RIDE_COL_PED + " REAL);",
-			"CREATE TABLE " + TABLE_ACHIEVEMENTS
+			"CREATE TABLE " + TABLE_GOALS
 			+ " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ ACH_COL_NAME + " TEXT, "
-			+ ACH_COL_DATE + " INTEGER, "
-			+ ACH_COL_DIST + " REAL, "
-			+ ACH_COL_PED + " REAL);" };
-//	private static final String DB_CREATE = "CREATE TABLE " + TABLE_RIDES
-//			+ " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
-//			+ RIDE_COL_NAME + " TEXT, "
-//			+ RIDE_COL_DATE + " INTEGER, "
-//			+ RIDE_COL_GPS + " INTEGER, "
-//			+ RIDE_COL_DIST + " REAL, "
-//			+ RIDE_COL_PED + " REAL);";
+			+ GOAL_COL_NAME + " TEXT, "
+			+ GOAL_COL_DATE + " INTEGER, "
+			+ GOAL_COL_DIST + " REAL, "
+			+ GOAL_COL_PED + " REAL);" };
 	// Match provided arguments
 	private static final String ID_MATCH_ARGS = "_ID=?";
 	// Get all by ID
@@ -102,7 +95,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
 			Log.v("create DB", sql);
 			db.execSQL(sql);
 		}
-//		db.execSQL(DB_CREATE);
 	}
 
 	@Override
@@ -112,9 +104,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		switch (oldVersion)
 		{
 			// Upgrade from v1
-//			case 1:
-//			{
-//			}
+			case 1:
+			{
+			}
 		}		
 	}
 	

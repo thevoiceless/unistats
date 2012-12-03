@@ -1,5 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/achievementDetailScrollView"
+    android:id="@+id/goalDetailScrollView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
@@ -8,53 +8,53 @@
 	    android:layout_height="wrap_content" >
 	    
 	    <EditText
-	        android:id="@+id/enterAchievementName"
+	        android:id="@+id/enterGoalName"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:hint="@string/hint_achievement_name" />
+	        android:hint="@string/hint_goal_name" />
 	    
 	    <TextView
-	        android:id="@+id/labelSelectAchievementParams"
+	        android:id="@+id/labelSelectGoalParams"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/enterAchievementName"
+	        android:layout_below="@id/enterGoalName"
 	        android:padding="5dip"
-	        android:text="@string/label_select_achievement_params"
+	        android:text="@string/label_select_goal_params"
 	        android:textSize="20sp" />
 	    
 	    <CheckBox
-	        android:id="@+id/checkboxAchievementDistance"
+	        android:id="@+id/checkboxGoalDistance"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/labelSelectAchievementParams"
+	        android:layout_below="@id/labelSelectGoalParams"
 	        android:paddingRight="5dip"
 	        android:text="@string/distance_goal" />
 	    
 	    <EditText
-	        android:id="@+id/enterAchievementDistance"
+	        android:id="@+id/enterGoalDistance"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignBaseline="@id/checkboxAchievementDistance"
+	        android:layout_alignBaseline="@id/checkboxGoalDistance"
 	        android:layout_alignParentLeft="false"
-	        android:layout_toRightOf="@id/checkboxAchievementDistance"
+	        android:layout_toRightOf="@id/checkboxGoalDistance"
 	        android:ems="10"
 	        android:enabled="false"
 	        android:inputType="number" />
 	    
 	    <CheckBox
-	        android:id="@+id/checkboxAchievementPedals"
+	        android:id="@+id/checkboxGoalPedals"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/checkboxAchievementDistance"
+	        android:layout_below="@id/checkboxGoalDistance"
 	        android:paddingRight="5dip"
 	        android:text="@string/pedals_goal" />
 	    
 	    <EditText
-	        android:id="@+id/enterAchievementPedals"
+	        android:id="@+id/enterGoalPedals"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignBaseline="@id/checkboxAchievementPedals"
-	        android:layout_alignLeft="@+id/enterAchievementDistance"
+	        android:layout_alignBaseline="@id/checkboxGoalPedals"
+	        android:layout_alignLeft="@+id/enterGoalDistance"
 	        android:layout_alignParentRight="true"
 	        android:ems="10"
 	        android:enabled="false"
@@ -62,30 +62,30 @@
 	        android:inputType="number" />
 	    
 	    <TextView
-	        android:id="@+id/labelSelectAchievementDate"
+	        android:id="@+id/labelSelectGoalDate"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/checkboxAchievementPedals"
+	        android:layout_below="@id/checkboxGoalPedals"
 	        android:padding="5dip"
-	        android:text="@string/label_select_achievement_date"
+	        android:text="@string/label_select_goal_date"
 	        android:textSize="20sp" />
 	    
 	    <CheckBox
 	        android:id="@+id/checkboxAnyDate"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/labelSelectAchievementDate"
+	        android:layout_below="@id/labelSelectGoalDate"
 	        android:checked="true"
 	        android:text="@string/no_goal_date" />
 	    
 	    <LinearLayout
-	        android:id="@+id/achievementDateRow"
+	        android:id="@+id/goalDateRow"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:layout_below="@id/checkboxAnyDate" >
 
             <EditText
-                android:id="@+id/enterAchievementMonth"
+                android:id="@+id/enterGoalMonth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -98,7 +98,7 @@
                 android:longClickable="false" />
 
             <EditText
-                android:id="@+id/enterAchievementDay"
+                android:id="@+id/enterGoalDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -111,7 +111,7 @@
                 android:longClickable="false" />
 
             <EditText
-                android:id="@+id/enterAchievementYear"
+                android:id="@+id/enterGoalYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -126,21 +126,21 @@
         </LinearLayout>
         
         <Button
-            android:id="@+id/buttonSetAchievementDate"
+            android:id="@+id/buttonSetGoalDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/achievementDateRow"
+            android:layout_below="@id/goalDateRow"
             android:enabled="false"
             android:focusable="false"
             android:text="@string/set_date" />
 	    
 	    <Button
-	        android:id="@+id/buttonSaveAchievement"
+	        android:id="@+id/buttonSaveGoal"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@id/buttonSetAchievementDate"
+	        android:layout_below="@id/buttonSetGoalDate"
 	        android:layout_marginTop="15dip"
-	        android:text="@string/button_save_achievement" />
+	        android:text="@string/button_save_goal" />
 
 	</RelativeLayout>
 </ScrollView>

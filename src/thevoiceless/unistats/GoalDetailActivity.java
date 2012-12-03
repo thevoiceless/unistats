@@ -20,7 +20,7 @@ import android.widget.EditText;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 
-public class AchievementDetailActivity extends SherlockActivity
+public class GoalDetailActivity extends SherlockActivity
 {
 	private static final SimpleDateFormat MONTH_FORMAT = new SimpleDateFormat("MMMMMMMMMM");
 	private static final SimpleDateFormat DAY_FORMAT = new SimpleDateFormat("d");
@@ -35,7 +35,7 @@ public class AchievementDetailActivity extends SherlockActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_achievement_details);
+		setContentView(R.layout.activity_goal_details);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		setDataMembers();
@@ -48,7 +48,7 @@ public class AchievementDetailActivity extends SherlockActivity
 		 switch (item.getItemId())
 		 {
 		        case android.R.id.home:
-		        	Intent i = new Intent(this, AchievementsActivity.class);
+		        	Intent i = new Intent(this, GoalsActivity.class);
 		        	i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 		        			| Intent.FLAG_ACTIVITY_NEW_TASK);
 		        	startActivity(i);
@@ -61,17 +61,17 @@ public class AchievementDetailActivity extends SherlockActivity
 	
 	private void setDataMembers()
 	{
-		name = (EditText) findViewById(R.id.enterAchievementName);
-		distance = (EditText) findViewById(R.id.enterAchievementDistance);
-		pedals = (EditText) findViewById(R.id.enterAchievementPedals);
-		month = (EditText) findViewById(R.id.enterAchievementMonth);
-		day = (EditText) findViewById(R.id.enterAchievementDay);
-		year = (EditText) findViewById(R.id.enterAchievementYear);
-		setDistance = (CheckBox) findViewById(R.id.checkboxAchievementDistance);
-		setPedals = (CheckBox) findViewById(R.id.checkboxAchievementPedals);
+		name = (EditText) findViewById(R.id.enterGoalName);
+		distance = (EditText) findViewById(R.id.enterGoalDistance);
+		pedals = (EditText) findViewById(R.id.enterGoalPedals);
+		month = (EditText) findViewById(R.id.enterGoalMonth);
+		day = (EditText) findViewById(R.id.enterGoalDay);
+		year = (EditText) findViewById(R.id.enterGoalYear);
+		setDistance = (CheckBox) findViewById(R.id.checkboxGoalDistance);
+		setPedals = (CheckBox) findViewById(R.id.checkboxGoalPedals);
 		anyDate = (CheckBox) findViewById(R.id.checkboxAnyDate);
-		setDate = (Button) findViewById(R.id.buttonSetAchievementDate);
-		save = (Button) findViewById(R.id.buttonSaveAchievement);
+		setDate = (Button) findViewById(R.id.buttonSetGoalDate);
+		save = (Button) findViewById(R.id.buttonSaveGoal);
 		
 		month.setKeyListener(null);
 		day.setKeyListener(null);
@@ -226,7 +226,7 @@ public class AchievementDetailActivity extends SherlockActivity
 		{
 			updateCalendar();
 			
-			new DatePickerDialog(AchievementDetailActivity.this, 
+			new DatePickerDialog(GoalDetailActivity.this, 
 					selectDate, 
 					cal.get(Calendar.YEAR), 
 					cal.get(Calendar.MONTH), 
