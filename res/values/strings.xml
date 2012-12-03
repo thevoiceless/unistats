@@ -61,6 +61,11 @@
     <string name="goal_updated_successfully">Goal updated</string>
     <string name="error_updating_goal">Error saving goal</string>
     
+    <!-- Tracking -->
+    <string name="title_activity_tracking_stats">Tracking…</string>
+    <string name="label_distance_recorded">Distance:</string>
+    <string name="label_pedals_recorded">Pedals:</string>
+    
     <!-- Menus -->
     <string name="menu_rides_title">Rides</string>
     <string name="menu_new_ride_title">New Ride</string>

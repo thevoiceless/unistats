@@ -158,6 +158,7 @@ public class RideDetailActivity extends SherlockActivity
 		recordDistance.setOnCheckedChangeListener(distanceCheckboxChange);
 		createGoal.setOnClickListener(pressCreateGoal);
 		save.setOnClickListener(pressSaveButton);
+		saveAndStart.setOnClickListener(pressSaveAndStartButton);
 	}
 	
 	private void enableGPSCheckbox()
@@ -343,6 +344,68 @@ public class RideDetailActivity extends SherlockActivity
 					if (result == 1)
 					{
 						Toast.makeText(RideDetailActivity.this, R.string.ride_updated_successfully, Toast.LENGTH_SHORT).show();
+						finish();
+					}
+					else
+					{
+						Log.e("update", "Rows affected: " + result);
+						Toast.makeText(RideDetailActivity.this, R.string.error_updating_ride, Toast.LENGTH_SHORT).show();
+					}
+				}
+			}
+			else
+			{
+				// TODO: Show error dialog
+				Toast.makeText(RideDetailActivity.this, errors, Toast.LENGTH_SHORT).show();
+			}
+		}
+	};
+	
+	OnClickListener pressSaveAndStartButton = new OnClickListener()
+	{
+		@Override
+		public void onClick(View v)
+		{
+			if (validateForm())
+			{
+				double d = recordDistance.isChecked() ? 0 : -1;
+				int g = useGPS.isChecked() ? 1 : 0;
+				double p = recordPedals.isChecked() ? 0 : -1;
+				
+				if (rideID == null)
+				{					
+					long result = dbHelper.insertRide(name.getText().toString(), 
+							(long) (cal.getTimeInMillis() / 1000L), 
+							g, d, p);
+					
+					if (result != -1)
+					{
+						Toast.makeText(RideDetailActivity.this, R.string.ride_created_successfully, Toast.LENGTH_SHORT).show();
+						Intent i = new Intent(RideDetailActivity.this, TrackingStatsActivity.class);
+						i.putExtra(TrackingStatsActivity.STATS_WITH_RIDE_ID, result);
+						startActivity(i);
+						finish();
+					}
+					else
+					{
+						Log.e("create", getString(R.string.error_creating_ride));
+						Toast.makeText(RideDetailActivity.this, R.string.error_creating_ride, Toast.LENGTH_SHORT).show();
+					}
+					
+				}
+				else
+				{					
+					int result = dbHelper.updateRide(rideID,
+							name.getText().toString(), 
+							(long) (cal.getTimeInMillis() / 1000L), 
+							g, d, p);
+					
+					if (result == 1)
+					{
+						Toast.makeText(RideDetailActivity.this, R.string.ride_updated_successfully, Toast.LENGTH_SHORT).show();
+						Intent i = new Intent(RideDetailActivity.this, TrackingStatsActivity.class);
+						i.putExtra(TrackingStatsActivity.STATS_WITH_RIDE_ID, Long.valueOf(rideID));
+						startActivity(i);
 						finish();
 					}
 					else
