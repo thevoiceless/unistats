@@ -63,16 +63,13 @@ public class GoalsActivity extends SherlockActivity
 					detailsBuilder.append(", ");
 				}
 				detailsBuilder.append(goalPedals + " pedals");
-				detailsBuilder.append(" ");
 			}
+			detailsBuilder.append(" ");
 			
 			Date d = helper.getGoalDate(cursor);
-			Log.v("populateForm", "d: " + d.toString());
-			Log.v("populateForm", "NO_DATE: " + NO_DATE.toString());
-			Log.v("populateForm", "d compare to NO_DATE: " + String.valueOf(d.compareTo(NO_DATE)));
 			if (d.compareTo(NO_DATE) != 0)
 			{
-				detailsBuilder.append(context.getString(R.string.by) + dateFormat.format(d));
+				detailsBuilder.append(context.getString(R.string.by) + " " + dateFormat.format(d));
 			}
 			
 			goalDetails.setText(detailsBuilder.toString());

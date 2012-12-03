@@ -58,6 +58,8 @@
     <string name="invalid_pedals">Invalid number of pedals.</string>
     <string name="goal_created_successfully">Goal created</string>
     <string name="error_creating_goal">Error creating goal</string>
+    <string name="goal_updated_successfully">Goal updated</string>
+    <string name="error_updating_goal">Error saving goal</string>
     
     <!-- Menus -->
     <string name="menu_rides_title">Rides</string>

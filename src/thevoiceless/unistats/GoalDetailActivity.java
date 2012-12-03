@@ -138,10 +138,6 @@ public class GoalDetailActivity extends SherlockActivity
 				enableDateSelection();
 			}
 		}
-		else
-		{
-			
-		}
 	}
 	
 	private void setListeners()
@@ -391,10 +387,10 @@ public class GoalDetailActivity extends SherlockActivity
 				double d = setDistance.isChecked() ? Double.valueOf(distance.getText().toString()) : -1;
 				Log.v("save", "pedals is checked: " + setPedals.isChecked());
 				double p = setPedals.isChecked() ? Double.valueOf(pedals.getText().toString()) : -1;
+				long date = anyDate.isChecked() ? -1L : (long) (cal.getTimeInMillis() / 1000L);
 				
 				if (goalID == null)
 				{
-					long date = anyDate.isChecked() ? -1L : (long) (cal.getTimeInMillis() / 1000L);
 					long result = dbHelper.insertGoal(name.getText().toString(), date, d, p);
 					
 					if (result != -1)
@@ -408,24 +404,21 @@ public class GoalDetailActivity extends SherlockActivity
 						Toast.makeText(GoalDetailActivity.this, R.string.error_creating_ride, Toast.LENGTH_SHORT).show();
 					}
 				}
-//				else
-//				{					
-//					int result = dbHelper.updateRide(rideID,
-//							name.getText().toString(), 
-//							(long) (cal.getTimeInMillis() / 1000L), 
-//							g, d, p);
-//					
-//					if (result == 1)
-//					{
-//						Toast.makeText(RideDetailActivity.this, R.string.ride_updated_successfully, Toast.LENGTH_SHORT).show();
-//						finish();
-//					}
-//					else
-//					{
-//						Log.e("update", "Rows affected: " + result);
-//						Toast.makeText(RideDetailActivity.this, R.string.error_updating_ride, Toast.LENGTH_SHORT).show();
-//					}
-//				}
+				else
+				{					
+					int result = dbHelper.updateGoal(goalID, name.getText().toString(), date, d, p);
+					
+					if (result == 1)
+					{
+						Toast.makeText(GoalDetailActivity.this, R.string.goal_updated_successfully, Toast.LENGTH_SHORT).show();
+						finish();
+					}
+					else
+					{
+						Log.e("update", "Rows affected: " + result);
+						Toast.makeText(GoalDetailActivity.this, R.string.error_updating_goal, Toast.LENGTH_SHORT).show();
+					}
+				}
 			}
 			else
 			{
