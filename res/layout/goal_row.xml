@@ -1,5 +1,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-
+    
+    <TextView
+        android:id="@+id/goalNameArea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="2.5dip"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:paddingTop="5dip"
+        android:text="@string/label_name"
+        android:textSize="22sp" />
+    
+    <TextView
+        android:id="@+id/goalDetailsArea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/goalNameArea"
+        android:paddingBottom="5dip"
+        android:paddingLeft="5dip"
+        android:paddingRight="5dip"
+        android:paddingTop="2.5dip"
+        android:text="@string/label_details"
+        android:textSize="15sp" />
+    
 </RelativeLayout>

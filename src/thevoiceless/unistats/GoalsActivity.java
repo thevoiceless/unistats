@@ -8,7 +8,8 @@ import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
@@ -17,7 +18,9 @@ import com.actionbarsherlock.view.MenuItem;
 public class GoalsActivity extends SherlockActivity
 {
 	private DatabaseHelper dbHelper;
-	
+	private ListView goalsList;
+	private TextView noGoals;
+
 	static class GoalHolder
 	{		
 		GoalHolder(View row)
@@ -60,6 +63,8 @@ public class GoalsActivity extends SherlockActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_goals);
+		
+		setDataMembers();
 	}
 	
 	@Override
@@ -87,5 +92,13 @@ public class GoalsActivity extends SherlockActivity
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	private void setDataMembers()
+	{
+		goalsList = (ListView) findViewById(R.id.goalsList);
+		noGoals = (TextView) findViewById(android.R.id.empty);
+		
+		goalsList.setEmptyView(noGoals);
 	}
 }

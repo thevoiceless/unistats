@@ -5,13 +5,16 @@
     <string name="app_name">UniStats</string>
     <string name="hello_world">Hello world!</string>
     
-    <!-- Rides List -->
-    <string name="title_activity_rides">Rides</string>
-    <string name="list_no_rides">No Rides</string>
+    <!-- Labels -->
     <string name="label_name">Name</string>
     <string name="label_date">Date</string>
     <string name="label_distance">Distance</string>
     <string name="label_pedals">Pedals</string>
+    <string name="label_details">Details</string>
+    
+    <!-- Rides List -->
+    <string name="title_activity_rides">Rides</string>
+    <string name="list_no_rides">No Rides</string>
     
     <!-- Ride Detail Form -->
     <string name="title_activity_new_ride">New Ride</string>
