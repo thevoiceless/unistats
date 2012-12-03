@@ -382,7 +382,7 @@ public class RideDetailActivity extends SherlockActivity
 					{
 						Toast.makeText(RideDetailActivity.this, R.string.ride_created_successfully, Toast.LENGTH_SHORT).show();
 						Intent i = new Intent(RideDetailActivity.this, TrackingStatsActivity.class);
-						i.putExtra(TrackingStatsActivity.STATS_WITH_RIDE_ID, result);
+						i.putExtra(TrackingStatsActivity.STATS_WITH_RIDE_ID, String.valueOf(result));
 						startActivity(i);
 						finish();
 					}
@@ -404,7 +404,7 @@ public class RideDetailActivity extends SherlockActivity
 					{
 						Toast.makeText(RideDetailActivity.this, R.string.ride_updated_successfully, Toast.LENGTH_SHORT).show();
 						Intent i = new Intent(RideDetailActivity.this, TrackingStatsActivity.class);
-						i.putExtra(TrackingStatsActivity.STATS_WITH_RIDE_ID, Long.valueOf(rideID));
+						i.putExtra(TrackingStatsActivity.STATS_WITH_RIDE_ID, rideID);
 						startActivity(i);
 						finish();
 					}
