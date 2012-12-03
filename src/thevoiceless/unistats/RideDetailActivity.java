@@ -316,6 +316,7 @@ public class RideDetailActivity extends SherlockActivity
 				int g = useGPS.isChecked() ? 1 : 0;
 				double p = recordPedals.isChecked() ? 0 : -1;
 				
+				// Create new ride
 				if (rideID == null)
 				{					
 					long result = dbHelper.insertRide(name.getText().toString(), 
@@ -334,6 +335,7 @@ public class RideDetailActivity extends SherlockActivity
 					}
 					
 				}
+				// Update existing ride
 				else
 				{					
 					int result = dbHelper.updateRide(rideID,
@@ -372,6 +374,7 @@ public class RideDetailActivity extends SherlockActivity
 				int g = useGPS.isChecked() ? 1 : 0;
 				double p = recordPedals.isChecked() ? 0 : -1;
 				
+				// Save and start new ride
 				if (rideID == null)
 				{					
 					long result = dbHelper.insertRide(name.getText().toString(), 
@@ -383,6 +386,7 @@ public class RideDetailActivity extends SherlockActivity
 						Toast.makeText(RideDetailActivity.this, R.string.ride_created_successfully, Toast.LENGTH_SHORT).show();
 						Intent i = new Intent(RideDetailActivity.this, TrackingStatsActivity.class);
 						i.putExtra(TrackingStatsActivity.STATS_WITH_RIDE_ID, String.valueOf(result));
+						i.putExtra(TrackingStatsActivity.MODIFY_OR_NEW, TrackingStatsActivity.NEW_RIDE);
 						startActivity(i);
 						finish();
 					}
@@ -391,8 +395,8 @@ public class RideDetailActivity extends SherlockActivity
 						Log.e("create", getString(R.string.error_creating_ride));
 						Toast.makeText(RideDetailActivity.this, R.string.error_creating_ride, Toast.LENGTH_SHORT).show();
 					}
-					
 				}
+				// Save and continue existing ride
 				else
 				{					
 					int result = dbHelper.updateRide(rideID,
@@ -405,6 +409,7 @@ public class RideDetailActivity extends SherlockActivity
 						Toast.makeText(RideDetailActivity.this, R.string.ride_updated_successfully, Toast.LENGTH_SHORT).show();
 						Intent i = new Intent(RideDetailActivity.this, TrackingStatsActivity.class);
 						i.putExtra(TrackingStatsActivity.STATS_WITH_RIDE_ID, rideID);
+						i.putExtra(TrackingStatsActivity.MODIFY_OR_NEW, TrackingStatsActivity.UPDATE_RIDE);
 						startActivity(i);
 						finish();
 					}
