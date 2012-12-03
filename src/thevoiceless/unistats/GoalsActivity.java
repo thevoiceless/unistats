@@ -8,9 +8,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.CursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ import com.actionbarsherlock.view.MenuItem;
 public class GoalsActivity extends SherlockActivity
 {
 	public static final String GOAL_ID_KEY = "thevoiceless.unistats.GOAL_ID";
+	public static final Date NO_DATE = new Date(0);
 	private static Context context;
 	private Cursor goals;
 	private GoalsAdapter goalsAdapter;
@@ -58,13 +62,17 @@ public class GoalsActivity extends SherlockActivity
 				{
 					detailsBuilder.append(", ");
 				}
-				detailsBuilder.append(goalPedals);
+				detailsBuilder.append(goalPedals + " pedals");
+				detailsBuilder.append(" ");
 			}
 			
-			long date = helper.getGoalDate(cursor);
-			if (date != -1L)
+			Date d = helper.getGoalDate(cursor);
+			Log.v("populateForm", "d: " + d.toString());
+			Log.v("populateForm", "NO_DATE: " + NO_DATE.toString());
+			Log.v("populateForm", "d compare to NO_DATE: " + String.valueOf(d.compareTo(NO_DATE)));
+			if (d.compareTo(NO_DATE) != 0)
 			{
-				detailsBuilder.append(context.getString(R.string.by) + dateFormat.format(new Date(date)));
+				detailsBuilder.append(context.getString(R.string.by) + dateFormat.format(d));
 			}
 			
 			goalDetails.setText(detailsBuilder.toString());
@@ -104,6 +112,7 @@ public class GoalsActivity extends SherlockActivity
 		setContentView(R.layout.activity_goals);
 		
 		setDataMembers();
+		initList();
 	}
 	
 	@Override
@@ -166,4 +175,22 @@ public class GoalsActivity extends SherlockActivity
 		goalsAdapter = new GoalsAdapter(goals);
 		goalsList.setAdapter(goalsAdapter);
 	}
+	
+	private void initList()
+	{
+		goalsList.setOnItemClickListener(selectGoalFromList);
+	}
+	
+	/* LISTENERS */
+	
+	OnItemClickListener selectGoalFromList = new OnItemClickListener()
+	{
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+		{
+			Intent i = new Intent(GoalsActivity.this, GoalDetailActivity.class);
+			i.putExtra(GOAL_ID_KEY, String.valueOf(id));
+			startActivity(i);
+		}
+	};
 }

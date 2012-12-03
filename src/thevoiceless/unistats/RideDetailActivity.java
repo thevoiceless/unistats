@@ -109,11 +109,11 @@ public class RideDetailActivity extends SherlockActivity
 			
 			name.setText(dbHelper.getRideName(c));
 			
-			Date d = dbHelper.getRideDate(c);
+			Date date = dbHelper.getRideDate(c);
 //			Log.v("initForm", d.toString());
-			month.setText(MONTH_FORMAT.format(d));
-			day.setText(DAY_FORMAT.format(d));
-			year.setText(YEAR_FORMAT.format(d));
+			month.setText(MONTH_FORMAT.format(date));
+			day.setText(DAY_FORMAT.format(date));
+			year.setText(YEAR_FORMAT.format(date));
 			
 			if (Double.valueOf(dbHelper.getRideDistance(c)) >= 0)
 			{

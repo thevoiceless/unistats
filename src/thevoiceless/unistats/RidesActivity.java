@@ -182,5 +182,4 @@ public class RidesActivity extends SherlockActivity
 			startActivity(i);
 		}
 	};
-	
 }

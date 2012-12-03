@@ -6,6 +6,7 @@ import java.util.Date;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,10 +14,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -41,7 +42,23 @@ public class GoalDetailActivity extends SherlockActivity
 		setContentView(R.layout.activity_goal_details);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
+		//setDataMembers();
+		//setListeners();
+	}
+	
+	@Override
+	public void onPause()
+	{
+		dbHelper.close();
+		super.onPause();
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
 		setDataMembers();
+		initForm();
 		setListeners();
 	}
 	
@@ -84,6 +101,49 @@ public class GoalDetailActivity extends SherlockActivity
 		year.setKeyListener(null);
 	}
 	
+	private void initForm()
+	{
+		if (goalID != null)
+		{
+			setTitle(R.string.title_activity_edit_goal);
+			
+			Cursor c = dbHelper.getGoalById(goalID);
+			c.moveToFirst();
+			
+			name.setText(dbHelper.getGoalName(c));
+			
+			String dist = dbHelper.getGoalDistance(c);
+			if (Double.valueOf(dist) >= 0)
+			{
+				setDistance.setChecked(true);
+				enableDistance();
+				distance.setText(dist);
+			}
+			
+			String ped = dbHelper.getGoalPedals(c);
+			if (Double.valueOf(ped) >= 0)
+			{
+				setPedals.setChecked(true);
+				enablePedals();
+				pedals.setText(ped);
+			}
+			
+			Date date = dbHelper.getGoalDate(c);
+			if (date.compareTo(GoalsActivity.NO_DATE) != 0)
+			{
+				anyDate.setChecked(false);
+				month.setText(MONTH_FORMAT.format(date));
+				day.setText(DAY_FORMAT.format(date));
+				year.setText(YEAR_FORMAT.format(date));
+				enableDateSelection();
+			}
+		}
+		else
+		{
+			
+		}
+	}
+	
 	private void setListeners()
 	{
 		anyDate.setOnCheckedChangeListener(dateCheckboxChange);
@@ -123,7 +183,6 @@ public class GoalDetailActivity extends SherlockActivity
 	
 	private void enableDateSelection()
 	{
-		updateDisplayedDate();
 		month.setEnabled(true);
 		month.setFocusable(true);
 		day.setEnabled(true);
@@ -255,6 +314,7 @@ public class GoalDetailActivity extends SherlockActivity
 			}
 			else
 			{
+				updateDisplayedDate();
 				enableDateSelection();
 			}
 		}
