@@ -39,9 +39,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	public static final String GOAL_COL_DATE = "date";
 	public static final String GOAL_COL_DIST = "distance";
 	public static final String GOAL_COL_PED = "pedals";
-	private static final String ALL_GOAL_COLS = GOAL_COL_NAME + " "
-			+ GOAL_COL_DATE + " "
-			+ GOAL_COL_DIST + " "
+	private static final String ALL_GOAL_COLS = GOAL_COL_NAME + ", "
+			+ GOAL_COL_DATE + ", "
+			+ GOAL_COL_DIST + ", "
 			+ GOAL_COL_PED;
 	// Goal column integers
 	private static final int GOAL_NAME_INT = 1;

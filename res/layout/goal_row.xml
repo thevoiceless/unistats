@@ -11,7 +11,8 @@
         android:paddingRight="5dip"
         android:paddingTop="5dip"
         android:text="@string/label_name"
-        android:textSize="22sp" />
+        android:textSize="22sp"
+        android:textStyle="bold" />
     
     <TextView
         android:id="@+id/goalDetailsArea"

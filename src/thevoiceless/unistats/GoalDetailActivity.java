@@ -327,7 +327,9 @@ public class GoalDetailActivity extends SherlockActivity
 		{
 			if (validateForm())
 			{
+				Log.v("save", "distance is checked: " + setDistance.isChecked());
 				double d = setDistance.isChecked() ? Double.valueOf(distance.getText().toString()) : -1;
+				Log.v("save", "pedals is checked: " + setPedals.isChecked());
 				double p = setPedals.isChecked() ? Double.valueOf(pedals.getText().toString()) : -1;
 				
 				if (goalID == null)

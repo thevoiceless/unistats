@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.widget.CursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +50,7 @@ public class GoalsActivity extends SherlockActivity
 			String goalPedals = helper.getGoalPedals(cursor);
 			if (Double.valueOf(goalDistance) >= 0)
 			{
-				detailsBuilder.append(goalDistance + "<units>");
+				detailsBuilder.append(goalDistance + " <units>");
 			}
 			if (Double.valueOf(goalPedals) >= 0)
 			{
@@ -91,7 +90,7 @@ public class GoalsActivity extends SherlockActivity
 		public View newView(Context context, Cursor cursor, ViewGroup parent)
 		{
 			LayoutInflater inflater = GoalsActivity.this.getLayoutInflater();
-			View row = inflater.inflate(R.layout.ride_row, parent, false);
+			View row = inflater.inflate(R.layout.goal_row, parent, false);
 			GoalHolder holder = new GoalHolder(row);
 			row.setTag(holder);
 			return row;
@@ -159,7 +158,7 @@ public class GoalsActivity extends SherlockActivity
 			goals.close();
 		}
 		
-		goals = dbHelper.getAllRides(DatabaseHelper.GOAL_COL_NAME);
+		goals = dbHelper.getAllGoals(DatabaseHelper.GOAL_COL_NAME);
 	}
 	
 	private void setAdapters()
