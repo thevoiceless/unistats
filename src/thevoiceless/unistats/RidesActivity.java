@@ -47,18 +47,18 @@ public class RidesActivity extends SherlockActivity
 			rideName.setText(helper.getRideName(cursor));
 			rideDate.setText(dateFormat.format(helper.getRideDate(cursor)));
 			
-			if (Double.valueOf(helper.getRideDistance(cursor)) >= 0)
+			if (helper.getRideDistance(cursor) >= 0)
 			{
-				rideDistance.setText(helper.getRideDistance(cursor));
+				rideDistance.setText(String.format("%.2f m", helper.getRideDistance(cursor)));
 			}
 			else
 			{
 				rideDistance.setText("");
 			}
 			
-			if (Double.valueOf(helper.getRidePedals(cursor)) >= 0)
+			if (helper.getRidePedals(cursor) >= 0)
 			{
-				ridePedals.setText(helper.getRidePedals(cursor));
+				ridePedals.setText(String.valueOf(helper.getRidePedals(cursor)));
 			}
 			else
 			{

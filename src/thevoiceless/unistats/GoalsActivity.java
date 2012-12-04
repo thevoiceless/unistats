@@ -50,11 +50,11 @@ public class GoalsActivity extends SherlockActivity
 			
 			goalName.setText(helper.getGoalName(cursor));
 			
-			String goalDistance = helper.getGoalDistance(cursor);
-			String goalPedals = helper.getGoalPedals(cursor);
-			if (Double.valueOf(goalDistance) >= 0)
+			double goalDistance = helper.getGoalDistance(cursor);
+			double goalPedals = helper.getGoalPedals(cursor);
+			if (goalDistance >= 0)
 			{
-				detailsBuilder.append(goalDistance + " <units>");
+				detailsBuilder.append(goalDistance + " m");
 			}
 			if (Double.valueOf(goalPedals) >= 0)
 			{

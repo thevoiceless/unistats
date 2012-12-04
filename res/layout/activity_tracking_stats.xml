@@ -39,12 +39,37 @@
 	        android:textSize="20sp" />
     
     </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/accuracyRow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/distanceRow"
+        android:layout_centerInParent="true" >
+        
+        <TextView
+            android:id="@+id/labelDistanceAccuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip"
+            android:text="@string/label_distance_accuracy"
+            android:textSize="15sp" />
+    
+	    <TextView
+	        android:id="@+id/distanceAccuracyArea"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:padding="5dip"
+	        android:text="@string/label_accuracy"
+	        android:textSize="15sp" />
+    
+    </LinearLayout>
 
 	<LinearLayout
 	    android:id="@+id/pedalsRow"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@id/distanceRow"
+	    android:layout_below="@id/accuracyRow"
 	    android:layout_centerInParent="true" >
 	    
 	    <TextView

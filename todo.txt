@@ -4,3 +4,4 @@ Use Loader instead of deprecated CursorAdapter constructor
 Fast-scroll in rides list
 Show error dialog after form validation
 Use custom button images (see http://stackoverflow.com/questions/2277732/how-to-get-rid-of-the-extra-gap-between-a-button-and-other-views)
+Allow user to specify location accuracy threshold

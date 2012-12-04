@@ -11,6 +11,7 @@
     <string name="label_distance">Distance</string>
     <string name="label_pedals">Pedals</string>
     <string name="label_details">Details</string>
+    <string name="label_accuracy">Accuracy</string>
     <string name="error_no_name">You must specify a name.</string>
     
     <!-- Rides List -->
@@ -32,6 +33,7 @@
     <string name="button_save_ride">Save</string>
     <string name="button_save_start_ride">Save and start ride</string>
     <string name="no_stat_selected">You must select a statistic.</string>
+    <string name="gps_not_enabled">GPS must be enabled to use it.</string>
     <string name="ride_created_successfully">Ride created</string>
     <string name="error_creating_ride">Error creating ride</string>
     <string name="ride_updated_successfully">Ride updated</string>
@@ -63,7 +65,9 @@
     
     <!-- Tracking -->
     <string name="title_activity_tracking_stats">Tracking…</string>
+    <string name="title_activity_tracking_stats_paused">Paused</string>
     <string name="label_distance_recorded">Distance:</string>
+    <string name="label_distance_accuracy">Accuracy:</string>
     <string name="label_pedals_recorded">Pedals:</string>
     
     <!-- Menus -->

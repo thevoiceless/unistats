@@ -146,6 +146,26 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		return getWritableDatabase().update(TABLE_RIDES, cv, ID_MATCH_ARGS, args);
 	}
 	
+	public int updateRideDistance(String id, double distance)
+	{
+		ContentValues cv = new ContentValues();
+		String[] args = {id};
+		
+		cv.put(RIDE_COL_DIST, distance);
+		
+		return getWritableDatabase().update(TABLE_RIDES, cv, ID_MATCH_ARGS, args);
+	}
+	
+	public int updateRidePedals(String id, double pedals)
+	{
+		ContentValues cv = new ContentValues();
+		String[] args = {id};
+		
+		cv.put(RIDE_COL_PED, pedals);
+		
+		return getWritableDatabase().update(TABLE_RIDES, cv, ID_MATCH_ARGS, args);
+	}
+	
 	public boolean deleteRide(String id)
 	{
 		String[] args = {id};
@@ -217,14 +237,14 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		return c.getInt(RIDE_GPS_INT) == 1;
 	}
 	
-	public String getRideDistance(Cursor c)
+	public double getRideDistance(Cursor c)
 	{
-		return c.getString(RIDE_DIST_INT);
+		return c.getDouble(RIDE_DIST_INT);
 	}
 	
-	public String getRidePedals(Cursor c)
+	public double getRidePedals(Cursor c)
 	{
-		return c.getString(RIDE_PED_INT);
+		return c.getDouble(RIDE_PED_INT);
 	}
 	
 	public Cursor getAllGoals(String orderBy)
@@ -262,13 +282,13 @@ public class DatabaseHelper extends SQLiteOpenHelper
 //		return cal.getTime();
 	}
 	
-	public String getGoalDistance(Cursor c)
+	public double getGoalDistance(Cursor c)
 	{
-		return c.getString(GOAL_DIST_INT);
+		return c.getDouble(GOAL_DIST_INT);
 	}
 	
-	public String getGoalPedals(Cursor c)
+	public double getGoalPedals(Cursor c)
 	{
-		return c.getString(GOAL_PED_INT);
+		return c.getDouble(GOAL_PED_INT);
 	}
 }

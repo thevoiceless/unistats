@@ -5,8 +5,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -179,12 +181,12 @@ public class RideDetailActivity extends SherlockActivity
 	private boolean validateForm()
 	{
 		StringBuilder formErrors = new StringBuilder();
-		// Check name
+		// Verify name
 		if (name.getText().toString().trim().equals(""))
 		{
 			formErrors.append(getString(R.string.error_no_name));
 		}
-		// Check chosen stat(s)
+		// Verify chosen statistic(s)
 		if (!(recordDistance.isChecked() || recordPedals.isChecked()))
 		{
 			if (formErrors.length() > 0)
@@ -193,6 +195,20 @@ public class RideDetailActivity extends SherlockActivity
 			}
 			formErrors.append(getString(R.string.no_stat_selected));
 		}
+		// If GPS is selected, verify that it is enabled
+		if (useGPS.isChecked())
+		{
+			LocationManager locManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+			if (!locManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+			{
+				if (formErrors.length() > 0)
+				{
+					formErrors.append("\n");
+				}
+				formErrors.append(getString(R.string.gps_not_enabled));
+			}
+		}
+		
 		
 		errors = formErrors.toString();
 		if (errors.equals(""))
@@ -287,6 +303,7 @@ public class RideDetailActivity extends SherlockActivity
 			if (isChecked)
 			{
 				enableGPSCheckbox();
+				useGPS.setChecked(true);
 			}
 			else
 			{
@@ -385,7 +402,10 @@ public class RideDetailActivity extends SherlockActivity
 					{
 						Toast.makeText(RideDetailActivity.this, R.string.ride_created_successfully, Toast.LENGTH_SHORT).show();
 						Intent i = new Intent(RideDetailActivity.this, TrackingStatsActivity.class);
-						i.putExtra(TrackingStatsActivity.STATS_WITH_RIDE_ID, String.valueOf(result));
+						i.putExtra(RidesActivity.RIDE_ID_KEY, String.valueOf(result));
+						i.putExtra(TrackingStatsActivity.TRACK_DISTANCE_KEY, recordDistance.isChecked());
+						i.putExtra(TrackingStatsActivity.USE_GPS_KEY, useGPS.isChecked());
+						i.putExtra(TrackingStatsActivity.TRACK_PEDALS_KEY, recordPedals.isChecked());
 						startActivity(i);
 						finish();
 					}
@@ -407,7 +427,10 @@ public class RideDetailActivity extends SherlockActivity
 					{
 						Toast.makeText(RideDetailActivity.this, R.string.ride_updated_successfully, Toast.LENGTH_SHORT).show();
 						Intent i = new Intent(RideDetailActivity.this, TrackingStatsActivity.class);
-						i.putExtra(TrackingStatsActivity.STATS_WITH_RIDE_ID, rideID);
+						i.putExtra(RidesActivity.RIDE_ID_KEY, rideID);
+						i.putExtra(TrackingStatsActivity.TRACK_DISTANCE_KEY, recordDistance.isChecked());
+						i.putExtra(TrackingStatsActivity.USE_GPS_KEY, useGPS.isChecked());
+						i.putExtra(TrackingStatsActivity.TRACK_PEDALS_KEY, recordPedals.isChecked());
 						startActivity(i);
 						finish();
 					}

@@ -112,20 +112,20 @@ public class GoalDetailActivity extends SherlockActivity
 			
 			name.setText(dbHelper.getGoalName(c));
 			
-			String dist = dbHelper.getGoalDistance(c);
-			if (Double.valueOf(dist) >= 0)
+			double dist = dbHelper.getGoalDistance(c);
+			if (dist >= 0)
 			{
 				setDistance.setChecked(true);
 				enableDistance();
-				distance.setText(dist);
+				distance.setText(String.valueOf(dist));
 			}
 			
-			String ped = dbHelper.getGoalPedals(c);
-			if (Double.valueOf(ped) >= 0)
+			double ped = dbHelper.getGoalPedals(c);
+			if (ped >= 0)
 			{
 				setPedals.setChecked(true);
 				enablePedals();
-				pedals.setText(ped);
+				pedals.setText(String.valueOf(ped));
 			}
 			
 			Date date = dbHelper.getGoalDate(c);
