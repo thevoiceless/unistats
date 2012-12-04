@@ -1,10 +1,8 @@
 package thevoiceless.unistats;
 
 import java.text.DecimalFormat;
-import java.util.Calendar;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
@@ -12,6 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
@@ -24,7 +23,7 @@ public class TrackingStatsActivity extends Activity
 	public static final String USE_GPS_KEY = "thevoiceless.unistats.USE_GPS";
 	public static final String TRACK_PEDALS_KEY = "thevoiceless.unistats.TRACK_PEDALS";
 	private static final DecimalFormat DISTANCE_FORMAT = new DecimalFormat();
-	// Time thresholds in ms
+	// Time thresholds in milliseconds
 	private static final int MIN_UPDATE_FREQ = 10 * 1000;
 	// Distance thresholds in meters
 	private static final int MIN_DISTANCE_NETWORK = 15;
@@ -81,6 +80,22 @@ public class TrackingStatsActivity extends Activity
 		super.onDestroy();
 	}
 	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)
+	{
+		// Save statistics when the back button is pressed
+	    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0)
+	    {
+	        if (thisRideID != null)
+	        {
+	        	updateThisRide();
+	        }
+	        return true;
+	    }
+
+	    return super.onKeyDown(keyCode, event);
+	}
+	
 	private void setDataMembers()
 	{
 		title = (TextView) findViewById(R.id.titleTracking);
@@ -92,15 +107,6 @@ public class TrackingStatsActivity extends Activity
 		initialLocation = true;
 		
 		thisRideID = getIntent().getStringExtra(RidesActivity.RIDE_ID_KEY);
-		// Temporary validation
-//		if (rideID != null)
-//		{
-//			Toast.makeText(this, "rideID: " + rideID, Toast.LENGTH_LONG).show();
-//		}
-//		else
-//		{
-//			Toast.makeText(this, "rideID is null!", Toast.LENGTH_LONG).show();
-//		}
 		
 		dbHelper = new DatabaseHelper(this);
 		
@@ -115,6 +121,7 @@ public class TrackingStatsActivity extends Activity
 		initRide();
 	}
 	
+	// Enable either network or GPS location updates
 	private void setLocationUpdates()
 	{
 		if (trackDistance)
@@ -137,6 +144,7 @@ public class TrackingStatsActivity extends Activity
 		stopButton.setOnClickListener(pressStopButton);
 	}
 	
+	// Load ride information from database into a Ride object for convenience
 	private void initRide()
 	{
 		thisRideCursor = dbHelper.getRideById(thisRideID);
@@ -146,13 +154,15 @@ public class TrackingStatsActivity extends Activity
 		thisRideDistance = dbHelper.getRideDistance(thisRideCursor);
 		thisRidePedals = dbHelper.getRidePedals(thisRideCursor);
 		
-		// String id, String name, double distance, double pedals, boolean trackDistance, boolean trackPedals, boolean useGPS
 		thisRide = new Ride(thisRideID, thisRideName, thisRideDistance, thisRidePedals, trackDistance, trackPedals, useGPS);
 	}
 	
+	// Initialize the form
 	private void initFields()
 	{
+		// No accuracy value until locations have been recorded
 		accuracy.setText("-");
+		// Initialize distance and pedals if they have values, even if they are not being collected during this ride
 		double d = thisRide.getDistance();
 		double p = thisRide.getPedals();
 		if (d >= 0)
@@ -173,6 +183,7 @@ public class TrackingStatsActivity extends Activity
 		}
 	}
 	
+	// Save the most recent statistics in the database
 	private void updateThisRide()
 	{
 		if (trackDistance)
@@ -193,7 +204,7 @@ public class TrackingStatsActivity extends Activity
 		}
 	}
 	
-	// Uses the haversine formula to calculate distance between two points
+	// Use the haversine formula to calculate distance between two points
 	// See http://www.movable-type.co.uk/scripts/latlong.html
 	private double calcDistanceTraveled(Location loc1, Location loc2)
 	{
@@ -212,6 +223,7 @@ public class TrackingStatsActivity extends Activity
 		return ((double) RADIUS_OF_EARTH) * c;
 	}
 	
+	// Calculate the average accuracy every time a location is recorded
 	private double calcAccuracy(float a)
 	{
 		acc += a;
@@ -227,11 +239,15 @@ public class TrackingStatsActivity extends Activity
 		{
 			if (trackDistance)
 			{
+				// Keep track of the previous location to calculate distance
+				// getLastKnownLocation does not work here because currentLoc is returned
 				if (initialLocation)
 				{
 					initialLocation = false;
 					lastLocation = currentLoc;
 				}
+				// Update the ride's distance and the displayed distance
+				// Displayed distance and accuracy are formatted to two decimal places
 				else
 				{
 					thisRide.updateDistance(calcDistanceTraveled(lastLocation, currentLoc));
@@ -263,10 +279,15 @@ public class TrackingStatsActivity extends Activity
 		@Override
 		public void onClick(View v)
 		{
+			// Stop location updates
 			locManager.removeUpdates(onLocationChange);
+			// Update the title
 			title.setText(R.string.title_activity_tracking_stats_paused);
+			// Change button image
 			pausePlayButton.setImageResource(R.drawable.icon_play);
+			// Set alternative listener
 			pausePlayButton.setOnClickListener(pressPlayButton);
+			// Save the ride
 			updateThisRide();
 		}
 	};
@@ -276,9 +297,13 @@ public class TrackingStatsActivity extends Activity
 		@Override
 		public void onClick(View v)
 		{
+			// Restart location updates
 			setLocationUpdates();
+			// Update the title
 			title.setText(R.string.title_activity_tracking_stats);
+			// Change button image
 			pausePlayButton.setImageResource(R.drawable.icon_pause);
+			// Set original listener
 			pausePlayButton.setOnClickListener(pressPauseButton);
 		}
 	};
@@ -288,6 +313,7 @@ public class TrackingStatsActivity extends Activity
 		@Override
 		public void onClick(View v)
 		{
+			// Stop location updates, save the ride, and finish the activity
 			locManager.removeUpdates(onLocationChange);
 			updateThisRide();
 			finish();

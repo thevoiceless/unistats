@@ -42,11 +42,13 @@ public class RidesActivity extends SherlockActivity
 		
 		void populateFrom(Cursor cursor, DatabaseHelper helper)
 		{
+			// Date format used in the ride details
 			SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy");
 			
 			rideName.setText(helper.getRideName(cursor));
 			rideDate.setText(dateFormat.format(helper.getRideDate(cursor)));
 			
+			// Distance is recorded if value is greater than -1
 			if (helper.getRideDistance(cursor) >= 0)
 			{
 				rideDistance.setText(String.format("%.2f m", helper.getRideDistance(cursor)));
@@ -55,7 +57,7 @@ public class RidesActivity extends SherlockActivity
 			{
 				rideDistance.setText("");
 			}
-			
+			// Pedals are recorded if value is greater -1
 			if (helper.getRidePedals(cursor) >= 0)
 			{
 				ridePedals.setText(String.valueOf(helper.getRidePedals(cursor)));
@@ -64,7 +66,6 @@ public class RidesActivity extends SherlockActivity
 			{
 				ridePedals.setText("");
 			}
-			
 		}
 	}
 	
@@ -126,10 +127,12 @@ public class RidesActivity extends SherlockActivity
 		Intent i;
 		switch (item.getItemId())
 		{
+			// Create new ride
 			case R.id.menu_new_ride:
 				i = new Intent(this, RideDetailActivity.class);
 				startActivity(i);
 				return true;
+			// Switch to goals list
 			case R.id.menu_goals:
 				i = new Intent(this, GoalsActivity.class);
 				i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

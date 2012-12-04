@@ -1,11 +1,14 @@
 package thevoiceless.unistats;
 
+// Convenience class used while recording statistics
 public class Ride
 {
+	// Data members for each aspect of a ride
 	private String id, name;
 	private double distance, pedals;
 	private boolean trackDistance, trackPedals, useGPS;
 	
+	// TODO: Determine if all fields are necessary, possibly use Builder pattern instead
 	public Ride(String id, String name, double distance, double pedals, boolean trackDistance, boolean trackPedals, boolean useGPS)
 	{
 		this.id = id;

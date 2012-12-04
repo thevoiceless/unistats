@@ -24,9 +24,11 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class GoalDetailActivity extends SherlockActivity
 {
+	// Date formats used in the form
 	private static final SimpleDateFormat MONTH_FORMAT = new SimpleDateFormat("MMMMMMMMMM");
 	private static final SimpleDateFormat DAY_FORMAT = new SimpleDateFormat("d");
 	private static final SimpleDateFormat YEAR_FORMAT = new SimpleDateFormat("yyyy");
+	
 	private static Calendar cal = Calendar.getInstance();
 	private static String errors;
 	private String goalID;
@@ -41,9 +43,6 @@ public class GoalDetailActivity extends SherlockActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_goal_details);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		//setDataMembers();
-		//setListeners();
 	}
 	
 	@Override
@@ -67,15 +66,16 @@ public class GoalDetailActivity extends SherlockActivity
 	{
 		 switch (item.getItemId())
 		 {
-		        case android.R.id.home:
-		        	Intent i = new Intent(this, GoalsActivity.class);
-		        	i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-		        			| Intent.FLAG_ACTIVITY_NEW_TASK);
-		        	startActivity(i);
-		        	finish();
-		        	return true;
-		        default:
-		        	return super.onOptionsItemSelected(item);
+			// Navigate up, clear activity from the stack to prevent issues with the back button
+	        case android.R.id.home:
+	        	Intent i = new Intent(this, GoalsActivity.class);
+	        	i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+	        			| Intent.FLAG_ACTIVITY_NEW_TASK);
+	        	startActivity(i);
+	        	finish();
+	        	return true;
+	        default:
+	        	return super.onOptionsItemSelected(item);
 		 }
 	}
 	
@@ -101,10 +101,13 @@ public class GoalDetailActivity extends SherlockActivity
 		year.setKeyListener(null);
 	}
 	
+	// Populate the form with the values of the selected goal, if it exists
 	private void initForm()
 	{
+		// Selected an already-existing goal
 		if (goalID != null)
 		{
+			// Editing this goal, so change the title of the activity
 			setTitle(R.string.title_activity_edit_goal);
 			
 			Cursor c = dbHelper.getGoalById(goalID);
@@ -113,13 +116,14 @@ public class GoalDetailActivity extends SherlockActivity
 			name.setText(dbHelper.getGoalName(c));
 			
 			double dist = dbHelper.getGoalDistance(c);
+			// Distance goal was set if the value is greater than -1
 			if (dist >= 0)
 			{
 				setDistance.setChecked(true);
 				enableDistance();
 				distance.setText(String.valueOf(dist));
 			}
-			
+			// Pedals goal was set if the value is greater than -1
 			double ped = dbHelper.getGoalPedals(c);
 			if (ped >= 0)
 			{
@@ -129,6 +133,7 @@ public class GoalDetailActivity extends SherlockActivity
 			}
 			
 			Date date = dbHelper.getGoalDate(c);
+			// Populate the date area if a date was set
 			if (date.compareTo(GoalsActivity.NO_DATE) != 0)
 			{
 				anyDate.setChecked(false);
@@ -137,6 +142,8 @@ public class GoalDetailActivity extends SherlockActivity
 				year.setText(YEAR_FORMAT.format(date));
 				enableDateSelection();
 			}
+			
+			c.close();
 		}
 	}
 	
@@ -149,6 +156,7 @@ public class GoalDetailActivity extends SherlockActivity
 		save.setOnClickListener(pressSaveButton);
 	}
 	
+	// Allow the user to enter a distance
 	private void enableDistance()
 	{
 		distance.setEnabled(true);
@@ -163,6 +171,7 @@ public class GoalDetailActivity extends SherlockActivity
 		distance.setText("");
 	}
 	
+	// Allow the user to enter a number of pedals
 	private void enablePedals()
 	{
 		pedals.setEnabled(true);
@@ -207,12 +216,12 @@ public class GoalDetailActivity extends SherlockActivity
 	private void updateDisplayedDate()
 	{
 		Date chosenDate = cal.getTime();
-//		Log.v("updateDisplayedDate", chosenDate.toString());
 		month.setText(MONTH_FORMAT.format(chosenDate));
 		day.setText(DAY_FORMAT.format(chosenDate));
 		year.setText(YEAR_FORMAT.format(chosenDate));		
 	}
 	
+	// Update the calendar to the date selected
 	private void updateCalendar()
 	{
 		StringBuilder dateString = new StringBuilder();
@@ -228,20 +237,20 @@ public class GoalDetailActivity extends SherlockActivity
 		}
 		catch (Exception e)
 		{
-			Log.wtf("ohshit", getString(R.string.exception_setting_date));
+			Log.wtf("updateCalendar", getString(R.string.exception_setting_date));
 		}
 	}
 	
+	// Validate the form, return true if there were no issues
 	private boolean validateForm()
 	{
 		StringBuilder formErrors = new StringBuilder();
-		// Check name
+		// Verify name
 		if (name.getText().toString().trim().equals(""))
 		{
 			formErrors.append(getString(R.string.error_no_name));
 		}
-		// Check chosen stat(s)
-		// None selected
+		// Check chosen statistic(s)
 		if (!(setDistance.isChecked() || setPedals.isChecked()))
 		{
 			if (formErrors.length() > 0)
@@ -255,6 +264,7 @@ public class GoalDetailActivity extends SherlockActivity
 		{
 			if (setDistance.isChecked())
 			{
+				// Validate distance
 				try
 				{
 					Double.valueOf(distance.getText().toString());
@@ -271,6 +281,7 @@ public class GoalDetailActivity extends SherlockActivity
 			
 			if (setPedals.isChecked())
 			{
+				// Validate number of pedals
 				try
 				{
 					Double.valueOf(pedals.getText().toString());
@@ -286,6 +297,7 @@ public class GoalDetailActivity extends SherlockActivity
 			}
 		}
 		
+		// Compile the errors, if any, into a single string
 		errors = formErrors.toString();
 		if (errors.equals(""))
 		{
@@ -381,14 +393,15 @@ public class GoalDetailActivity extends SherlockActivity
 		@Override
 		public void onClick(View v)
 		{
+			// Validate the form
 			if (validateForm())
 			{
-				Log.v("save", "distance is checked: " + setDistance.isChecked());
+				// Set default values for distance, pedals, and date unless specified by the user
 				double d = setDistance.isChecked() ? Double.valueOf(distance.getText().toString()) : -1;
-				Log.v("save", "pedals is checked: " + setPedals.isChecked());
 				double p = setPedals.isChecked() ? Double.valueOf(pedals.getText().toString()) : -1;
 				long date = anyDate.isChecked() ? -1L : (long) (cal.getTimeInMillis() / 1000L);
 				
+				// Creating a new goal
 				if (goalID == null)
 				{
 					long result = dbHelper.insertGoal(name.getText().toString(), date, d, p);
@@ -404,6 +417,7 @@ public class GoalDetailActivity extends SherlockActivity
 						Toast.makeText(GoalDetailActivity.this, R.string.error_creating_ride, Toast.LENGTH_SHORT).show();
 					}
 				}
+				// Update an already-existing goal
 				else
 				{					
 					int result = dbHelper.updateGoal(goalID, name.getText().toString(), date, d, p);
@@ -420,6 +434,7 @@ public class GoalDetailActivity extends SherlockActivity
 					}
 				}
 			}
+			// Display a toast with the form errors
 			else
 			{
 				// TODO: Show error dialog

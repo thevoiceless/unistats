@@ -10,6 +10,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * @author riley
+ *
+ */
+/**
+ * @author riley
+ *
+ */
 public class DatabaseHelper extends SQLiteOpenHelper
 {
 	private static Calendar cal;
@@ -95,6 +103,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		super(context, DATABASE_NAME, null, SCHEMA_VERSION);
 	}
 
+	// Execute each SQL statement in the DB_CREATE array
 	@Override
 	public void onCreate(SQLiteDatabase db)
 	{
@@ -120,6 +129,15 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	
 	/* DATABASE MODIFICATION */
 	
+	
+	/**
+	 * @param name		Name of the ride
+	 * @param date		long representing the date of the ride
+	 * @param gps		Whether or not to use GPS if recording distance (1 for true, 0 for false)
+	 * @param distance	Distance traveled
+	 * @param pedals	Number of times pedaled
+	 * @return			The row ID of the newly inserted row, or -1 if an error occurred
+	 */
 	public long insertRide(String name, long date, int gps, double distance, double pedals)
 	{
 		ContentValues cv = new ContentValues();
@@ -132,6 +150,16 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		return getWritableDatabase().insert(TABLE_RIDES, RIDE_COL_NAME, cv);
 	}
 	
+	
+	/**
+	 * @param id		ID of the ride in the table
+	 * @param name		Name of the ride
+	 * @param date		long representing the date of the ride
+	 * @param gps		Whether or not to use GPS if recording distance (1 for true, 0 for false)
+	 * @param distance	Distance traveled
+	 * @param pedals	Number of times pedaled
+	 * @return			The number of rows affected
+	 */
 	public int updateRide(String id, String name, long date, int gps, double distance, double pedals)
 	{
 		ContentValues cv = new ContentValues();
@@ -146,6 +174,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		return getWritableDatabase().update(TABLE_RIDES, cv, ID_MATCH_ARGS, args);
 	}
 	
+	/**
+	 * @param id		ID of the ride in the table
+	 * @param distance	New distance value
+	 * @return			The number of rows affected
+	 */
 	public int updateRideDistance(String id, double distance)
 	{
 		ContentValues cv = new ContentValues();
@@ -156,6 +189,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		return getWritableDatabase().update(TABLE_RIDES, cv, ID_MATCH_ARGS, args);
 	}
 	
+	/**
+	 * @param id		ID of the ride in the table
+	 * @param pedals	New pedals value
+	 * @return			The number of rows affected
+	 */
 	public int updateRidePedals(String id, double pedals)
 	{
 		ContentValues cv = new ContentValues();
@@ -166,6 +204,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		return getWritableDatabase().update(TABLE_RIDES, cv, ID_MATCH_ARGS, args);
 	}
 	
+	/**
+	 * @param id	ID of the ride to delete
+	 * @return		Whether or not the ride was delete successfully
+	 */
 	public boolean deleteRide(String id)
 	{
 		String[] args = {id};
@@ -174,6 +216,13 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		return (result != 0) ? true : false;
 	}
 	
+	/**
+	 * @param name		Name of the goal
+	 * @param date		long representing the desired date of completion
+	 * @param distance	Distance goal, or -1 if not set
+	 * @param pedals	Pedals goal, or -1 if not set
+	 * @return			The row ID of the newly inserted row, or -1 if an error occurred
+	 */
 	public long insertGoal(String name, long date, double distance, double pedals)
 	{
 		ContentValues cv = new ContentValues();
@@ -185,6 +234,14 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		return getWritableDatabase().insert(TABLE_GOALS, GOAL_COL_NAME, cv);
 	}
 	
+	/**
+	 * @param id		ID of the goal in the table
+	 * @param name		Name of the goal
+	 * @param date		long representing the desired date of completion
+	 * @param distance	Distance goal, or -1 if not set
+	 * @param pedals	Pedals goal, or -1 if not set
+	 * @return			The number of rows affected
+	 */
 	public int updateGoal(String id, String name, long date, double distance, double pedals)
 	{
 		ContentValues cv = new ContentValues();
@@ -198,6 +255,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		return getWritableDatabase().update(TABLE_GOALS, cv, ID_MATCH_ARGS, args);
 	}
 	
+	/**
+	 * @param id	ID of the goal in the table
+	 * @return		Whether or not the goal was deleted successfully
+	 */
 	public boolean deleteGoal(String id)
 	{
 		String[] args = {id};
@@ -276,10 +337,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
 			cal.setTimeInMillis(d * 1000);
 			return cal.getTime();
 		}
-//		cal = Calendar.getInstance();
-//		cal.setTimeInMillis((long) (c.getLong(GOAL_DATE_INT) * 1000));
-//		
-//		return cal.getTime();
 	}
 	
 	public double getGoalDistance(Cursor c)

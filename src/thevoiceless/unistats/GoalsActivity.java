@@ -24,6 +24,7 @@ import com.actionbarsherlock.view.MenuItem;
 public class GoalsActivity extends SherlockActivity
 {
 	public static final String GOAL_ID_KEY = "thevoiceless.unistats.GOAL_ID";
+	// If no date is given, use Date(0) to allow comparisons
 	public static final Date NO_DATE = new Date(0);
 	private static Context context;
 	private Cursor goals;
@@ -43,20 +44,23 @@ public class GoalsActivity extends SherlockActivity
 			goalDetails = (TextView) row.findViewById(R.id.goalDetailsArea);
 		}
 		
+		// Populate the row layout
 		void populateFrom(Cursor cursor, DatabaseHelper helper)
 		{
 			detailsBuilder.setLength(0);
+			// Date format used in the goal details
 			SimpleDateFormat dateFormat = new SimpleDateFormat("M/d/yy");
 			
 			goalName.setText(helper.getGoalName(cursor));
 			
 			double goalDistance = helper.getGoalDistance(cursor);
 			double goalPedals = helper.getGoalPedals(cursor);
+			// Display the goal values if they are greater than -1
 			if (goalDistance >= 0)
 			{
 				detailsBuilder.append(goalDistance + " m");
 			}
-			if (Double.valueOf(goalPedals) >= 0)
+			if (goalPedals >= 0)
 			{
 				if (detailsBuilder.length() > 0)
 				{
@@ -67,6 +71,7 @@ public class GoalsActivity extends SherlockActivity
 			detailsBuilder.append(" ");
 			
 			Date d = helper.getGoalDate(cursor);
+			// Check if a date was specified
 			if (d.compareTo(NO_DATE) != 0)
 			{
 				detailsBuilder.append(context.getString(R.string.by) + " " + dateFormat.format(d));
@@ -133,10 +138,12 @@ public class GoalsActivity extends SherlockActivity
 		Intent i;
 		switch (item.getItemId())
 		{
+			// Create new goal
 			case R.id.menu_new_goal:
 				i = new Intent(this, GoalDetailActivity.class);
 				startActivity(i);
 				return true;
+			// Switch to rides list, clear this activity from the stack to prevent back-and-forth
 			case R.id.menu_rides:
 				i = new Intent(this, RidesActivity.class);
 				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
