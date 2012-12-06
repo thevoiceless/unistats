@@ -17,7 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TrackingStatsActivity extends Activity
+public class TrackingStatsActivity extends Activity implements StepListener
 {
 	public static final String TRACK_DISTANCE_KEY = "thevoiceless.unistats.TRACK_DISTANCE";
 	public static final String USE_GPS_KEY = "thevoiceless.unistats.USE_GPS";
@@ -46,6 +46,7 @@ public class TrackingStatsActivity extends Activity
 	private ImageButton pausePlayButton, stopButton;
 	
 	private PedalDetector pedalDetector;
+	private int numPedals;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -92,11 +93,19 @@ public class TrackingStatsActivity extends Activity
 	        if (thisRideID != null)
 	        {
 	        	updateThisRide();
+	        	finish();
 	        }
 	        return true;
 	    }
 
 	    return super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
+	public void onStep()
+	{
+		numPedals++;
+		updateDisplayedPedals();
 	}
 	
 	private void setDataMembers()
@@ -144,6 +153,7 @@ public class TrackingStatsActivity extends Activity
 	
 	private void setListeners()
 	{
+		pedalDetector.addStepListener(this);
 		pausePlayButton.setOnClickListener(pressPauseButton);
 		stopButton.setOnClickListener(pressStopButton);
 	}
@@ -206,6 +216,11 @@ public class TrackingStatsActivity extends Activity
 				Toast.makeText(TrackingStatsActivity.this, R.string.error_updating_ride, Toast.LENGTH_LONG).show();
 			}
 		}
+	}
+	
+	private void updateDisplayedPedals()
+	{
+		pedals.setText(String.valueOf(numPedals));
 	}
 	
 	// Use the haversine formula to calculate distance between two points
@@ -323,5 +338,4 @@ public class TrackingStatsActivity extends Activity
 			finish();
 		}
 	};
-
 }

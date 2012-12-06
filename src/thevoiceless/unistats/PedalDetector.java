@@ -1,5 +1,7 @@
 package thevoiceless.unistats;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -17,16 +19,18 @@ public class PedalDetector implements SensorEventListener
 	private Sensor sensor;
 	private double xAxis, yAxis, zAxis;
 	
-	private final static String TAG = "StepDetector";
     private float limit = 10;
     private float lastValues[] = new float[6];
     private float scale[] = new float[2];
-    private float yOffset;
+    private int h = 480;
+    private float yOffset = h * 0.5f;
 
     private float lastDirections[] = new float[6];
     private float lastExtremes[][] = { new float[6], new float[6] };
     private float lastDiff[] = new float[6];
     private int lastMatch = -1;
+    
+    private ArrayList<StepListener> stepListeners = new ArrayList<StepListener>();
 	
 	public PedalDetector(Context context)
 	{
@@ -34,8 +38,6 @@ public class PedalDetector implements SensorEventListener
 		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 	    sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_FASTEST);
 	    
-	    int h = 480;
-        yOffset = h * 0.5f;
         scale[0] = - (h * 0.5f * (1.0f / (SensorManager.STANDARD_GRAVITY * 2)));
         scale[1] = - (h * 0.5f * (1.0f / (SensorManager.MAGNETIC_FIELD_EARTH_MAX)));
 	}
@@ -61,7 +63,7 @@ public class PedalDetector implements SensorEventListener
                 if (direction == -lastDirections[k])
                 {
                     // Direction changed
-                    int extType = (direction > 0 ? 0 : 1); // minumum or maximum?
+                    int extType = (direction > 0 ? 0 : 1); // Minimum or maximum?
                     lastExtremes[extType][k] = lastValues[k];
                     float diff = Math.abs(lastExtremes[extType][k] - lastExtremes[1 - extType][k]);
 
@@ -73,11 +75,11 @@ public class PedalDetector implements SensorEventListener
                         
                         if (isAlmostAsLargeAsPrevious && isPreviousLargeEnough && isNotContra)
                         {
-                            Log.i(TAG, "step");
-//                            for (StepListener stepListener : stepListeners)
-//                            {
-//                                stepListener.onStep();
-//                            }
+                            Log.i("PedalDetector", "step");
+                            for (StepListener stepListener : stepListeners)
+                            {
+                                stepListener.onStep();
+                            }
                             lastMatch = extType;
                         }
                         else
@@ -102,6 +104,11 @@ public class PedalDetector implements SensorEventListener
 	public void onAccuracyChanged(Sensor sensor, int accuracy)
 	{
 	}
+	
+	public void addStepListener(StepListener sl)
+	{
+        stepListeners.add(sl);
+    }
 	
 	public void stopCollectingData()
 	{
