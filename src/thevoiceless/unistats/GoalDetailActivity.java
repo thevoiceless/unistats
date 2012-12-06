@@ -398,7 +398,7 @@ public class GoalDetailActivity extends SherlockActivity
 			{
 				// Set default values for distance, pedals, and date unless specified by the user
 				double d = setDistance.isChecked() ? Double.valueOf(distance.getText().toString()) : -1;
-				double p = setPedals.isChecked() ? Double.valueOf(pedals.getText().toString()) : -1;
+				int p = setPedals.isChecked() ? Integer.valueOf(pedals.getText().toString()) : -1;
 				long date = anyDate.isChecked() ? -1L : (long) (cal.getTimeInMillis() / 1000L);
 				
 				// Creating a new goal

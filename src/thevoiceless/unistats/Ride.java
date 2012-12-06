@@ -5,11 +5,12 @@ public class Ride
 {
 	// Data members for each aspect of a ride
 	private String id, name;
-	private double distance, pedals;
+	private double distance;
+	int pedals;
 	private boolean trackDistance, trackPedals, useGPS;
 	
 	// TODO: Determine if all fields are necessary, possibly use Builder pattern instead
-	public Ride(String id, String name, double distance, double pedals, boolean trackDistance, boolean trackPedals, boolean useGPS)
+	public Ride(String id, String name, double distance, int pedals, boolean trackDistance, boolean trackPedals, boolean useGPS)
 	{
 		this.id = id;
 		this.name = name;
@@ -37,7 +38,7 @@ public class Ride
 		return distance;
 	}
 	
-	public double getPedals()
+	public int getPedals()
 	{
 		return pedals;
 	}
@@ -64,8 +65,8 @@ public class Ride
 		distance += distanceTraveled;
 	}
 	
-	public void updatePedals(double numPedals)
+	public void updatePedals(int numPedals)
 	{
-		pedals += numPedals;
+		pedals = numPedals;
 	}
 }

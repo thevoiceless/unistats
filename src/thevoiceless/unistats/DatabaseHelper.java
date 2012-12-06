@@ -68,13 +68,13 @@ public class DatabaseHelper extends SQLiteOpenHelper
 			+ RIDE_COL_DATE + " INTEGER, "
 			+ RIDE_COL_GPS + " INTEGER, "
 			+ RIDE_COL_DIST + " REAL, "
-			+ RIDE_COL_PED + " REAL);",
+			+ RIDE_COL_PED + " INTEGER);",
 			"CREATE TABLE " + TABLE_GOALS
 			+ " (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
 			+ GOAL_COL_NAME + " TEXT, "
 			+ GOAL_COL_DATE + " INTEGER, "
 			+ GOAL_COL_DIST + " REAL, "
-			+ GOAL_COL_PED + " REAL);" };
+			+ GOAL_COL_PED + " INTEGER);" };
 	// Match provided arguments
 	private static final String ID_MATCH_ARGS = "_ID=?";
 	// Get all by ID
@@ -138,7 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	 * @param pedals	Number of times pedaled
 	 * @return			The row ID of the newly inserted row, or -1 if an error occurred
 	 */
-	public long insertRide(String name, long date, int gps, double distance, double pedals)
+	public long insertRide(String name, long date, int gps, double distance, int pedals)
 	{
 		ContentValues cv = new ContentValues();
 		cv.put(RIDE_COL_NAME, name);
@@ -150,7 +150,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		return getWritableDatabase().insert(TABLE_RIDES, RIDE_COL_NAME, cv);
 	}
 	
-	
 	/**
 	 * @param id		ID of the ride in the table
 	 * @param name		Name of the ride
@@ -160,7 +159,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	 * @param pedals	Number of times pedaled
 	 * @return			The number of rows affected
 	 */
-	public int updateRide(String id, String name, long date, int gps, double distance, double pedals)
+	public int updateRide(String id, String name, long date, int gps, double distance, int pedals)
 	{
 		ContentValues cv = new ContentValues();
 		String[] args = {id};
@@ -194,7 +193,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	 * @param pedals	New pedals value
 	 * @return			The number of rows affected
 	 */
-	public int updateRidePedals(String id, double pedals)
+	public int updateRidePedals(String id, int pedals)
 	{
 		ContentValues cv = new ContentValues();
 		String[] args = {id};
@@ -223,7 +222,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	 * @param pedals	Pedals goal, or -1 if not set
 	 * @return			The row ID of the newly inserted row, or -1 if an error occurred
 	 */
-	public long insertGoal(String name, long date, double distance, double pedals)
+	public long insertGoal(String name, long date, double distance, int pedals)
 	{
 		ContentValues cv = new ContentValues();
 		cv.put(GOAL_COL_NAME, name);
@@ -242,7 +241,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	 * @param pedals	Pedals goal, or -1 if not set
 	 * @return			The number of rows affected
 	 */
-	public int updateGoal(String id, String name, long date, double distance, double pedals)
+	public int updateGoal(String id, String name, long date, double distance, int pedals)
 	{
 		ContentValues cv = new ContentValues();
 		String[] args = {id};
@@ -303,9 +302,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		return c.getDouble(RIDE_DIST_INT);
 	}
 	
-	public double getRidePedals(Cursor c)
+	public int getRidePedals(Cursor c)
 	{
-		return c.getDouble(RIDE_PED_INT);
+		return c.getInt(RIDE_PED_INT);
 	}
 	
 	public Cursor getAllGoals(String orderBy)
@@ -344,8 +343,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
 		return c.getDouble(GOAL_DIST_INT);
 	}
 	
-	public double getGoalPedals(Cursor c)
+	public int getGoalPedals(Cursor c)
 	{
-		return c.getDouble(GOAL_PED_INT);
+		return c.getInt(GOAL_PED_INT);
 	}
 }

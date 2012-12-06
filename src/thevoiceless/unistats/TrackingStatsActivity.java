@@ -34,7 +34,8 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	private LocationManager locManager;
 	private Location lastLocation;
 	private String thisRideID, thisRideName;
-	private double thisRideDistance, thisRidePedals;
+	private double thisRideDistance;
+	private int thisRidePedals;
 	private boolean trackDistance, trackPedals, useGPS, initialLocation;
 	private DatabaseHelper dbHelper;
 	private Cursor thisRideCursor;
@@ -105,6 +106,7 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	public void onStep()
 	{
 		numPedals++;
+		thisRide.updatePedals(numPedals);
 		updateDisplayedPedals();
 	}
 	
@@ -178,7 +180,7 @@ public class TrackingStatsActivity extends Activity implements StepListener
 		accuracy.setText("-");
 		// Initialize distance and pedals if they have values, even if they are not being collected during this ride
 		double d = thisRide.getDistance();
-		double p = thisRide.getPedals();
+		int p = thisRide.getPedals();
 		if (d >= 0)
 		{
 			distance.setText(String.valueOf(d));

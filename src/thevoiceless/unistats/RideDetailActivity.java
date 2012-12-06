@@ -350,7 +350,7 @@ public class RideDetailActivity extends SherlockActivity
 				// Set default values for distance, GPS use, and pedals unless specified by the user
 				double d = recordDistance.isChecked() ? 0 : -1;
 				int g = useGPS.isChecked() ? 1 : 0;
-				double p = recordPedals.isChecked() ? 0 : -1;
+				int p = recordPedals.isChecked() ? 0 : -1;
 				
 				// Create new ride
 				if (rideID == null)
@@ -409,7 +409,7 @@ public class RideDetailActivity extends SherlockActivity
 				// Set default values for distance, GPS use, and pedals unless specified by the user
 				double d = recordDistance.isChecked() ? 0 : -1;
 				int g = useGPS.isChecked() ? 1 : 0;
-				double p = recordPedals.isChecked() ? 0 : -1;
+				int p = recordPedals.isChecked() ? 0 : -1;
 				
 				// Save and start new ride
 				if (rideID == null)
