@@ -44,6 +44,8 @@ public class TrackingStatsActivity extends Activity
 	// View elements
 	private TextView title, distance, pedals, accuracy;
 	private ImageButton pausePlayButton, stopButton;
+	
+	private PedalDetector pedalDetector;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -77,6 +79,7 @@ public class TrackingStatsActivity extends Activity
 	{
 		locManager.removeUpdates(onLocationChange);
 		thisRideCursor.close();
+		pedalDetector.stopCollectingData();
 		super.onDestroy();
 	}
 	
@@ -98,6 +101,7 @@ public class TrackingStatsActivity extends Activity
 	
 	private void setDataMembers()
 	{
+		pedalDetector = new PedalDetector(this);
 		title = (TextView) findViewById(R.id.titleTracking);
 		distance = (TextView) findViewById(R.id.recordedDistanceArea);
 		pedals = (TextView) findViewById(R.id.recordedPedalsArea);
