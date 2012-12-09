@@ -65,6 +65,7 @@ public class TrackingStatsActivity extends Activity implements StepListener
 		setContentView(R.layout.activity_tracking_stats);
 		
 		setDataMembers();
+		initRide();
 		setListeners();
 		setLocationUpdates();
 		
@@ -79,9 +80,17 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	}
 	
 	@Override
+	public void onPause()
+	{
+		goals.close();
+		super.onPause();
+	}
+	
+	@Override
 	public void onResume()
 	{
 		super.onResume();
+		goals = dbHelper.getAllGoals(DatabaseHelper.GOAL_COL_NAME);
 		initFields();
 	}
 	
@@ -89,7 +98,6 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	public void onDestroy()
 	{
 		locManager.removeUpdates(onLocationChange);
-		goals.close();
 		if (trackPedals)
 		{
 			pedalDetector.stopCollectingData();
@@ -135,7 +143,6 @@ public class TrackingStatsActivity extends Activity implements StepListener
 		thisRideID = getIntent().getStringExtra(RidesActivity.RIDE_ID_KEY);
 		
 		dbHelper = new DatabaseHelper(this);
-		goals = dbHelper.getAllGoals(DatabaseHelper.GOAL_COL_NAME);
 		
 		trackDistance = getIntent().getBooleanExtra(TRACK_DISTANCE_KEY, false);
 		trackPedals = getIntent().getBooleanExtra(TRACK_PEDALS_KEY, false);
@@ -146,8 +153,6 @@ public class TrackingStatsActivity extends Activity implements StepListener
 		{
 			Log.wtf("TrackingStatsActivity", "Not tracking any stat");
 		}
-				
-		initRide();
 	}
 	
 	// Enable either network or GPS location updates

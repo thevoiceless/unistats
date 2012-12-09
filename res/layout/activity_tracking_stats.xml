@@ -1,119 +1,121 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/trackingScrollview"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:paddingLeft="10dip"
-    android:paddingRight="10dip" >
+    android:layout_height="fill_parent" >
 
-    <TextView
-        android:id="@+id/titleTracking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:paddingBottom="20dip"
-        android:text="@string/title_activity_tracking_stats"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30sp" />
-    
-    <LinearLayout
-        android:id="@+id/distanceRow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/titleTracking"
-        android:layout_centerInParent="true" >
-        
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip" >
+
         <TextView
-            android:id="@+id/labelRecordedDistance"
+            android:id="@+id/titleTracking"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dip"
-            android:text="@string/label_distance_recorded"
-            android:textSize="20sp" />
-    
-	    <TextView
-	        android:id="@+id/recordedDistanceArea"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:padding="5dip"
-	        android:text="@string/label_distance"
-	        android:textSize="20sp" />
-    
-    </LinearLayout>
-    
-    <LinearLayout
-        android:id="@+id/accuracyRow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/distanceRow"
-        android:layout_centerInParent="true" >
-        
-        <TextView
-            android:id="@+id/labelDistanceAccuracy"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="20dip"
+            android:text="@string/title_activity_tracking_stats"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:id="@+id/distanceRow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dip"
-            android:text="@string/label_distance_accuracy"
-            android:textSize="15sp" />
-    
-	    <TextView
-	        android:id="@+id/distanceAccuracyArea"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:padding="5dip"
-	        android:text="@string/label_accuracy"
-	        android:textSize="15sp" />
-    
-    </LinearLayout>
+            android:layout_below="@id/titleTracking"
+            android:layout_centerInParent="true" >
 
-	<LinearLayout
-	    android:id="@+id/pedalsRow"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_below="@id/accuracyRow"
-	    android:layout_centerInParent="true" >
-	    
-	    <TextView
-	        android:id="@+id/labelRecordedPedals"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:padding="5dip"
-	        android:text="@string/label_pedals_recorded"
-	        android:textSize="20sp" />
-	    
-	    <TextView
-	        android:id="@+id/recordedPedalsArea"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:padding="5dip"
-	        android:text="@string/label_pedals"
-	        android:textSize="20sp" />
-	    
-	</LinearLayout>
-	
-	<LinearLayout
-	    android:id="@+id/controlsRow"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@id/pedalsRow"
-	    android:layout_centerVertical="true"
-	    android:paddingTop="20dip" >
-	    
-	    <ImageButton
-	        android:id="@+id/buttonPausePlayStats"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:src="@drawable/icon_pause" />
-	    
-	    <ImageButton
-	        android:id="@+id/buttonStopStats"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:src="@drawable/icon_stop" />
-	    
-	</LinearLayout>
+            <TextView
+                android:id="@+id/labelRecordedDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_distance_recorded"
+                android:textSize="20sp" />
 
-</RelativeLayout>
+            <TextView
+                android:id="@+id/recordedDistanceArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_distance"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/accuracyRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/distanceRow"
+            android:layout_centerInParent="true" >
+
+            <TextView
+                android:id="@+id/labelDistanceAccuracy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_distance_accuracy"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/distanceAccuracyArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_accuracy"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/pedalsRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/accuracyRow"
+            android:layout_centerInParent="true" >
+
+            <TextView
+                android:id="@+id/labelRecordedPedals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_pedals_recorded"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/recordedPedalsArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dip"
+                android:text="@string/label_pedals"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/controlsRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/pedalsRow"
+            android:layout_centerVertical="true"
+            android:paddingTop="20dip" >
+
+            <ImageButton
+                android:id="@+id/buttonPausePlayStats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/icon_pause" />
+
+            <ImageButton
+                android:id="@+id/buttonStopStats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/icon_stop" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</ScrollView>

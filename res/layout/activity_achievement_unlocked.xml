@@ -1,93 +1,95 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/achievementLayout"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/achievementScroll"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-    
-    <TextView
-        android:id="@+id/congrats"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/title_activity_achievement_unlocked"
-        android:textSize="30sp" />
-    
-    <TextView
-        android:id="@+id/youSuccessfully"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/congrats"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="10dip"
-        android:text="@string/label_achievement_info"
-        android:textSize="20sp" />
-    
-    <TextView
-        android:id="@+id/whatYouDid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/youSuccessfully"
-        android:layout_centerHorizontal="true"
-        android:text="foo" />
-    
-    <TextView
-        android:id="@+id/shareOn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/whatYouDid"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="30dip"
-        android:text="@string/label_share_achievement"
-        android:textSize="20sp" />
-    
-    <LinearLayout
-        android:id="@+id/socialButtonsRow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/shareOn"
-        android:layout_centerHorizontal="true" >
-        
-        <ImageButton
-            android:id="@+id/buttonGooglePlus"
+
+    <RelativeLayout
+        android:id="@+id/achievementLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <TextView
+            android:id="@+id/congrats"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
+            android:layout_centerHorizontal="true"
             android:padding="10dip"
-            android:scaleType="center"
-            android:src="@drawable/google4" />
-	    
-	    <ImageButton
-	        android:id="@+id/buttonFacebook"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:background="@null"
-	        android:padding="10dip"
-	        android:src="@drawable/facebook4" />
-	    
-	    <ImageButton
-	        android:id="@+id/buttonTwitter"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:background="@null"
-	        android:padding="10dip"
-	        android:src="@drawable/twitter4" />
-	    
-	    <ImageButton
-	        android:id="@+id/buttonTumblr"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:background="@null"
-	        android:padding="10dip"
-	        android:src="@drawable/tumblr4" />
-        
-    </LinearLayout>
-    
-    <Button
-        android:id="@+id/buttonCopyToClipboard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/socialButtonsRow"
-        android:layout_centerHorizontal="true"
-        android:text="@string/button_copy_to_clipboard"
-        android:textSize="15sp" />
-    
-</RelativeLayout>
+            android:text="@string/title_activity_achievement_unlocked"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/youSuccessfully"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/congrats"
+            android:layout_centerHorizontal="true"
+            android:padding="10dip"
+            android:text="@string/label_achievement_info"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/whatYouDid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/youSuccessfully"
+            android:layout_centerHorizontal="true"
+            android:text="foo" />
+
+        <TextView
+            android:id="@+id/shareOn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/whatYouDid"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="30dip"
+            android:text="@string/label_share_achievement"
+            android:textSize="20sp" />
+
+        <LinearLayout
+            android:id="@+id/socialButtonsRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/shareOn"
+            android:layout_centerHorizontal="true" >
+
+            <ImageButton
+                android:id="@+id/buttonGooglePlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:scaleType="center"
+                android:src="@drawable/google_button" />
+
+            <ImageButton
+                android:id="@+id/buttonFacebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/facebook_button" />
+
+            <ImageButton
+                android:id="@+id/buttonTwitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/twitter_button" />
+
+            <ImageButton
+                android:id="@+id/buttonTumblr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:src="@drawable/tumblr_button" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonCopyToClipboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/socialButtonsRow"
+            android:layout_centerHorizontal="true"
+            android:text="@string/button_copy_to_clipboard"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+</ScrollView>
