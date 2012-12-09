@@ -34,6 +34,8 @@ public class RideDetailActivity extends SherlockActivity
 	private static Calendar cal = Calendar.getInstance();
 	private static String errors;
 	private String rideID;
+	private double distance;
+	private int pedals;
 	private DatabaseHelper dbHelper;
 	private EditText name, month, day, year;
 	private CheckBox recordDistance, useGPS, recordPedals;
@@ -125,7 +127,8 @@ public class RideDetailActivity extends SherlockActivity
 			checkIfDateIsToday();
 			
 			// Distance was recorded if value is greater than -1
-			if (dbHelper.getRideDistance(c) >= 0)
+			distance = dbHelper.getRideDistance(c);
+			if (distance >= 0)
 			{
 				recordDistance.setChecked(true);
 				enableGPSCheckbox();
@@ -146,7 +149,8 @@ public class RideDetailActivity extends SherlockActivity
 			}
 			
 			// Pedals were recorded if value is greater than -1
-			if (dbHelper.getRidePedals(c) >= 0)
+			pedals = dbHelper.getRidePedals(c);
+			if (pedals >= 0)
 			{
 				recordPedals.setChecked(true);
 			}
@@ -346,15 +350,15 @@ public class RideDetailActivity extends SherlockActivity
 		{
 			// Validate the form
 			if (validateForm())
-			{
-				// Set default values for distance, GPS use, and pedals unless specified by the user
-				double d = recordDistance.isChecked() ? 0 : -1;
-				int g = useGPS.isChecked() ? 1 : 0;
-				int p = recordPedals.isChecked() ? 0 : -1;
-				
+			{				
 				// Create new ride
 				if (rideID == null)
-				{					
+				{
+					// Set default values for distance, GPS use, and pedals unless specified by the user
+					double d = recordDistance.isChecked() ? 0 : -1;
+					int g = useGPS.isChecked() ? 1 : 0;
+					int p = recordPedals.isChecked() ? 0 : -1;
+					
 					long result = dbHelper.insertRide(name.getText().toString(), 
 							(long) (cal.getTimeInMillis() / 1000L), 
 							g, d, p);
@@ -373,7 +377,12 @@ public class RideDetailActivity extends SherlockActivity
 				}
 				// Update an already-existing ride
 				else
-				{					
+				{
+					// Set default values for distance, GPS use, and pedals unless specified by the user
+					double d = recordDistance.isChecked() ? distance : -1;
+					int g = useGPS.isChecked() ? 1 : 0;
+					int p = recordPedals.isChecked() ? pedals : -1;
+					
 					int result = dbHelper.updateRide(rideID, name.getText().toString(), 
 							(long) (cal.getTimeInMillis() / 1000L), g, d, p);
 					
@@ -405,15 +414,15 @@ public class RideDetailActivity extends SherlockActivity
 		{
 			// Validate the form
 			if (validateForm())
-			{
-				// Set default values for distance, GPS use, and pedals unless specified by the user
-				double d = recordDistance.isChecked() ? 0 : -1;
-				int g = useGPS.isChecked() ? 1 : 0;
-				int p = recordPedals.isChecked() ? 0 : -1;
-				
+			{				
 				// Save and start new ride
 				if (rideID == null)
-				{					
+				{
+					// Set default values for distance, GPS use, and pedals unless specified by the user
+					double d = recordDistance.isChecked() ? 0 : -1;
+					int g = useGPS.isChecked() ? 1 : 0;
+					int p = recordPedals.isChecked() ? 0 : -1;
+					
 					long result = dbHelper.insertRide(name.getText().toString(), 
 							(long) (cal.getTimeInMillis() / 1000L), g, d, p);
 					
@@ -437,7 +446,12 @@ public class RideDetailActivity extends SherlockActivity
 				}
 				// Save and continue existing ride
 				else
-				{					
+				{
+					// Set default values for distance, GPS use, and pedals unless specified by the user
+					double d = recordDistance.isChecked() ? distance : -1;
+					int g = useGPS.isChecked() ? 1 : 0;
+					int p = recordPedals.isChecked() ? pedals : -1;
+					
 					int result = dbHelper.updateRide(rideID, name.getText().toString(), 
 							(long) (cal.getTimeInMillis() / 1000L), g, d, p);
 					

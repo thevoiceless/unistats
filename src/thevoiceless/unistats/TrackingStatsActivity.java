@@ -30,7 +30,6 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	public static final String TRACK_DISTANCE_KEY = "thevoiceless.unistats.TRACK_DISTANCE";
 	public static final String USE_GPS_KEY = "thevoiceless.unistats.USE_GPS";
 	public static final String TRACK_PEDALS_KEY = "thevoiceless.unistats.TRACK_PEDALS";
-	private static final DecimalFormat DISTANCE_FORMAT = new DecimalFormat();
 	// Time thresholds in milliseconds
 	private static final int MIN_UPDATE_FREQ = 10 * 1000;
 	// Distance thresholds in meters
@@ -55,8 +54,7 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	private ImageButton pausePlayButton, stopButton;
 	// Track number of pedals
 	private PedalDetector pedalDetector;
-	private int numPedals;
-	// Achievement notification ID
+	// Achievement notification ID and icon
 	private int goalID = 0;
 	private Bitmap achievementIcon;
 
@@ -91,9 +89,11 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	public void onDestroy()
 	{
 		locManager.removeUpdates(onLocationChange);
-		thisRideCursor.close();
 		goals.close();
-		pedalDetector.stopCollectingData();
+		if (trackPedals)
+		{
+			pedalDetector.stopCollectingData();
+		}
 		super.onDestroy();
 	}
 	
@@ -117,14 +117,12 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	@Override
 	public void onStep()
 	{
-		numPedals++;
-		thisRide.updatePedals(numPedals);
+		thisRide.updatePedals(++thisRidePedals);
 		updateDisplayedPedals();
 	}
 	
 	private void setDataMembers()
 	{
-		pedalDetector = new PedalDetector(this);
 		title = (TextView) findViewById(R.id.titleTracking);
 		distance = (TextView) findViewById(R.id.recordedDistanceArea);
 		pedals = (TextView) findViewById(R.id.recordedPedalsArea);
@@ -142,6 +140,8 @@ public class TrackingStatsActivity extends Activity implements StepListener
 		trackDistance = getIntent().getBooleanExtra(TRACK_DISTANCE_KEY, false);
 		trackPedals = getIntent().getBooleanExtra(TRACK_PEDALS_KEY, false);
 		useGPS = getIntent().getBooleanExtra(USE_GPS_KEY, false);
+		pedalDetector = trackPedals ? new PedalDetector(this) : null;
+		
 		if (!(trackDistance || trackPedals))
 		{
 			Log.wtf("TrackingStatsActivity", "Not tracking any stat");
@@ -158,18 +158,21 @@ public class TrackingStatsActivity extends Activity implements StepListener
 			locManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 			if (useGPS)
 			{
-				locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_UPDATE_FREQ, 0, onLocationChange);
+				locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_UPDATE_FREQ, MIN_DISTANCE_GPS, onLocationChange);
 			}
 			else
 			{
-				locManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_UPDATE_FREQ, 0, onLocationChange);
+				locManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_UPDATE_FREQ, MIN_DISTANCE_NETWORK, onLocationChange);
 			}
 		}
 	}
 	
 	private void setListeners()
 	{
-		pedalDetector.addStepListener(this);
+		if (trackPedals)
+		{
+			pedalDetector.addStepListener(this);
+		}
 		pausePlayButton.setOnClickListener(pressPauseButton);
 		stopButton.setOnClickListener(pressStopButton);
 	}
@@ -179,12 +182,14 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	{
 		thisRideCursor = dbHelper.getRideById(thisRideID);
 		thisRideCursor.moveToFirst();
-		
+				
 		thisRideName = dbHelper.getRideName(thisRideCursor);
 		thisRideDistance = dbHelper.getRideDistance(thisRideCursor);
 		thisRidePedals = dbHelper.getRidePedals(thisRideCursor);
-		
+				
 		thisRide = new Ride(thisRideID, thisRideName, thisRideDistance, thisRidePedals, trackDistance, trackPedals, useGPS);
+		
+		thisRideCursor.close();
 	}
 	
 	// Initialize the form
@@ -197,7 +202,7 @@ public class TrackingStatsActivity extends Activity implements StepListener
 		int p = thisRide.getPedals();
 		if (d >= 0)
 		{
-			distance.setText(String.valueOf(d));
+			updateDisplayedDistance();
 		}
 		else
 		{
@@ -205,7 +210,8 @@ public class TrackingStatsActivity extends Activity implements StepListener
 		}
 		if (p >= 0)
 		{
-			pedals.setText(String.valueOf(p));
+			updateDisplayedPedals();
+			
 		}
 		else
 		{
@@ -247,10 +253,6 @@ public class TrackingStatsActivity extends Activity implements StepListener
 		stackBuilder.addParentStack(AchievementUnlockedActivity.class);
 		// Adds the Intent that starts the Activity to the top of the stack
 		stackBuilder.addNextIntent(showAchievement);
-//		PendingIntent achievement = PendingIntent.getActivity(this, 
-//				0, 
-//				showAchievement, 
-//				0);
 		PendingIntent achievement = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 		
 		goals.moveToFirst();
@@ -265,7 +267,6 @@ public class TrackingStatsActivity extends Activity implements StepListener
 					.setContentText(getString(R.string.notification_goal_distance) + " " + d + " m")
 					.setContentIntent(achievement)
 					.setSmallIcon(R.drawable.icon_menu_star)
-					.setLargeIcon(achievementIcon)
 					.build();
 				notification.flags |= Notification.FLAG_AUTO_CANCEL;
 				
@@ -291,7 +292,12 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	
 	private void updateDisplayedPedals()
 	{
-		pedals.setText(String.valueOf(numPedals));
+		pedals.setText(String.valueOf(thisRide.getPedals()));
+	}
+	
+	private void updateDisplayedDistance()
+	{
+		distance.setText(String.format("%.2f m", thisRide.getDistance()));
 	}
 	
 	// Use the haversine formula to calculate distance between two points
@@ -341,7 +347,7 @@ public class TrackingStatsActivity extends Activity implements StepListener
 				else
 				{
 					thisRide.updateDistance(calcDistanceTraveled(lastLocation, currentLoc));
-					distance.setText(String.format("%.2f m", thisRide.getDistance()));
+					updateDisplayedDistance();
 					accuracy.setText(String.format("%.2f m", calcAccuracy(currentLoc.getAccuracy())));
 					lastLocation = currentLoc;
 				}

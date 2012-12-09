@@ -1,4 +1,5 @@
-Determine distance units
+Store stats separately from whether or not to record them (currently overwritten with -1)
+
 
 Use Loader instead of deprecated CursorAdapter constructor
 Fast-scroll in rides list

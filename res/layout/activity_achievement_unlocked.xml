@@ -8,7 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="@string/title_activity_achievement_unlocked" />
+        android:text="@string/title_activity_achievement_unlocked"
+        android:textSize="30sp" />
     
     <TextView
         android:id="@+id/youSuccessfully"
@@ -16,7 +17,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/congrats"
         android:layout_centerHorizontal="true"
-        android:text="@string/label_achievement_info" />
+        android:paddingTop="10dip"
+        android:text="@string/label_achievement_info"
+        android:textSize="20sp" />
     
     <TextView
         android:id="@+id/whatYouDid"
@@ -32,7 +35,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/whatYouDid"
         android:layout_centerHorizontal="true"
-        android:text="@string/label_share_achievement" />
+        android:paddingTop="30dip"
+        android:text="@string/label_share_achievement"
+        android:textSize="20sp" />
     
     <LinearLayout
         android:id="@+id/socialButtonsRow"
@@ -47,7 +52,8 @@
             android:layout_height="wrap_content"
             android:background="@null"
             android:padding="10dip"
-            android:src="@drawable/google" />
+            android:scaleType="center"
+            android:src="@drawable/google4" />
 	    
 	    <ImageButton
 	        android:id="@+id/buttonFacebook"
@@ -55,7 +61,7 @@
 	        android:layout_height="wrap_content"
 	        android:background="@null"
 	        android:padding="10dip"
-	        android:src="@drawable/facebook" />
+	        android:src="@drawable/facebook4" />
 	    
 	    <ImageButton
 	        android:id="@+id/buttonTwitter"
@@ -63,7 +69,7 @@
 	        android:layout_height="wrap_content"
 	        android:background="@null"
 	        android:padding="10dip"
-	        android:src="@drawable/twitter" />
+	        android:src="@drawable/twitter4" />
 	    
 	    <ImageButton
 	        android:id="@+id/buttonTumblr"
@@ -71,7 +77,7 @@
 	        android:layout_height="wrap_content"
 	        android:background="@null"
 	        android:padding="10dip"
-	        android:src="@drawable/tumblr" />
+	        android:src="@drawable/tumblr4" />
         
     </LinearLayout>
     
@@ -81,6 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/socialButtonsRow"
         android:layout_centerHorizontal="true"
-        android:text="@string/button_copy_to_clipboard" />
+        android:text="@string/button_copy_to_clipboard"
+        android:textSize="15sp" />
     
 </RelativeLayout>
