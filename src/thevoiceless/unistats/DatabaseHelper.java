@@ -129,7 +129,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
 	
 	/* DATABASE MODIFICATION */
 	
-	
 	/**
 	 * @param name		Name of the ride
 	 * @param date		long representing the date of the ride

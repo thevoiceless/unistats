@@ -1,5 +1,6 @@
 package thevoiceless.unistats;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import android.app.Activity;
@@ -33,9 +34,12 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	private static final int MIN_UPDATE_FREQ = 10 * 1000;
 	// Distance thresholds in meters
 	private static final int MIN_DISTANCE_NETWORK = 15;
-	private static final int MIN_DISTANCE_GPS = 5;
+	private static final int MIN_DISTANCE_GPS = 0;
 	// Mean radius of Earth in meters
 	private static final int RADIUS_OF_EARTH = 6371000;
+	// Calendars for date comparison
+	private static Calendar rideDate = Calendar.getInstance();
+	private static Calendar goalDate = Calendar.getInstance();
 	
 	private LocationManager locManager;
 	private Location lastLocation;
@@ -261,14 +265,16 @@ public class TrackingStatsActivity extends Activity implements StepListener
 		{
 			StringBuilder goalInfo = new StringBuilder();
 			// Get date of goal, if any
-			long date = goals.getLong(DatabaseHelper.GOAL_DATE_INT) * 1000L;
-			Log.e("goal date", GoalsActivity.dateFormat.format(new Date(date)));
+			long gd = goals.getLong(DatabaseHelper.GOAL_DATE_INT);
+			Log.e("goal date", GoalsActivity.dateFormat.format(new Date(gd * 1000L)));
 			Log.e("ride date", GoalsActivity.dateFormat.format(new Date(thisRide.getDate())));
-			boolean checkDate = (date != -1L) ? true : false;
+			goalDate.setTimeInMillis(gd * 1000);
+			rideDate.setTimeInMillis(thisRide.getDate());
+			boolean checkDate = (gd != -1L) ? true : false;
 			// Only check distance and pedals if:
 			//   a) Completion date does not matter, OR
 			//   b) This ride occurred before the given completion date
-			if (!checkDate || (checkDate && thisRide.getDate() < date))
+			if (!checkDate || (checkDate && isRideBeforeGoalDate()))
 			{
 				// Check distance goals
 				double dist = goals.getDouble(DatabaseHelper.GOAL_DIST_INT);
@@ -286,7 +292,7 @@ public class TrackingStatsActivity extends Activity implements StepListener
 						goalInfo.append(" ");
 						goalInfo.append(getString(R.string.by));
 						goalInfo.append(" ");
-						goalInfo.append(GoalsActivity.dateFormat.format(new Date(date)));
+						goalInfo.append(GoalsActivity.dateFormat.format(goalDate.getTime()));
 					}
 					distanceAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, goalInfo.toString());
 					// Add the notification ID as an intent extra
@@ -333,6 +339,23 @@ public class TrackingStatsActivity extends Activity implements StepListener
 			}
 			goals.moveToNext();
 		}	
+	}
+	
+	// Only compares year and day of year
+	private boolean isRideBeforeGoalDate()
+	{
+		// Ride year is after goal year
+		if (rideDate.get(Calendar.YEAR) > goalDate.get(Calendar.YEAR))
+		{
+			return false;
+		}
+		// Ride day of year is after goal day of year
+		if (rideDate.get(Calendar.DAY_OF_YEAR) > goalDate.get(Calendar.DAY_OF_YEAR))
+		{
+			return false;
+		}
+		// Ride year is before goal year and day of year is before goal year
+		return true;
 	}
 	
 	private void updateDisplayedPedals()
