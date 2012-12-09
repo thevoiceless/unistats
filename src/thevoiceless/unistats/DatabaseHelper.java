@@ -37,11 +37,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
 			+ RIDE_COL_DIST + ", " 
 			+ RIDE_COL_PED;
 	// Ride column integers
-	private static final int RIDE_NAME_INT = 1;
-	private static final int RIDE_DATE_INT = 2;
-	private static final int RIDE_GPS_INT = 3;
-	private static final int RIDE_DIST_INT = 4;
-	private static final int RIDE_PED_INT = 5;
+	public static final int RIDE_NAME_INT = 1;
+	public static final int RIDE_DATE_INT = 2;
+	public static final int RIDE_GPS_INT = 3;
+	public static final int RIDE_DIST_INT = 4;
+	public static final int RIDE_PED_INT = 5;
 	// Goal column names
 	public static final String GOAL_COL_NAME = "name";
 	public static final String GOAL_COL_DATE = "date";
@@ -52,10 +52,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
 			+ GOAL_COL_DIST + ", "
 			+ GOAL_COL_PED;
 	// Goal column integers
-	private static final int GOAL_NAME_INT = 1;
-	private static final int GOAL_DATE_INT = 2;
-	private static final int GOAL_DIST_INT = 3;
-	private static final int GOAL_PED_INT = 4;
+	public static final int GOAL_NAME_INT = 1;
+	public static final int GOAL_DATE_INT = 2;
+	public static final int GOAL_DIST_INT = 3;
+	public static final int GOAL_PED_INT = 4;
 	
 	private static final int SCHEMA_VERSION = 1;
 	

@@ -70,6 +70,17 @@
     <string name="label_distance_accuracy">Accuracy:</string>
     <string name="label_pedals_recorded">Pedals:</string>
     
+    <!-- Achievement Unlocked -->
+    <string name="title_activity_achievement_unlocked">Congratulations!</string>
+    <string name="label_achievement_info">You successfully</string>
+    <string name="label_share_achievement">Share On:</string>
+    <string name="button_copy_to_clipboard">Copy to Clipboard</string>
+    
+    <!-- Notifications -->
+    <string name="notification_achievement_get">Congratulations!</string>
+    <string name="notification_goal_distance">You\'ve ridden</string>
+    <string name="notification_goal_pedals">You\'ve pedaled</string>
+    
     <!-- Menus -->
     <string name="menu_rides_title">Rides</string>
     <string name="menu_new_ride_title">New Ride</string>

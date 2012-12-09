@@ -35,6 +35,8 @@
             android:label="@string/title_activity_new_goal" />
         <activity
             android:name=".TrackingStatsActivity" />
+        <activity
+            android:name=".AchievementUnlockedActivity" />
         
     </application>
 </manifest>
