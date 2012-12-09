@@ -264,6 +264,7 @@ public class TrackingStatsActivity extends Activity implements StepListener
 			{
 				String info = getString(R.string.notification_goal_distance) + " " + d + " m";
 				achievementUnlocked.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, info);
+				achievementUnlocked.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 				// Adds the Intent that starts the Activity to the top of the stack
 				stackBuilder.addNextIntent(achievementUnlocked);
 				PendingIntent showAchievementActivity = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -284,6 +285,7 @@ public class TrackingStatsActivity extends Activity implements StepListener
 			{
 				String info = getString(R.string.notification_goal_pedals) + " " + p + " times";
 				achievementUnlocked.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, info);
+				achievementUnlocked.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 				// Adds the Intent that starts the Activity to the top of the stack
 				stackBuilder.addNextIntent(achievementUnlocked);
 				PendingIntent showAchievementActivity = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
