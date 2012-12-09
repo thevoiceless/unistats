@@ -74,7 +74,8 @@
     <string name="title_activity_achievement_unlocked">Congratulations!</string>
     <string name="label_achievement_info">You successfully</string>
     <string name="label_share_achievement">Share On:</string>
-    <string name="button_copy_to_clipboard">Copy to Clipboard</string>
+    <string name="or">OR</string>
+    <string name="button_share_other">Share other ways</string>
     <string name="copied_to_clipboard">Achievement copied to clipboard</string>
     <string name="on_a_unicycle">on a unicycle</string>
     <string name="open_with">Open with…</string>

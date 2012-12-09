@@ -72,14 +72,24 @@
                 android:background="@null"
                 android:src="@drawable/tumblr_button" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/buttonCopyToClipboard"
+        
+        <TextView
+            android:id="@+id/or"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/socialButtonsRow"
             android:layout_centerHorizontal="true"
-            android:text="@string/button_copy_to_clipboard"
+            android:padding="5dip"
+            android:text="@string/or"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/buttonShareOther"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/or"
+            android:layout_centerHorizontal="true"
+            android:text="@string/button_share_other"
             android:textSize="15sp" />
     </RelativeLayout>
 

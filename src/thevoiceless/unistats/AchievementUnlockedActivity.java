@@ -21,7 +21,7 @@ public class AchievementUnlockedActivity extends Activity
 	public static final String ACHIEVEMENT_ID_KEY = "thevoiceless.unistats.ACHIEVEMENT_ID";
 	private TextView accomplishment;
 	private ImageButton google, facebook, twitter, tumblr;
-	private Button copyToClipboard;
+	private Button shareOther;
 	private String achievement;
 	private String whatIDid;
 	
@@ -42,7 +42,7 @@ public class AchievementUnlockedActivity extends Activity
 		facebook = (ImageButton) findViewById(R.id.buttonFacebook);
 		twitter = (ImageButton) findViewById(R.id.buttonTwitter);
 		tumblr = (ImageButton) findViewById(R.id.buttonTumblr);
-		copyToClipboard = (Button) findViewById(R.id.buttonCopyToClipboard);
+		shareOther = (Button) findViewById(R.id.buttonShareOther);
 		achievement = getIntent().getStringExtra(ACHIEVEMENT_INFO_KEY);
 		whatIDid = achievement.replaceFirst("You", "I") + " " + getString(R.string.on_a_unicycle);
 		
@@ -55,7 +55,7 @@ public class AchievementUnlockedActivity extends Activity
 		facebook.setOnClickListener(shareOnFacebook);
 		twitter.setOnClickListener(shareOnTwitter);
 		tumblr.setOnClickListener(shareOnTumblr);
-		copyToClipboard.setOnClickListener(pressCopyToClipboard);
+		shareOther.setOnClickListener(pressShareOther);
 	}
 	
 	@SuppressLint("NewApi")
@@ -79,12 +79,16 @@ public class AchievementUnlockedActivity extends Activity
 	
 	/* LISTENERS */
 	
-	OnClickListener pressCopyToClipboard = new OnClickListener()
+	OnClickListener pressShareOther = new OnClickListener()
 	{
 		@Override
 		public void onClick(View v)
 		{
 			copyToClipboard();
+			Intent shareIntent = new Intent(Intent.ACTION_SEND);
+			shareIntent.setType("text/plain");
+			shareIntent.putExtra(Intent.EXTRA_TEXT, whatIDid);
+			startActivity(Intent.createChooser(shareIntent, getString(R.string.open_with)));
 		}
 	};
 	
