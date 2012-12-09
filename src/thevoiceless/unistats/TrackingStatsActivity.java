@@ -1,5 +1,7 @@
 package thevoiceless.unistats;
 
+import java.util.Date;
+
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -14,7 +16,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -258,8 +259,11 @@ public class TrackingStatsActivity extends Activity implements StepListener
 		goals.moveToFirst();
 		while (!goals.isAfterLast())
 		{
+			StringBuilder goalInfo = new StringBuilder();
 			// Get date of goal, if any
-			long date = goals.getLong(DatabaseHelper.GOAL_DATE_INT);
+			long date = goals.getLong(DatabaseHelper.GOAL_DATE_INT) * 1000L;
+			Log.e("goal date", GoalsActivity.dateFormat.format(new Date(date)));
+			Log.e("ride date", GoalsActivity.dateFormat.format(new Date(thisRide.getDate())));
 			boolean checkDate = (date != -1L) ? true : false;
 			// Only check distance and pedals if:
 			//   a) Completion date does not matter, OR
@@ -273,8 +277,18 @@ public class TrackingStatsActivity extends Activity implements StepListener
 					// Create intent to launch the activity
 					Intent distanceAchievement = new Intent(this, AchievementUnlockedActivity.class);
 					// Create the achievement info string and add it as an intent extra
-					String distanceInfo = getString(R.string.notification_goal_distance) + " " + dist + " m";
-					distanceAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, distanceInfo);
+					goalInfo.append(getString(R.string.notification_goal_distance));
+					goalInfo.append(" ");
+					goalInfo.append(dist);
+					goalInfo.append(" m");
+					if (checkDate)
+					{
+						goalInfo.append(" ");
+						goalInfo.append(getString(R.string.by));
+						goalInfo.append(" ");
+						goalInfo.append(GoalsActivity.dateFormat.format(new Date(date)));
+					}
+					distanceAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, goalInfo.toString());
 					// Add the notification ID as an intent extra
 					distanceAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_ID_KEY, goalID);
 					distanceAchievement.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -283,7 +297,7 @@ public class TrackingStatsActivity extends Activity implements StepListener
 					
 					Notification distanceNotification = new NotificationCompat.Builder(this)
 						.setContentTitle(getString(R.string.notification_achievement_get))
-						.setContentText(distanceInfo)
+						.setContentText(goalInfo.toString())
 						.setContentIntent(showDistanceAchievement)
 						.setSmallIcon(R.drawable.icon_menu_star)
 						.build();

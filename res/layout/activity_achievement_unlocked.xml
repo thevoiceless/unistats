@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/congrats"
             android:layout_centerHorizontal="true"
+            android:gravity="center"
             android:text="foo"
             android:textSize="20sp" />
 

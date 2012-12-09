@@ -24,6 +24,8 @@ import com.actionbarsherlock.view.MenuItem;
 public class GoalsActivity extends SherlockActivity
 {
 	public static final String GOAL_ID_KEY = "thevoiceless.unistats.GOAL_ID";
+	// Date format used in the goal details
+	public static final SimpleDateFormat dateFormat = new SimpleDateFormat("M/d/yy");
 	// If no date is given, use Date(0) to allow comparisons
 	public static final Date NO_DATE = new Date(0);
 	private static Context context;
@@ -48,8 +50,6 @@ public class GoalsActivity extends SherlockActivity
 		void populateFrom(Cursor cursor, DatabaseHelper helper)
 		{
 			detailsBuilder.setLength(0);
-			// Date format used in the goal details
-			SimpleDateFormat dateFormat = new SimpleDateFormat("M/d/yy");
 			
 			goalName.setText(helper.getGoalName(cursor));
 			

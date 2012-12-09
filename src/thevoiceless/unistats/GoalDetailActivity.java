@@ -8,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -405,6 +406,7 @@ public class GoalDetailActivity extends SherlockActivity
 				if (goalID == null)
 				{
 					long result = dbHelper.insertGoal(name.getText().toString(), date, d, p);
+					Log.e("new goal", "ID " + result + " Date set to " + GoalsActivity.dateFormat.format(new Date(date * 1000L)));
 					
 					if (result != -1)
 					{
@@ -421,6 +423,7 @@ public class GoalDetailActivity extends SherlockActivity
 				else
 				{					
 					int result = dbHelper.updateGoal(goalID, name.getText().toString(), date, d, p);
+					Log.e("update goal", "ID " + goalID + " Date set to " + GoalsActivity.dateFormat.format(new Date(date * 1000L)));
 					
 					if (result == 1)
 					{

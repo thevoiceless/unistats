@@ -87,8 +87,8 @@
     
     <!-- Notifications -->
     <string name="notification_achievement_get">Congratulations!</string>
-    <string name="notification_goal_distance">You\'ve ridden more than</string>
-    <string name="notification_goal_pedals">You\'ve pedaled more than</string>
+    <string name="notification_goal_distance">You rode more than</string>
+    <string name="notification_goal_pedals">You pedaled more than</string>
     
     <!-- Menus -->
     <string name="menu_rides_title">Rides</string>
