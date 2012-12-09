@@ -247,7 +247,12 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	private void checkGoals()
 	{
 		NotificationManager notificationMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		
+		// Separate intents are created for each scenario because of the need to pass achievement info
+		// The ID of the notification is passed as an extra with the intent and as the supposedly unused
+		// second parameter (requestCode) of the PendingIntent constructor
+		// This is done to avoid conflicts between the intents that prevented the correct information
+		// from being passed with the second intent if two notifications were created
+		// See http://stackoverflow.com/questions/3730258/mulitple-instances-of-pending-intent
 		goals.moveToFirst();
 		while (!goals.isAfterLast())
 		{
@@ -255,12 +260,15 @@ public class TrackingStatsActivity extends Activity implements StepListener
 			double d = goals.getDouble(DatabaseHelper.GOAL_DIST_INT);
 			if (d != -1 && thisRide.getDistance() > d)
 			{
+				// Create intent to launch the activity
 				Intent distanceAchievement = new Intent(this, AchievementUnlockedActivity.class);
+				// Create the achievement info string and add it as an intent extra
 				String distanceInfo = getString(R.string.notification_goal_distance) + " " + d + " m";
-				Log.e("distance", distanceInfo);
 				distanceAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, distanceInfo);
+				// Add the notification ID as an intent extra
 				distanceAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_ID_KEY, goalID);
 				distanceAchievement.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				// Pass the notification ID as the second parameter to the constructor, set flag to CANCEL_CURRENT
 				PendingIntent showDistanceAchievement = PendingIntent.getActivity(this, goalID, distanceAchievement, PendingIntent.FLAG_CANCEL_CURRENT);
 				
 				Notification distanceNotification = new NotificationCompat.Builder(this)
@@ -271,19 +279,21 @@ public class TrackingStatsActivity extends Activity implements StepListener
 					.build();
 				distanceNotification.flags |= Notification.FLAG_AUTO_CANCEL;
 				
-				Log.e("distance id", String.valueOf(goalID));
 				notificationMgr.notify(goalID++, distanceNotification);
 			}
 			// Check pedal goals
 			int p = goals.getInt(DatabaseHelper.GOAL_PED_INT);
 			if (p != -1 && thisRide.getPedals() > p)
 			{
+				// Create intent to launch the activity
 				Intent pedalsAchievement = new Intent(this, AchievementUnlockedActivity.class);
+				// Create the achievement info string and add it as an intent extra
 				String pedalsInfo = getString(R.string.notification_goal_pedals) + " " + p + " times";
-				Log.e("pedals", pedalsInfo);
 				pedalsAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, pedalsInfo);
+				// Add the notification ID as an intent extra
 				pedalsAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_ID_KEY, goalID);
 				pedalsAchievement.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				// Pass the notification ID as the second parameter to the constructor, set flag to CANCEL_CURRENT
 				PendingIntent showPedalsAchievement = PendingIntent.getActivity(this, goalID, pedalsAchievement, PendingIntent.FLAG_CANCEL_CURRENT);
 				
 				Notification pedalsNotification = new NotificationCompat.Builder(this)
@@ -294,7 +304,6 @@ public class TrackingStatsActivity extends Activity implements StepListener
 					.build();
 				pedalsNotification.flags |= Notification.FLAG_AUTO_CANCEL;
 				
-				Log.e("pedals id", String.valueOf(goalID));
 				notificationMgr.notify(goalID++, pedalsNotification);
 			}
 			goals.moveToNext();

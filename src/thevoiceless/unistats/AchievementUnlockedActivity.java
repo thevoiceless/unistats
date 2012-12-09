@@ -40,7 +40,6 @@ public class AchievementUnlockedActivity extends Activity
 		tumblr = (ImageButton) findViewById(R.id.buttonTumblr);
 		copyToClipboard = (Button) findViewById(R.id.buttonCopyToClipboard);
 		achievement = getIntent().getStringExtra(ACHIEVEMENT_INFO_KEY);
-		Log.e("achievement", achievement);
 		
 		accomplishment.setText(achievement);
 	}
