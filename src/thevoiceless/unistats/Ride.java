@@ -6,14 +6,16 @@ public class Ride
 	// Data members for each aspect of a ride
 	private String id, name;
 	private double distance;
-	int pedals;
+	private int pedals;
+	private long date;
 	private boolean trackDistance, trackPedals, useGPS;
 	
 	// TODO: Determine if all fields are necessary, possibly use Builder pattern instead
-	public Ride(String id, String name, double distance, int pedals, boolean trackDistance, boolean trackPedals, boolean useGPS)
+	public Ride(String id, String name, long date, double distance, int pedals, boolean trackDistance, boolean trackPedals, boolean useGPS)
 	{
 		this.id = id;
 		this.name = name;
+		this.date = date;
 		this.distance = distance;
 		this.pedals = pedals;
 		this.trackDistance = trackDistance;
@@ -31,6 +33,11 @@ public class Ride
 	public String getName()
 	{
 		return name;
+	}
+	
+	public long getDate()
+	{
+		return date;
 	}
 	
 	public double getDistance()

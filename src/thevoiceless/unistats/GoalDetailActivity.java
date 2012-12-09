@@ -124,7 +124,7 @@ public class GoalDetailActivity extends SherlockActivity
 				distance.setText(String.valueOf(dist));
 			}
 			// Pedals goal was set if the value is greater than -1
-			double ped = dbHelper.getGoalPedals(c);
+			int ped = dbHelper.getGoalPedals(c);
 			if (ped >= 0)
 			{
 				setPedals.setChecked(true);
@@ -284,7 +284,7 @@ public class GoalDetailActivity extends SherlockActivity
 				// Validate number of pedals
 				try
 				{
-					Double.valueOf(pedals.getText().toString());
+					Integer.valueOf(pedals.getText().toString());
 				}
 				catch (Exception e)
 				{

@@ -41,6 +41,7 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	private String thisRideID, thisRideName;
 	private double thisRideDistance;
 	private int thisRidePedals;
+	private long thisRideDate;
 	private boolean trackDistance, trackPedals, useGPS, initialLocation;
 	private DatabaseHelper dbHelper;
 	private Cursor thisRideCursor, goals;
@@ -189,8 +190,9 @@ public class TrackingStatsActivity extends Activity implements StepListener
 		thisRideName = dbHelper.getRideName(thisRideCursor);
 		thisRideDistance = dbHelper.getRideDistance(thisRideCursor);
 		thisRidePedals = dbHelper.getRidePedals(thisRideCursor);
+		thisRideDate = dbHelper.getRideDate(thisRideCursor).getTime();
 				
-		thisRide = new Ride(thisRideID, thisRideName, thisRideDistance, thisRidePedals, trackDistance, trackPedals, useGPS);
+		thisRide = new Ride(thisRideID, thisRideName, thisRideDate, thisRideDistance, thisRidePedals, trackDistance, trackPedals, useGPS);
 		
 		thisRideCursor.close();
 	}
@@ -256,55 +258,64 @@ public class TrackingStatsActivity extends Activity implements StepListener
 		goals.moveToFirst();
 		while (!goals.isAfterLast())
 		{
-			// Check distance goals
-			double d = goals.getDouble(DatabaseHelper.GOAL_DIST_INT);
-			if (d != -1 && thisRide.getDistance() > d)
+			// Get date of goal, if any
+			long date = goals.getLong(DatabaseHelper.GOAL_DATE_INT);
+			boolean checkDate = (date != -1L) ? true : false;
+			// Only check distance and pedals if:
+			//   a) Completion date does not matter, OR
+			//   b) This ride occurred before the given completion date
+			if (!checkDate || (checkDate && thisRide.getDate() < date))
 			{
-				// Create intent to launch the activity
-				Intent distanceAchievement = new Intent(this, AchievementUnlockedActivity.class);
-				// Create the achievement info string and add it as an intent extra
-				String distanceInfo = getString(R.string.notification_goal_distance) + " " + d + " m";
-				distanceAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, distanceInfo);
-				// Add the notification ID as an intent extra
-				distanceAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_ID_KEY, goalID);
-				distanceAchievement.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				// Pass the notification ID as the second parameter to the constructor, set flag to CANCEL_CURRENT
-				PendingIntent showDistanceAchievement = PendingIntent.getActivity(this, goalID, distanceAchievement, PendingIntent.FLAG_CANCEL_CURRENT);
-				
-				Notification distanceNotification = new NotificationCompat.Builder(this)
-					.setContentTitle(getString(R.string.notification_achievement_get))
-					.setContentText(distanceInfo)
-					.setContentIntent(showDistanceAchievement)
-					.setSmallIcon(R.drawable.icon_menu_star)
-					.build();
-				distanceNotification.flags |= Notification.FLAG_AUTO_CANCEL;
-				
-				notificationMgr.notify(goalID++, distanceNotification);
-			}
-			// Check pedal goals
-			int p = goals.getInt(DatabaseHelper.GOAL_PED_INT);
-			if (p != -1 && thisRide.getPedals() > p)
-			{
-				// Create intent to launch the activity
-				Intent pedalsAchievement = new Intent(this, AchievementUnlockedActivity.class);
-				// Create the achievement info string and add it as an intent extra
-				String pedalsInfo = getString(R.string.notification_goal_pedals) + " " + p + " times";
-				pedalsAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, pedalsInfo);
-				// Add the notification ID as an intent extra
-				pedalsAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_ID_KEY, goalID);
-				pedalsAchievement.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				// Pass the notification ID as the second parameter to the constructor, set flag to CANCEL_CURRENT
-				PendingIntent showPedalsAchievement = PendingIntent.getActivity(this, goalID, pedalsAchievement, PendingIntent.FLAG_CANCEL_CURRENT);
-				
-				Notification pedalsNotification = new NotificationCompat.Builder(this)
-					.setContentTitle(getString(R.string.notification_achievement_get))
-					.setContentText(pedalsInfo)
-					.setContentIntent(showPedalsAchievement)
-					.setSmallIcon(R.drawable.icon_menu_star)
-					.build();
-				pedalsNotification.flags |= Notification.FLAG_AUTO_CANCEL;
-				
-				notificationMgr.notify(goalID++, pedalsNotification);
+				// Check distance goals
+				double dist = goals.getDouble(DatabaseHelper.GOAL_DIST_INT);
+				if (dist != -1 && thisRide.getDistance() > dist)
+				{
+					// Create intent to launch the activity
+					Intent distanceAchievement = new Intent(this, AchievementUnlockedActivity.class);
+					// Create the achievement info string and add it as an intent extra
+					String distanceInfo = getString(R.string.notification_goal_distance) + " " + dist + " m";
+					distanceAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, distanceInfo);
+					// Add the notification ID as an intent extra
+					distanceAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_ID_KEY, goalID);
+					distanceAchievement.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					// Pass the notification ID as the second parameter to the constructor, set flag to CANCEL_CURRENT
+					PendingIntent showDistanceAchievement = PendingIntent.getActivity(this, goalID, distanceAchievement, PendingIntent.FLAG_CANCEL_CURRENT);
+					
+					Notification distanceNotification = new NotificationCompat.Builder(this)
+						.setContentTitle(getString(R.string.notification_achievement_get))
+						.setContentText(distanceInfo)
+						.setContentIntent(showDistanceAchievement)
+						.setSmallIcon(R.drawable.icon_menu_star)
+						.build();
+					distanceNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+					
+					notificationMgr.notify(goalID++, distanceNotification);
+				}
+				// Check pedal goals
+				int ped = goals.getInt(DatabaseHelper.GOAL_PED_INT);
+				if (ped != -1 && thisRide.getPedals() > ped)
+				{
+					// Create intent to launch the activity
+					Intent pedalsAchievement = new Intent(this, AchievementUnlockedActivity.class);
+					// Create the achievement info string and add it as an intent extra
+					String pedalsInfo = getString(R.string.notification_goal_pedals) + " " + ped + " times";
+					pedalsAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, pedalsInfo);
+					// Add the notification ID as an intent extra
+					pedalsAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_ID_KEY, goalID);
+					pedalsAchievement.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					// Pass the notification ID as the second parameter to the constructor, set flag to CANCEL_CURRENT
+					PendingIntent showPedalsAchievement = PendingIntent.getActivity(this, goalID, pedalsAchievement, PendingIntent.FLAG_CANCEL_CURRENT);
+					
+					Notification pedalsNotification = new NotificationCompat.Builder(this)
+						.setContentTitle(getString(R.string.notification_achievement_get))
+						.setContentText(pedalsInfo)
+						.setContentIntent(showPedalsAchievement)
+						.setSmallIcon(R.drawable.icon_menu_star)
+						.build();
+					pedalsNotification.flags |= Notification.FLAG_AUTO_CANCEL;
+					
+					notificationMgr.notify(goalID++, pedalsNotification);
+				}
 			}
 			goals.moveToNext();
 		}	

@@ -59,7 +59,7 @@
 	        android:ems="10"
 	        android:enabled="false"
 	        android:focusable="false"
-	        android:inputType="numberDecimal" />
+	        android:inputType="number" />
 	    
 	    <TextView
 	        android:id="@+id/labelSelectGoalDate"
