@@ -1,11 +1,10 @@
 package thevoiceless.unistats;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
-import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 public class AchievementUnlockedActivity extends Activity
 {
 	public static final String ACHIEVEMENT_INFO_KEY = "thevoiceless.unistats.ACHIEVEMENT_INFO";
+	public static final String ACHIEVEMENT_ID_KEY = "thevoiceless.unistats.ACHIEVEMENT_ID";
 	private TextView accomplishment;
 	private ImageButton google, facebook, twitter, tumblr;
 	private Button copyToClipboard;
@@ -40,6 +40,7 @@ public class AchievementUnlockedActivity extends Activity
 		tumblr = (ImageButton) findViewById(R.id.buttonTumblr);
 		copyToClipboard = (Button) findViewById(R.id.buttonCopyToClipboard);
 		achievement = getIntent().getStringExtra(ACHIEVEMENT_INFO_KEY);
+		Log.e("achievement", achievement);
 		
 		accomplishment.setText(achievement);
 	}

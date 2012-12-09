@@ -248,13 +248,6 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	{
 		NotificationManager notificationMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		
-		Intent achievementUnlocked = new Intent(this, AchievementUnlockedActivity.class);
-		// The stack builder object will contain an artificial back stack for the started Activity
-		// This ensures that navigating backward from the Activity leads out of your application to the home screen
-		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-		// Adds the back stack for the Intent (but not the Intent itself)
-		stackBuilder.addParentStack(AchievementUnlockedActivity.class);
-		
 		goals.moveToFirst();
 		while (!goals.isAfterLast())
 		{
@@ -262,43 +255,47 @@ public class TrackingStatsActivity extends Activity implements StepListener
 			double d = goals.getDouble(DatabaseHelper.GOAL_DIST_INT);
 			if (d != -1 && thisRide.getDistance() > d)
 			{
-				String info = getString(R.string.notification_goal_distance) + " " + d + " m";
-				achievementUnlocked.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, info);
-				achievementUnlocked.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-				// Adds the Intent that starts the Activity to the top of the stack
-				stackBuilder.addNextIntent(achievementUnlocked);
-				PendingIntent showAchievementActivity = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+				Intent distanceAchievement = new Intent(this, AchievementUnlockedActivity.class);
+				String distanceInfo = getString(R.string.notification_goal_distance) + " " + d + " m";
+				Log.e("distance", distanceInfo);
+				distanceAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, distanceInfo);
+				distanceAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_ID_KEY, goalID);
+				distanceAchievement.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				PendingIntent showDistanceAchievement = PendingIntent.getActivity(this, goalID, distanceAchievement, PendingIntent.FLAG_CANCEL_CURRENT);
 				
-				Notification notification = new NotificationCompat.Builder(this)
+				Notification distanceNotification = new NotificationCompat.Builder(this)
 					.setContentTitle(getString(R.string.notification_achievement_get))
-					.setContentText(info)
-					.setContentIntent(showAchievementActivity)
+					.setContentText(distanceInfo)
+					.setContentIntent(showDistanceAchievement)
 					.setSmallIcon(R.drawable.icon_menu_star)
 					.build();
-				notification.flags |= Notification.FLAG_AUTO_CANCEL;
+				distanceNotification.flags |= Notification.FLAG_AUTO_CANCEL;
 				
-				notificationMgr.notify(goalID++, notification);
+				Log.e("distance id", String.valueOf(goalID));
+				notificationMgr.notify(goalID++, distanceNotification);
 			}
 			// Check pedal goals
 			int p = goals.getInt(DatabaseHelper.GOAL_PED_INT);
 			if (p != -1 && thisRide.getPedals() > p)
 			{
-				String info = getString(R.string.notification_goal_pedals) + " " + p + " times";
-				achievementUnlocked.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, info);
-				achievementUnlocked.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-				// Adds the Intent that starts the Activity to the top of the stack
-				stackBuilder.addNextIntent(achievementUnlocked);
-				PendingIntent showAchievementActivity = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+				Intent pedalsAchievement = new Intent(this, AchievementUnlockedActivity.class);
+				String pedalsInfo = getString(R.string.notification_goal_pedals) + " " + p + " times";
+				Log.e("pedals", pedalsInfo);
+				pedalsAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, pedalsInfo);
+				pedalsAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_ID_KEY, goalID);
+				pedalsAchievement.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				PendingIntent showPedalsAchievement = PendingIntent.getActivity(this, goalID, pedalsAchievement, PendingIntent.FLAG_CANCEL_CURRENT);
 				
-				Notification notification = new NotificationCompat.Builder(this)
+				Notification pedalsNotification = new NotificationCompat.Builder(this)
 					.setContentTitle(getString(R.string.notification_achievement_get))
-					.setContentText(info)
-					.setContentIntent(showAchievementActivity)
+					.setContentText(pedalsInfo)
+					.setContentIntent(showPedalsAchievement)
 					.setSmallIcon(R.drawable.icon_menu_star)
 					.build();
-				notification.flags |= Notification.FLAG_AUTO_CANCEL;
+				pedalsNotification.flags |= Notification.FLAG_AUTO_CANCEL;
 				
-				notificationMgr.notify(goalID++, notification);
+				Log.e("pedals id", String.valueOf(goalID));
+				notificationMgr.notify(goalID++, pedalsNotification);
 			}
 			goals.moveToNext();
 		}	
