@@ -1,7 +1,5 @@
 package thevoiceless.unistats;
 
-import java.text.DecimalFormat;
-
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -250,15 +248,12 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	{
 		NotificationManager notificationMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		
-		Intent showAchievement = new Intent(this, AchievementUnlockedActivity.class);
+		Intent achievementUnlocked = new Intent(this, AchievementUnlockedActivity.class);
 		// The stack builder object will contain an artificial back stack for the started Activity
 		// This ensures that navigating backward from the Activity leads out of your application to the home screen
 		TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
 		// Adds the back stack for the Intent (but not the Intent itself)
 		stackBuilder.addParentStack(AchievementUnlockedActivity.class);
-		// Adds the Intent that starts the Activity to the top of the stack
-		stackBuilder.addNextIntent(showAchievement);
-		PendingIntent achievement = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 		
 		goals.moveToFirst();
 		while (!goals.isAfterLast())
@@ -266,11 +261,17 @@ public class TrackingStatsActivity extends Activity implements StepListener
 			// Check distance goals
 			double d = goals.getDouble(DatabaseHelper.GOAL_DIST_INT);
 			if (d != -1 && thisRide.getDistance() > d)
-			{				
+			{
+				String info = getString(R.string.notification_goal_distance) + " " + d + " m";
+				achievementUnlocked.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, info);
+				// Adds the Intent that starts the Activity to the top of the stack
+				stackBuilder.addNextIntent(achievementUnlocked);
+				PendingIntent showAchievementActivity = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+				
 				Notification notification = new NotificationCompat.Builder(this)
 					.setContentTitle(getString(R.string.notification_achievement_get))
-					.setContentText(getString(R.string.notification_goal_distance) + " " + d + " m")
-					.setContentIntent(achievement)
+					.setContentText(info)
+					.setContentIntent(showAchievementActivity)
 					.setSmallIcon(R.drawable.icon_menu_star)
 					.build();
 				notification.flags |= Notification.FLAG_AUTO_CANCEL;
@@ -281,10 +282,16 @@ public class TrackingStatsActivity extends Activity implements StepListener
 			int p = goals.getInt(DatabaseHelper.GOAL_PED_INT);
 			if (p != -1 && thisRide.getPedals() > p)
 			{
+				String info = getString(R.string.notification_goal_pedals) + " " + p + " times";
+				achievementUnlocked.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, info);
+				// Adds the Intent that starts the Activity to the top of the stack
+				stackBuilder.addNextIntent(achievementUnlocked);
+				PendingIntent showAchievementActivity = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+				
 				Notification notification = new NotificationCompat.Builder(this)
 					.setContentTitle(getString(R.string.notification_achievement_get))
-					.setContentText(getString(R.string.notification_goal_pedals) + " " + p + " times")
-					.setContentIntent(achievement)
+					.setContentText(info)
+					.setContentIntent(showAchievementActivity)
 					.setSmallIcon(R.drawable.icon_menu_star)
 					.build();
 				notification.flags |= Notification.FLAG_AUTO_CANCEL;

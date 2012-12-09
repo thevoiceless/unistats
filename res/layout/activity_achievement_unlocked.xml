@@ -6,7 +6,7 @@
     <RelativeLayout
         android:id="@+id/achievementLayout"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/congrats"
@@ -18,22 +18,13 @@
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/youSuccessfully"
+            android:id="@+id/whatYouDid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/congrats"
             android:layout_centerHorizontal="true"
-            android:padding="10dip"
-            android:text="@string/label_achievement_info"
+            android:text="foo"
             android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/whatYouDid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/youSuccessfully"
-            android:layout_centerHorizontal="true"
-            android:text="foo" />
 
         <TextView
             android:id="@+id/shareOn"
