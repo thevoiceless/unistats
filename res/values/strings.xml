@@ -75,6 +75,8 @@
     <string name="label_achievement_info">You successfully</string>
     <string name="label_share_achievement">Share On:</string>
     <string name="button_copy_to_clipboard">Copy to Clipboard</string>
+    <string name="copied_to_clipboard">Achievement copied to clipboard</string>
+    <string name="on_a_unicycle">on a unicycle</string>
     
     <!-- Notifications -->
     <string name="notification_achievement_get">Congratulations!</string>

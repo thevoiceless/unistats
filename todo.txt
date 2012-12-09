@@ -1,4 +1,5 @@
 Store stats separately from whether or not to record them (currently overwritten with -1)
+Localize all strings (mainly an issue with concatenation)
 
 
 Use Loader instead of deprecated CursorAdapter constructor
