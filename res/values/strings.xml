@@ -77,6 +77,12 @@
     <string name="button_copy_to_clipboard">Copy to Clipboard</string>
     <string name="copied_to_clipboard">Achievement copied to clipboard</string>
     <string name="on_a_unicycle">on a unicycle</string>
+    <string name="open_with">Open with…</string>
+    <string name="uri_google_plus">https://plus.google.com/</string>
+    <string name="uri_facebook">https://www.facebook.com/</string>
+    <string name="uri_twitter">https://www.twitter.com/home</string>
+    <string name="uri_twitter_direct_url">https://twitter.com/intent/tweet?source=webclient&amp;text=</string>
+    <string name="uri_tumblr">https://www.tumblr.com/</string>
     
     <!-- Notifications -->
     <string name="notification_achievement_get">Congratulations!</string>

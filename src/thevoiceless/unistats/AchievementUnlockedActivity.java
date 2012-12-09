@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ShareCompat;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -73,7 +74,7 @@ public class AchievementUnlockedActivity extends Activity
 		    android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(CLIPBOARD_SERVICE); 
 		    clipboard.setText(whatIDid);
 		}
-		Toast.makeText(AchievementUnlockedActivity.this, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
+		Toast.makeText(AchievementUnlockedActivity.this, R.string.copied_to_clipboard, Toast.LENGTH_LONG).show();
 	}
 	
 	/* LISTENERS */
@@ -105,9 +106,9 @@ public class AchievementUnlockedActivity extends Activity
 			}
 			catch (Exception e)
 			{
-				Intent shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://plus.google.com/u/0/"));
+				Intent shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.uri_google_plus)));
 				copyToClipboard();
-				startActivity(shareIntent);
+				startActivity(Intent.createChooser(shareIntent, getString(R.string.open_with)));
 			}
 		}
 	};
@@ -118,27 +119,79 @@ public class AchievementUnlockedActivity extends Activity
 		@Override
 		public void onClick(View v)
 		{
-			
+			try
+			{
+				Intent shareIntent = ShareCompat.IntentBuilder.from(AchievementUnlockedActivity.this)
+				   .setText(whatIDid)
+				   .setType("text/plain")
+				   .getIntent()
+				   .setPackage("com.facebook.katana");
+				
+				copyToClipboard();
+				
+				startActivity(shareIntent);
+			}
+			catch (Exception e)
+			{
+				Intent shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.uri_facebook)));
+				startActivity(Intent.createChooser(shareIntent, getString(R.string.open_with)));
+			}
 		}
 	};
 	
 	// Twitter
+	// TODO: Test this
 	OnClickListener shareOnTwitter = new OnClickListener()
 	{
 		@Override
 		public void onClick(View v)
 		{
-			
+			try
+			{
+				Intent shareIntent = ShareCompat.IntentBuilder.from(AchievementUnlockedActivity.this)
+				   .setText(whatIDid)
+				   .setType("text/plain")
+				   .getIntent()
+				   .setPackage("com.twitter.android");
+				
+				copyToClipboard();
+				
+				startActivity(shareIntent);
+			}
+			catch (Exception e)
+			{
+				Intent shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.uri_twitter)));
+				//String tweet = getString(R.string.uri_twitter_direct_url) + achievement.replaceAll(" ", "+");
+				//Intent shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweet));
+				startActivity(Intent.createChooser(shareIntent, getString(R.string.open_with)));
+			}
 		}
 	};
 	
 	// Tumblr
+	// TODO: Test this
 	OnClickListener shareOnTumblr = new OnClickListener()
 	{
 		@Override
 		public void onClick(View v)
 		{
-			
+			try
+			{
+				Intent shareIntent = ShareCompat.IntentBuilder.from(AchievementUnlockedActivity.this)
+				   .setText(whatIDid)
+				   .setType("text/plain")
+				   .getIntent()
+				   .setPackage("com.tumblr");
+				
+				copyToClipboard();
+				
+				startActivity(shareIntent);
+			}
+			catch (Exception e)
+			{
+				Intent shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.uri_tumblr)));
+				startActivity(Intent.createChooser(shareIntent, getString(R.string.open_with)));
+			}
 		}
 	};
 }
