@@ -254,6 +254,7 @@ public class TrackingStatsActivity extends Activity implements StepListener
 	private void checkGoals()
 	{
 		NotificationManager notificationMgr = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		StringBuilder goalInfo = new StringBuilder();
 		// Separate intents are created for each scenario because of the need to pass achievement info
 		// The ID of the notification is passed as an extra with the intent and as the supposedly unused
 		// second parameter (requestCode) of the PendingIntent constructor
@@ -263,12 +264,12 @@ public class TrackingStatsActivity extends Activity implements StepListener
 		goals.moveToFirst();
 		while (!goals.isAfterLast())
 		{
-			StringBuilder goalInfo = new StringBuilder();
 			// Get date of goal, if any
-			long gd = goals.getLong(DatabaseHelper.GOAL_DATE_INT);
-			Log.e("goal date", GoalsActivity.dateFormat.format(new Date(gd * 1000L)));
-			Log.e("ride date", GoalsActivity.dateFormat.format(new Date(thisRide.getDate())));
-			goalDate.setTimeInMillis(gd * 1000);
+			// Value is multiplied by 1000 to be comparable to the Date object that would be returned by
+			// getGoalDate (since the time is being directly accessed as a long). Calling getGoalDate would
+			// require a cursor, which would be even messier than this implementation
+			long gd = goals.getLong(DatabaseHelper.GOAL_DATE_INT) * 1000L;
+			goalDate.setTimeInMillis(gd);
 			rideDate.setTimeInMillis(thisRide.getDate());
 			boolean checkDate = (gd != -1L) ? true : false;
 			// Only check distance and pedals if:
@@ -310,6 +311,7 @@ public class TrackingStatsActivity extends Activity implements StepListener
 					distanceNotification.flags |= Notification.FLAG_AUTO_CANCEL;
 					
 					notificationMgr.notify(goalID++, distanceNotification);
+					goalInfo.setLength(0);
 				}
 				// Check pedal goals
 				int ped = goals.getInt(DatabaseHelper.GOAL_PED_INT);
@@ -318,8 +320,18 @@ public class TrackingStatsActivity extends Activity implements StepListener
 					// Create intent to launch the activity
 					Intent pedalsAchievement = new Intent(this, AchievementUnlockedActivity.class);
 					// Create the achievement info string and add it as an intent extra
-					String pedalsInfo = getString(R.string.notification_goal_pedals) + " " + ped + " times";
-					pedalsAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, pedalsInfo);
+					goalInfo.append(getString(R.string.notification_goal_pedals));
+					goalInfo.append(" ");
+					goalInfo.append(ped);
+					goalInfo.append(" times");
+					if (checkDate)
+					{
+						goalInfo.append(" ");
+						goalInfo.append(getString(R.string.by));
+						goalInfo.append(" ");
+						goalInfo.append(GoalsActivity.dateFormat.format(goalDate.getTime()));
+					}
+					pedalsAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_INFO_KEY, goalInfo.toString());
 					// Add the notification ID as an intent extra
 					pedalsAchievement.putExtra(AchievementUnlockedActivity.ACHIEVEMENT_ID_KEY, goalID);
 					pedalsAchievement.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -328,13 +340,14 @@ public class TrackingStatsActivity extends Activity implements StepListener
 					
 					Notification pedalsNotification = new NotificationCompat.Builder(this)
 						.setContentTitle(getString(R.string.notification_achievement_get))
-						.setContentText(pedalsInfo)
+						.setContentText(goalInfo.toString())
 						.setContentIntent(showPedalsAchievement)
 						.setSmallIcon(R.drawable.icon_menu_star)
 						.build();
 					pedalsNotification.flags |= Notification.FLAG_AUTO_CANCEL;
 					
 					notificationMgr.notify(goalID++, pedalsNotification);
+					goalInfo.setLength(0);
 				}
 			}
 			goals.moveToNext();

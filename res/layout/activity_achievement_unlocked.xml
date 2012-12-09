@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/socialButtonsRow"
             android:layout_centerHorizontal="true"
-            android:padding="5dip"
+            android:paddingBottom="5dip"
             android:text="@string/or"
             android:textSize="15sp" />
 

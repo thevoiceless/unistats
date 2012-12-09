@@ -19,6 +19,7 @@ public class AchievementUnlockedActivity extends Activity
 {
 	public static final String ACHIEVEMENT_INFO_KEY = "thevoiceless.unistats.ACHIEVEMENT_INFO";
 	public static final String ACHIEVEMENT_ID_KEY = "thevoiceless.unistats.ACHIEVEMENT_ID";
+	private static StringBuilder stringBuilder = new StringBuilder();
 	private TextView accomplishment;
 	private ImageButton google, facebook, twitter, tumblr;
 	private Button shareOther;
@@ -44,8 +45,12 @@ public class AchievementUnlockedActivity extends Activity
 		tumblr = (ImageButton) findViewById(R.id.buttonTumblr);
 		shareOther = (Button) findViewById(R.id.buttonShareOther);
 		achievement = getIntent().getStringExtra(ACHIEVEMENT_INFO_KEY);
-		whatIDid = achievement.replaceFirst("You", "I") + " " + getString(R.string.on_a_unicycle);
 		
+		stringBuilder.append(getString(R.string.on_a_unicycle));
+		stringBuilder.append(" ");
+		stringBuilder.append(getString(R.string.by));
+		whatIDid = achievement.replace(getString(R.string.by), stringBuilder.toString()).replaceFirst("You", "I");
+				
 		accomplishment.setText(achievement);
 	}
 	
@@ -84,11 +89,10 @@ public class AchievementUnlockedActivity extends Activity
 		@Override
 		public void onClick(View v)
 		{
-			copyToClipboard();
 			Intent shareIntent = new Intent(Intent.ACTION_SEND);
 			shareIntent.setType("text/plain");
 			shareIntent.putExtra(Intent.EXTRA_TEXT, whatIDid);
-			startActivity(Intent.createChooser(shareIntent, getString(R.string.open_with)));
+			startActivity(Intent.createChooser(shareIntent, getString(R.string.share_via)));
 		}
 	};
 	
@@ -112,7 +116,7 @@ public class AchievementUnlockedActivity extends Activity
 			{
 				Intent shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.uri_google_plus)));
 				copyToClipboard();
-				startActivity(Intent.createChooser(shareIntent, getString(R.string.open_with)));
+				startActivity(Intent.createChooser(shareIntent, getString(R.string.share_via)));
 			}
 		}
 	};
@@ -138,7 +142,7 @@ public class AchievementUnlockedActivity extends Activity
 			catch (Exception e)
 			{
 				Intent shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.uri_facebook)));
-				startActivity(Intent.createChooser(shareIntent, getString(R.string.open_with)));
+				startActivity(Intent.createChooser(shareIntent, getString(R.string.share_via)));
 			}
 		}
 	};
@@ -167,7 +171,7 @@ public class AchievementUnlockedActivity extends Activity
 				Intent shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.uri_twitter)));
 				//String tweet = getString(R.string.uri_twitter_direct_url) + achievement.replaceAll(" ", "+");
 				//Intent shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(tweet));
-				startActivity(Intent.createChooser(shareIntent, getString(R.string.open_with)));
+				startActivity(Intent.createChooser(shareIntent, getString(R.string.share_via)));
 			}
 		}
 	};
@@ -194,7 +198,7 @@ public class AchievementUnlockedActivity extends Activity
 			catch (Exception e)
 			{
 				Intent shareIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.uri_tumblr)));
-				startActivity(Intent.createChooser(shareIntent, getString(R.string.open_with)));
+				startActivity(Intent.createChooser(shareIntent, getString(R.string.share_via)));
 			}
 		}
 	};
