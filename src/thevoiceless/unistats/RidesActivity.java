@@ -171,6 +171,7 @@ public class RidesActivity extends SherlockActivity
 	private void initList()
 	{
 		ridesList.setOnItemClickListener(selectRideFromList);
+		ridesList.setFastScrollEnabled(true);
 	}
 	
 	/* LISTENERS */

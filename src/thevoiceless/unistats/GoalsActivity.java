@@ -183,6 +183,7 @@ public class GoalsActivity extends SherlockActivity
 	private void initList()
 	{
 		goalsList.setOnItemClickListener(selectGoalFromList);
+		goalsList.setFastScrollEnabled(true);
 	}
 	
 	/* LISTENERS */
