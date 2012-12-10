@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item
+        android:id="@+id/menu_save_and_start"
+        android:title="@string/button_save_start_ride"
+        android:icon="@drawable/icon_menu_play"
+        android:showAsAction="ifRoom|withText" />
+    
+</menu>

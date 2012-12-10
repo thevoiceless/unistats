@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 public class RideDetailActivity extends SherlockActivity
@@ -66,6 +68,29 @@ public class RideDetailActivity extends SherlockActivity
 	}
 	
 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu)
+	{
+		if (saveAndStart.isEnabled())
+		{
+			menu.findItem(R.id.menu_save_and_start).setEnabled(true);
+			menu.findItem(R.id.menu_save_and_start).setIcon(R.drawable.icon_menu_play);
+		}
+		else
+		{
+			menu.findItem(R.id.menu_save_and_start).setEnabled(false);
+			menu.findItem(R.id.menu_save_and_start).setIcon(R.drawable.icon_menu_play_disabled);
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		getSupportMenuInflater().inflate(R.menu.menu_ride_details, menu);
+		return true;
+	}
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		 switch (item.getItemId())
@@ -77,6 +102,9 @@ public class RideDetailActivity extends SherlockActivity
 	        			| Intent.FLAG_ACTIVITY_NEW_TASK);
 	        	startActivity(i);
 	        	finish();
+	        	return true;
+	        case R.id.menu_save_and_start:
+	        	saveAndStart.performClick();
 	        	return true;
 	        default:
 	        	return super.onOptionsItemSelected(item);
@@ -260,6 +288,8 @@ public class RideDetailActivity extends SherlockActivity
 		{
 			saveAndStart.setEnabled(true);
 		}
+		// Disable the "save and start" action bar item, if needed
+		supportInvalidateOptionsMenu();
 	}
 	
 	// Set calendar values to the text values in the form

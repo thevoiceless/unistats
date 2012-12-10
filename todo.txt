@@ -1,4 +1,3 @@
-Add action bar item to start ride
 Store statistics separately from whether or not to record them (currently overwritten with -1)
 Localize all strings (mainly an issue with concatenation of small parts)
 Use Loader instead of deprecated CursorAdapter constructor
